@@ -1,0 +1,21 @@
+{ 
+    "message": "SUCESS",
+    "result":[
+        {
+            "keyword": "사과",
+            "image_url": "images/newyear.jpg"
+        },
+        {
+            "keyword":"사과",
+            "image_url": "https://i.pinimg.com/originals/f9/f4/2c/f9f42cc1853189038a8e219fdf47a644.png"
+        },
+        {
+            "keyword":"사탕",
+            "image_url":"http://kuku-keke.com/wp-content/uploads/2020/04/2470_5.png"
+        },
+        {
+            "keyword": "사탕",
+            "image_url":"https://png.pngtree.com/element_our/20190603/ourmid/pngtree-children-s-day-lollipop-image_1440682.jpg"
+        }
+    ]
+}
