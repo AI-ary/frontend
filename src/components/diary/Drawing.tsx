@@ -112,12 +112,12 @@ interface GrimImageProps{
 function Drawing(props:DrawingProps){
   const {choiceImg, setUpdateCanvas}=useStore();
   const [grimimage, setGrimimage] = useState<GrimImageProps[]>([]);
-  const [selectedId, selectShape] = useState(null);
+  const [selectedId, selectShape] = useState<string | null>(null);
   const [tool, setTool] = useState<string>('pen');
   const [currentColor,setColor]=useState<string>('#000000');
   const listColors:string[]=['black','red','blue']
-  const [lines, setLines] = useState([]);
-  let stageRef=useRef(null);
+  const [lines, setLines] = useState<any>([]);
+  let stageRef=useRef<any>(null);
   const isDrawing = useRef<boolean>(false);
   const checkDeselect = (e:any) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -161,6 +161,7 @@ function Drawing(props:DrawingProps){
     }
     // add point
     lastLine.points = lastLine.points.concat([point.x, point.y]);
+
     // replace last
     // lines.splice(lines.length - 1, 1, lastLine);
     setLines([...lines.slice(0, -1),lastLine]);
@@ -223,7 +224,7 @@ function Drawing(props:DrawingProps){
                   draggable={true}
                   onClick={handleRemove}
                   onSelect={() => {
-                    selectShape(rect);
+                    selectShape(rect.id);
                   }}
                   onChange={(newAttrs: GrimImageProps) => {
                     const rects = grimimage.slice();
@@ -234,7 +235,7 @@ function Drawing(props:DrawingProps){
                 />
               );
             })}
-            {lines && lines.map((line, i) => (
+            {lines && lines.map((line:any, i:any) => (
               <Line
                 key={i}
                 points={line.points}
@@ -291,7 +292,7 @@ function Drawing(props:DrawingProps){
               />
             );
           })}
-          {lines && lines.map((line, i) => (
+          {lines && lines.map((line:any, i:any) => (
             <Line
               key={i}
               points={line.points}
@@ -307,7 +308,7 @@ function Drawing(props:DrawingProps){
         </Layer>
       </Stage>)}
       {!props.grim?(
-        <div style={{transform:'translate(68%,-100%)'}}>
+        <div style={{transform:'translate(68%,-100%)', display:'flex'}}>
           {listColors && listColors.map((map,index)=>{
             return(
               <BsFillCircleFill key={index} color={map} size="23" style={{marginRight:'8px'}} onClick={()=>{

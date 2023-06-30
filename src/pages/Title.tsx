@@ -5,7 +5,7 @@ const Title = styled.div`
   display: flex;
   justify-contents : center;
   align-items : center;
-  font-size: 80px;`
+  font-size: 70px;`
 
 function Titles({children} : PropsWithChildren) {
   return(
