@@ -26,18 +26,18 @@ function GrimList() {
   const user = sessionStorage.getItem('id'); //user id받아오기
 
   //일기 리스트 가져오기(전체)
-  // const allList = async () =>{
-  //   const response = await api.get('/diaries');
-  //   return response.data;
-  // }
-  // useEffect(()=>{
-  //   const getAllList=async () =>{
-  //     const allGrimList = await allList();
-  //     if(allGrimList) setAdd(allGrimList);
-  //   };
-  //   getAllList();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[]);
+  const allList = async () =>{
+    const response = await api.get('/diaries');
+    return response.data;
+  }
+  useEffect(()=>{
+    const getAllList=async () =>{
+      const allGrimList = await allList();
+      if(allGrimList) setAdd(allGrimList);
+    };
+    getAllList();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   for(let i=0;i<add.length;i++){
     if(add[i].user_id===parseInt(user)){
@@ -47,14 +47,12 @@ function GrimList() {
   }
   return(
     <WriteContainer>
-      {/* <ShareModal open={open} openShare={openShare} /> */}
       <Book2Container> 
         <BookShape2L>
           <Calender list={list} exist={exist} />
         </BookShape2L>
         <BookShape2R>
-          <DiaryList id={1} title={'hello'} weather={1} draw={''} contents={''} date={''} emoji={''} />
-          {/* {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
+          {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
             // eslint-disable-next-line no-loop-func
             .map((data,index)=>{
               return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
@@ -67,7 +65,7 @@ function GrimList() {
                     일기 쓰러 가기<BsArrowRight size="2rem" />
               </Link>
             </div>
-          </DiviContainer>)} */}
+          </DiviContainer>)}
         </BookShape2R>
         <Bookmark />
       </Book2Container>

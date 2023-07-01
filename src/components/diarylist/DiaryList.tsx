@@ -121,9 +121,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
 
   return(
     <DiviContainer>
-      {/* <div style={{ position:'absolute', border: '1px solid black', height:'100vh', width: '100vw', backgroundColor:'rgba(0, 0, 0, 0.5)', display:'flex', justifyContent:'center', alignItems:'center'}}>
-        <div>gd</div>
-      </div> */}
       <DateContainer>
         <Dateline>
           <Datetitle>날짜</Datetitle>
@@ -142,22 +139,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
       <div>
         <ChoiceButtonContainer style={{height: '25px' ,marginTop:'2%', marginLeft:'2.2%'}}>
           <Button onClick={()=>DeleteDiary(id)}>삭제</Button>
-          {/* <Button
-          // onClick={shareMessage}
-            className={classes.customHoverFocus}
-            type='button'
-            variant='outlined'
-            style={{
-              position: 'relative',
-              top:'4px',
-              right: '10px',
-              borderRadius: '30px',
-              border: '2px solid black',
-              fontWeight: 'bolder',
-            }}
-          >
-            카카오톡 공유하기
-          </Button> */}
           <SNSImg onClick={kakaoShare} src='images/kakao.png' alt='none' />
           <SNSImg onClick={twitterShare} src='images/twitter.png' alt='none' />
           <SNSImg onClick={urlShare} src='images/url.png' alt='none' />
