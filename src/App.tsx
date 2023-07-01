@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 import GrimList from './pages/GrimList';
 import WriteGrim from './pages/WriteGrim';
 import Main from './pages/Main';
-import AfterLogin from './components/Modal/AfterLogin';
+import AfterLogin from './pages/AfterLogin';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Manual from './pages/Manual';
@@ -24,11 +24,11 @@ const router= createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {path:'/', element:<PublicPages Component={Main} restricted={undefined}/>},
+      {path:'/', element:<PublicPages Component={Main} restricted/>},
       {path:'/signin', element:<PublicPages Component={SignIn} restricted/>},
       {path:'/main', element:<AfterLogin />},
       {path:'/signup', element:<PublicPages Component={SignUp} restricted/>},
-      {path:'/about', element:<PublicPages Component={Manual} restricted={undefined}/>},
+      {path:'/about', element:<PublicPages Component={Manual} restricted />},
       // {path:'/write', element:<PrivatePages Component={WriteGrim}/>},
       // {path:'/list', element:<PrivatePages Component={GrimList}/>},
       {path:'/write', element:<WriteGrim />},
@@ -38,7 +38,7 @@ const router= createBrowserRouter([
 ])
 
 function App() {
-  // window.Kakao.init(process.env.REACT_APP_KAKAO_KEY);
+  // window.Kakao.init(import.meta.env.REACT_APP_KAKAO_KEY);
   return (
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />

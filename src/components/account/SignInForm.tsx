@@ -4,6 +4,7 @@ import {Button, Container, TextField, makeStyles} from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../apis/axios'
 import { AxiosResponse } from 'axios';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles(theme => ({
   customHoverFocus: {
@@ -41,7 +42,6 @@ function SignInForm() {
   const [email, setEmail] = useState<string>('');
   const [password,setPassword] = useState<string>('');
   const JWT_EXPIRY_TIME = 1800 * 1000 // 만료시간 30분 (밀리초로 표현)
-  const Swal = require('sweetalert2');
   let count : number = 0;
 
   function emailValid() {

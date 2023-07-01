@@ -4,6 +4,7 @@ import { BsBrightnessHighFill, BsFillCloudFill ,BsFillCloudSnowFill, BsFillCloud
 import { Content, DateContainer, Dateline, Datetitle, DiviContainer, Weathercontainer, DateContent, TitleContainer, Title, Titlecontent, Canvas} from '../diary/DiaryContent';
 import { ChoiceButtonContainer } from '../diary/GrimChoice';
 import api from '../../apis/axios'
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 const useStyles = makeStyles(() => ({
   customHoverFocus: {
@@ -21,12 +22,7 @@ interface DiaryListProps{
   emoji: string;
 }
 
-type Props = {
-  dismiss: string,
-  isConfirmed: boolean,
-  isDenied: boolean,
-  isDismissed : boolean
-}
+type Props = SweetAlertResult<any>;
 
 function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListProps){
   let fulldate=date.split('-');
@@ -52,7 +48,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   //   });
   // }
   const DeleteDiary = (id:number) => {
-    const Swal = require('sweetalert2');
     Swal.fire({
       title: '정말 삭제하시겠습니까?',
       icon: 'warning',

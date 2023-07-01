@@ -2,17 +2,13 @@ import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import api from '../../apis/axios'
 import React from 'react';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
-type Props = {
-  dismiss: string,
-  isConfirmed: boolean,
-  isDenied: boolean,
-  isDismissed : boolean
-}
+
+type Props = SweetAlertResult<any>;
 
 export default function LogoutBtn() {
   const navigate = useNavigate();
-  const Swal = require('sweetalert2');
   
   function onClick(e : React.MouseEvent) {
     Swal.fire({

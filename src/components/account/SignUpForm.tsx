@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
 import api from '../../apis/axios';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
   customHoverFocus: {
@@ -43,7 +44,6 @@ function SignUpForm() {
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
   const [confirm, setConfirm] = useState < string > ('');
-  const Swal = require('sweetalert2');
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);

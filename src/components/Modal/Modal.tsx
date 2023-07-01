@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import './Modal.css';
 import api from '../../apis/axios'
 import { Button, makeStyles } from '@material-ui/core';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import Swal from 'sweetalert2';
+
 
 const useStyles = makeStyles(theme => ({
   customHoverFocus: {
@@ -27,7 +29,7 @@ const Nickname = styled.h1`
   position: relative;
   margin: 10px;
   bottom: 22px;
-  font-size: 55px;`
+  font-size: 45px;`
 
 const SelectBtn = styled.div`
   background-color: rgb(0, 0, 0, 0);
@@ -45,7 +47,6 @@ function Modals({setIsOpen, selected, setSelected} : any) {
   const navigate = useNavigate();
   const classes = useStyles();
   const nickname = sessionStorage.getItem('nickname');
-  const Swal = require('sweetalert2');
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -74,14 +75,18 @@ function Modals({setIsOpen, selected, setSelected} : any) {
     // }).then(function (res) {
     let flip : Element | null= document.querySelector('.flip');
     let slide : Element | null = document.querySelector('.slide');
-    slide.classList.add('move')
-    setTimeout(() => {
-      flip.classList.add('open');
-      flip.classList.toggle('color')
+    if (slide) {
+      slide.classList.add('move');
       setTimeout(() => {
-        navigate('/list');
-      }, 400)
-    }, 800);
+        if (flip) {
+          flip.classList.add('open');
+          flip.classList.toggle('color');
+          setTimeout(() => {
+            navigate('/list');
+          }, 400);
+        }
+      }, 800);
+    }
     //   console.log(Toast)
     //   Toast.fire({
     //     icon: 'success',

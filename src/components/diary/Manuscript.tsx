@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 /* 원고지 틀 컴포넌트 */
 function Manuscript(props:any) {
   const [word, setWord] = useState<string>('');
-  const Swal = require('sweetalert2');
   let tr:number[] = Array.apply(null, new Array(5)).map(Number.prototype.valueOf, 0);
   let td:number[] = Array.apply(null, new Array(10)).map(Number.prototype.valueOf, 0);
 

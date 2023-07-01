@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import BookCover from '../bookshape/BookCover';
-import Modals from './Modal'
-import OpenModal from './OpenModal';
+import BookCover from '../components/bookshape/BookCover';
+import Modals from '../components/Modal/Modal'
+import OpenModal from '../components/Modal/OpenModal';
 
 function AfterLogin() {
   const [selected, setSelected] = useState<string>('images/mainLogo.png');

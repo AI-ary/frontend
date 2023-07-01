@@ -1,5 +1,5 @@
 import React from 'react';
-import AfterLogin from '../Modal/AfterLogin';
+import AfterLogin from '../../pages/AfterLogin';
 import IsLogin from './IsLogin';
 
 type Props = {
