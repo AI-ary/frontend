@@ -145,11 +145,6 @@ function Calender({list, exist}:CalenderProps){
   const onDateClick = (day:any) =>{
     setSelectedDate(day);
     setChoicedDate(day);
-    // api.get('diaries/').then((res) => {
-    //   getId(res.data.filter((date:any) => date.diary_date === format(day, 'yyyy-MM-dd'))[0].id)
-    // }).catch((err) => {
-    //   console.log(err)
-    // })
   }
   return(
     <div className='listcontainer'>

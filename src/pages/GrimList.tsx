@@ -19,23 +19,11 @@ interface ListContent{
 }
 
 function GrimList() {
-  // useEffect(() => {
-  //   api.get('diaries/').then((res) => {
-  //     setDeleteId(res.data.filter((date:any) => date.diary_date === format(new Date(), 'yyyy-MM-dd'))[0].id)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
-  // },[])
   const [add, setAdd]=useState<ListContent[]>([]);
   const {choiceDate}=useStore();
   const exist:any[]=[];
   const list:any[]=[];
-  const user = sessionStorage.getItem('id') || ''; //user id받아오기
-  // const [deleteId, setDeleteId] = useState<any>();
-  // const getId = (day:any) => {
-  //   setDeleteId(day);
-  // }
-  // console.log(deleteId)
+  const user = sessionStorage.getItem('id'); //user id받아오기
 
   //일기 리스트 가져오기(전체)
   const allList = async () =>{
@@ -57,7 +45,6 @@ function GrimList() {
       list.push(add[i]);
     }
   }
-  
   return(
     <WriteContainer>
       <Book2Container> 
