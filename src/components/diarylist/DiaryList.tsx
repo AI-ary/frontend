@@ -4,6 +4,7 @@ import { BsBrightnessHighFill, BsFillCloudFill ,BsFillCloudSnowFill, BsFillCloud
 import { Content, DateContainer, Dateline, Datetitle, DiviContainer, Weathercontainer, DateContent, TitleContainer, Title, Titlecontent, Canvas} from '../diary/DiaryContent';
 import { ChoiceButtonContainer } from '../diary/GrimChoice';
 import api from '../../apis/axios'
+import styled from 'styled-components';
 
 const useStyles = makeStyles(() => ({
   customHoverFocus: {
@@ -34,25 +35,50 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   let todayMonth=fulldate[1];  //월 구하기
   let todayDate=fulldate[2];  //일 구하기
 
+  const Swal = require('sweetalert2');
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true
+  })
   const classes = useStyles();
-  // function shareMessage() {
-  //   window.Kakao.Share.sendDefault({
-  //     objectType: 'feed',
-  //     content: {
-  //       title: title,
-  //       description: contents,
-  //       // 일기에서 그린 그림 url 주소 하고 싶어영
-  //       imageUrl: draw,
-  //       link: {
-  //       // 도메인 주소 정해지면 그거 넣으면 될 것 같아여
-  //         mobileWebUrl: 'http://localhost',
-  //         webUrl: 'http://localhost',
-  //       },
-  //     },
-  //   });
-  // }
+
+  const kakaoShare = () => {
+    // window.Kakao.Share.sendDefault({
+    //   objectType: 'feed',
+    //   content: {
+    //     title: title,
+    //     description: contents,
+    //     // 일기에서 그린 그림 url 주소 하고 싶어영
+    //     imageUrl: draw,
+    //     link: {
+    //     // 도메인 주소 정해지면 그거 넣으면 될 것 같아여
+    //       mobileWebUrl: 'http://localhost',
+    //       webUrl: 'http://localhost',
+    //     },
+    //   },
+    // });
+  }
+
+  const twitterShare = () => {
+    const location = window.location.href;
+    const url = encodeURIComponent(location);
+    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`);
+  }
+
+  const urlShare = () => {
+    const location = window.location.href;
+    window.navigator.clipboard.writeText(location).then(() => {
+      Toast.fire({
+        icon: 'success',
+        title: '복사 성공!'
+      })
+    })
+  }
+
   const DeleteDiary = (id:number) => {
-    const Swal = require('sweetalert2');
     Swal.fire({
       title: '정말 삭제하시겠습니까?',
       icon: 'warning',
@@ -95,6 +121,9 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
 
   return(
     <DiviContainer>
+      {/* <div style={{ position:'absolute', border: '1px solid black', height:'100vh', width: '100vw', backgroundColor:'rgba(0, 0, 0, 0.5)', display:'flex', justifyContent:'center', alignItems:'center'}}>
+        <div>gd</div>
+      </div> */}
       <DateContainer>
         <Dateline>
           <Datetitle>날짜</Datetitle>
@@ -111,9 +140,9 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
       </TitleContainer>
       <Canvas><img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} /></Canvas>
       <div>
-        <Button onClick={()=>DeleteDiary(id)}>삭제</Button>
         <ChoiceButtonContainer style={{height: '25px' ,marginTop:'2%', marginLeft:'2.2%'}}>
-          <Button
+          <Button onClick={()=>DeleteDiary(id)}>삭제</Button>
+          {/* <Button
           // onClick={shareMessage}
             className={classes.customHoverFocus}
             type='button'
@@ -127,8 +156,11 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
               fontWeight: 'bolder',
             }}
           >
-        카카오톡 공유하기
-          </Button>
+            카카오톡 공유하기
+          </Button> */}
+          <SNSImg onClick={kakaoShare} src='images/kakao.png' alt='none' />
+          <SNSImg onClick={twitterShare} src='images/twitter.png' alt='none' />
+          <SNSImg onClick={urlShare} src='images/url.png' alt='none' />
         </ChoiceButtonContainer>
       </div>
       <Content><ResultManuscript content={contents}/></Content>
@@ -137,3 +169,11 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
 }
 
 export default DiaryList;
+
+const SNSImg = styled.img`
+  height: 40px;
+  margin: 0px 10px 0px 10px;
+  &:hover {
+    cursor: pointer;
+  }
+  `
