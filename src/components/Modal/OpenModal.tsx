@@ -43,7 +43,7 @@ const ItemBox = styled.div`
 function OpenModal({isOpen, setIsOpen, setSelected} : Props) {
   const classes = useStyles();
   const [number, setNumber] = useState<number>();
-  const [imgFile, setImgFile]=useState<string>('');
+  const [imgFile, setImgFile]=useState<string | null>(null);
   
   function selectedImg(checked : string){
     setSelected(checked)
@@ -57,15 +57,16 @@ function OpenModal({isOpen, setIsOpen, setSelected} : Props) {
 
   const addFile = ()=>{
     const imgFile = imgRef.current;
-    const file=imgFile.files[0];
-    const reader=new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend=()=>{
-      setImgFile(reader.result as SetStateAction<string>);
-      setSelected(reader.result as SetStateAction<string>);
-      setNumber(5);
+    if (imgFile?.files) {
+      const file=imgFile?.files[0];
+      const reader=new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend=()=>{
+        setImgFile(reader.result as string);
+        setSelected(reader.result as string);
+        setNumber(5);
+      }
     }
-    console.log(imgFile);
   }
 
   function Menu({num} : {num : number}) {
@@ -121,4 +122,4 @@ function OpenModal({isOpen, setIsOpen, setSelected} : Props) {
   )
 }
 
-export default OpenModal
+export default OpenModal;

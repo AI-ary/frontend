@@ -8,6 +8,7 @@ import Drawing from './Drawing';
 import { useStore } from '../../store/store';
 import api from '../../apis/axios';
 import { format } from 'date-fns';
+import Swal from 'sweetalert2';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
@@ -29,7 +30,6 @@ function DiaryContent(props:DiaryContentProps) {
   const variable = useRef<RefObject>({
     isDoubleClick: false
   });  //더블 클릭 방지 변수
-  const Swal = require('sweetalert2');
   const date = location.state?.date;
   let year = date.getFullYear(); //연도 구하기
   let todayMonth = date.getMonth() + 1; //월 구하기
@@ -53,7 +53,7 @@ function DiaryContent(props:DiaryContentProps) {
   const u8arr = new Uint8Array(array);
   const file = new Blob([u8arr], { type: 'image/png' });
 
-  const user = sessionStorage.getItem('id'); //세션에 저장되어 있는 user id받아오기
+  const user = sessionStorage.getItem('id') || ''; //세션에 저장되어 있는 user id받아오기
 
   //작성한 일기 보내기
   const grimDiary = async () => {

@@ -5,6 +5,7 @@ import { Content, DateContainer, Dateline, Datetitle, DiviContainer, Weathercont
 import { ChoiceButtonContainer } from '../diary/GrimChoice';
 import api from '../../apis/axios'
 import styled from 'styled-components';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 const useStyles = makeStyles(() => ({
   customHoverFocus: {
@@ -22,12 +23,7 @@ interface DiaryListProps{
   emoji: string;
 }
 
-type Props = {
-  dismiss: string,
-  isConfirmed: boolean,
-  isDenied: boolean,
-  isDismissed : boolean
-}
+type Props = SweetAlertResult<any>;
 
 function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListProps){
   let fulldate=date.split('-');

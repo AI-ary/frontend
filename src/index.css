@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @font-face {
     font-family: 'KyoboHand';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff') format('woff');
@@ -16,7 +19,7 @@ html, body{
 body{
     /* position: fixed; */
     overflow: hidden;
-    background-image: url("../public/images/background.PNG");
+    background-image: url("images/background.PNG");
     background-repeat: no-repeat;
     background-size: cover;
 }
