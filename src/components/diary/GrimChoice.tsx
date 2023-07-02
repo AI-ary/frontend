@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { useStore } from '../../store/store';
 
@@ -94,6 +94,8 @@ const Choice = styled.div`
     width: 500px;   
     height: 520px;
     background:white;
+    display:flex;
+    flex-wrap: wrap;
     border-radius: 10px;
     border: 2px dotted grey;
     overflow: auto;

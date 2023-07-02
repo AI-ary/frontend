@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WriteContainer, Book2Container } from './WriteGrim';
 import BookShape2L from '../components/bookshape/BookShapeL';
 import BookShape2R from '../components/bookshape/BookShapeR';
@@ -23,7 +23,7 @@ function GrimList() {
   const {choiceDate}=useStore();
   const exist:any[]=[];
   const list:any[]=[];
-  const user = sessionStorage.getItem('id'); //user id받아오기
+  const user = sessionStorage.getItem('id')  || ''; //user id받아오기
 
   //일기 리스트 가져오기(전체)
   const allList = async () =>{
