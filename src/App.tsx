@@ -6,6 +6,7 @@ import AfterLogin from './pages/AfterLogin';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Manual from './pages/Manual';
+import DiarySearchList from './pages/DIarySearchList';
 import PrivatePages from './components/access/PrivatePages';
 import PublicPages from './components/access/PublicPages';
 import ErrorPage from './pages/ErrorPage';
@@ -33,6 +34,7 @@ const router= createBrowserRouter([
       // {path:'/list', element:<PrivatePages Component={GrimList}/>},
       {path:'/write', element:<WriteGrim />},
       {path:'/list', element:<GrimList />},
+      {path:'/search/:word', element:<DiarySearchList />}
     ]
   }
 ])

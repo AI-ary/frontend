@@ -19,7 +19,7 @@ html, body{
 body{
     /* position: fixed; */
     overflow: hidden;
-    background-image: url("images/background.PNG");
+    background-image: url("/images/background.PNG");
     background-repeat: no-repeat;
     background-size: cover;
 }
