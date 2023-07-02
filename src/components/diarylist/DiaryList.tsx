@@ -31,7 +31,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   let todayMonth=fulldate[1];  //월 구하기
   let todayDate=fulldate[2];  //일 구하기
 
-  const Swal = require('sweetalert2');
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
