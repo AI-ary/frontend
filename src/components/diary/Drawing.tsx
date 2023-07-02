@@ -186,7 +186,6 @@ function Drawing(props:DrawingProps){
   const handleRemove=(index:any)=>{
     const newList=grimimage.filter((item, index)=> index !== index);
     setGrimimage(newList);
-    console.log(grimimage)
   }
   const unSelectShape = (prop:any)=>{
     selectShape(prop);
@@ -214,8 +213,6 @@ function Drawing(props:DrawingProps){
         >
           <Layer>
             {grimimage && grimimage.map((rect, i) => {
-              console.log(grimimage)
-              console.log(selectedId)
               return (
                 <Rectangle
                   key={i}
