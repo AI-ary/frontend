@@ -47,33 +47,30 @@ function GrimList() {
     }
   }
   return(
-    <>
-      <DiarySearch />
-      <WriteContainer>
-        <Book2Container> 
-          <BookShape2L>
-            <Calender list={list} exist={exist} />
-          </BookShape2L>
-          <BookShape2R>
-            {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
-              // eslint-disable-next-line no-loop-func
-              .map((data,index)=>{
-                return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
-            {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(<DiviContainer style={{zIndex: '0'}}>
-              <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
-                <img src="images/write.PNG"  style={{width: '30%', margin:"0 auto"}} alt="list"/>
-                <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</p>의</div>
-                  하루를 기록해볼까요?
-                <Link to='/write' state={{date:choiceDate}} className="listLink">
-                      일기 쓰러 가기<BsArrowRight size="2rem" />
-                </Link>
-              </div>
-            </DiviContainer>)}
-          </BookShape2R>
-          <Bookmark />
-        </Book2Container>
-      </WriteContainer>
-    </>
+    <WriteContainer>
+      <Book2Container style={{paddingBottom:'80px'}}> 
+        <BookShape2L>
+          <Calender list={list} exist={exist} />
+        </BookShape2L>
+        <BookShape2R>
+          {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
+            // eslint-disable-next-line no-loop-func
+            .map((data,index)=>{
+              return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
+          {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(<DiviContainer style={{zIndex: '0'}}>
+            <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
+              <img src="images/write.PNG"  style={{width: '30%', margin:"0 auto"}} alt="list"/>
+              <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</p>의</div>
+                하루를 기록해볼까요?
+              <Link to='/write' state={{date:choiceDate}} className="listLink">
+                    일기 쓰러 가기<BsArrowRight size="2rem" />
+              </Link>
+            </div>
+          </DiviContainer>)}
+        </BookShape2R>
+        <Bookmark />
+      </Book2Container>
+    </WriteContainer>
   )
 }
 

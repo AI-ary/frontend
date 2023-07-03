@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import BookCover from '../components/bookshape/BookCover';
 import Titles from './Title';
 import CoverControl from './CoverControl'
+import Navbar from '@/components/Navbar';
 
 const LinkBox = styled.div`
   width: 110%;
@@ -25,17 +26,20 @@ const ShowImage = styled.img`
 
 function Main() {
   return(
-    <BookCover>
-      <CoverControl>
-        <Titles>G.Diary</Titles>
-        <ShowImage src='images/logo.png' />
-        <LinkBox>
-          <Link to='/signin' className='link'>로그인</Link>
-          <Link to='/signup' className='link'>회원가입</Link>
-          <Link to='/about' className='link'>소개</Link>
-        </LinkBox>
-      </CoverControl>
-    </BookCover>
+    <>
+      <BookCover>
+        <CoverControl>
+          <Titles>G.Diary</Titles>
+          <ShowImage src='images/logo.png' />
+          <LinkBox>
+            <Link to='/signin' className='link'>로그인</Link>
+            <Link to='/signup' className='link'>회원가입</Link>
+            <Link to='/about' className='link'>소개</Link>
+          </LinkBox>
+        </CoverControl>
+      </BookCover>
+    </>
+  
   );
 }
 
