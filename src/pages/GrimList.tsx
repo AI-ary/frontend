@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WriteContainer, Book2Container } from './WriteGrim';
 import BookShape2L from '../components/bookshape/BookShapeL';
 import BookShape2R from '../components/bookshape/BookShapeR';

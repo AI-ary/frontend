@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 import ResultManuscript from './ResultManuscript';
 import { BsBrightnessHighFill, BsFillCloudFill ,BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';

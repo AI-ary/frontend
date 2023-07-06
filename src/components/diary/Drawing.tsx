@@ -21,10 +21,10 @@ interface RectangleProps{
   onSelect: any;
   onChange?: any;
   onDelete?: any;
-  onClick?: any;
+   onClick?: any;
 }
 
-const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onSelect, onChange, onDelete, onClick}:RectangleProps) => {
+const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onSelect, onChange, onDelete}:RectangleProps) => {
   const shapeRef = useRef<any>();
   const trRef = useRef<any>();
   const [img] = useImage(image,'anonymous');
@@ -112,7 +112,7 @@ interface GrimImageProps{
 function Drawing(props:DrawingProps){
   const {choiceImg, setUpdateCanvas}=useStore();
   const [grimimage, setGrimimage] = useState<GrimImageProps[]>([]);
-  const [selectedId, selectShape] = useState<string | null>(null);
+  const [selectedId, selectShape] = useState<number | null>(null);
   const [tool, setTool] = useState<string>('pen');
   const [currentColor,setColor]=useState<string>('#000000');
   const listColors:string[]=['black','red','blue']
@@ -184,7 +184,7 @@ function Drawing(props:DrawingProps){
     }
   }
   const handleRemove=(index:any)=>{
-    const newList=grimimage.filter((item)=> item.id !== index);
+    const newList=grimimage.filter((item, index)=> index !== index);
     setGrimimage(newList);
   }
   const unSelectShape = (prop:any)=>{
@@ -213,18 +213,17 @@ function Drawing(props:DrawingProps){
         >
           <Layer>
             {grimimage && grimimage.map((rect, i) => {
-              console.log(grimimage)
               return (
                 <Rectangle
                   key={i}
                   image={rect.img}
                   shapeProps={rect}
-                  isSelected={rect.id === selectedId}
+                  isSelected={i === selectedId}
                   unSelectShape={(e:any)=>{unSelectShape(e)}}
                   draggable={true}
                   onClick={handleRemove}
                   onSelect={() => {
-                    selectShape(rect.id);
+                    selectShape(i);
                   }}
                   onChange={(newAttrs: GrimImageProps) => {
                     const rects = grimimage.slice();
@@ -279,10 +278,10 @@ function Drawing(props:DrawingProps){
                 key={i}
                 image={rect.img}
                 shapeProps={rect}
-                isSelected={rect.id === selectedId}
+                isSelected={i === selectedId}
                 draggable={false}
                 onSelect={() => {
-                  selectShape(rect.id);
+                  selectShape(i);
                 }}
                 onChange={(newAttrs: any) => {
                   const rects = grimimage.slice();
