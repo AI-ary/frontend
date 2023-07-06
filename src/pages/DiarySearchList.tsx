@@ -44,33 +44,29 @@ function DiarySearchList(){
   },[]);
 
   return(
-    <>
-      <DiarySearch />
-      <WriteContainer>
-        <Book2Container> 
-          <BookShape2L>
-            <div style={{display:'flex', flexDirection:'column'}}>
-              {searchList.map((data:any,key:number)=>{
-                return(
-                  <div key={key}>
-                    <span style={{margin:'10px'}}>{data.diary_date}</span>
-                    <span style={{margin:'10px'}} onClick={()=>setDetail(data)}>{data.title}</span>
-                    <span style={{margin:'10px'}}>{data.contents}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </BookShape2L>
-          <BookShape2R>
-            {detail===undefined || detail.id===-1?'':
-              <DiaryList key={detail.id} id={detail.id} title={detail.title} weather={detail.weather} draw={detail.drawing_url} contents={detail.contents} date={detail.diary_date} emoji={detail.emoji} />
-            }
-          </BookShape2R>
-          <Bookmark />
-        </Book2Container>
-      </WriteContainer></>
-  
-
+    <WriteContainer>
+      <Book2Container style={{paddingBottom:'80px'}}> 
+        <BookShape2L>
+          <div style={{display:'flex', flexDirection:'column'}}>
+            {searchList.map((data:any,key:number)=>{
+              return(
+                <div key={key}>
+                  <span style={{margin:'10px'}}>{data.diary_date}</span>
+                  <span style={{margin:'10px'}} onClick={()=>setDetail(data)}>{data.title}</span>
+                  <span style={{margin:'10px'}}>{data.contents}</span>
+                </div>
+              )
+            })}
+          </div>
+        </BookShape2L>
+        <BookShape2R>
+          {detail===undefined || detail.id===-1?'':
+            <DiaryList key={detail.id} id={detail.id} title={detail.title} weather={detail.weather} draw={detail.drawing_url} contents={detail.contents} date={detail.diary_date} emoji={detail.emoji} />
+          }
+        </BookShape2R>
+        <Bookmark />
+      </Book2Container>
+    </WriteContainer>
   )
 }
 

@@ -47,7 +47,7 @@ function BookCover({ children } : React.PropsWithChildren) {
   let now = new Date();
   let year = now.getFullYear();
   return (
-    <AllControl className='slide'>
+    <AllControl className='slide' style={{ paddingBottom: '60px'}}>
       <Left/>
       <div className  ='flip'>
         <Year>

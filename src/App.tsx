@@ -6,12 +6,13 @@ import AfterLogin from './pages/AfterLogin';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Manual from './pages/Manual';
-import DiarySearchList from './pages/DIarySearchList';
+import DiarySearchList from './pages/DiarySearchList';
 import PrivatePages from './components/access/PrivatePages';
 import PublicPages from './components/access/PublicPages';
 import ErrorPage from './pages/ErrorPage';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import Root from './pages/Root';
+import Navbar from './components/Navbar';
 
 const theme = createTheme({
   typography: {
@@ -25,16 +26,21 @@ const router= createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {path:'/', element:<PublicPages Component={Main} restricted/>},
       {path:'/signin', element:<PublicPages Component={SignIn} restricted/>},
-      {path:'/main', element:<AfterLogin />},
       {path:'/signup', element:<PublicPages Component={SignUp} restricted/>},
-      {path:'/about', element:<PublicPages Component={Manual} restricted />},
       // {path:'/write', element:<PrivatePages Component={WriteGrim}/>},
       // {path:'/list', element:<PrivatePages Component={GrimList}/>},
       {path:'/write', element:<WriteGrim />},
-      {path:'/list', element:<GrimList />},
-      {path:'/search/:word', element:<DiarySearchList />}
+      {
+        path:'/', element:<Navbar />,
+        children:[
+          {path:'/', element:<PublicPages Component={Main} restricted/>},
+          {path:'main', element:<AfterLogin />},
+          {path:'about', element:<PublicPages Component={Manual} restricted />},
+          {path:'list', element:<GrimList />},
+          {path:'/search/:word', element:<DiarySearchList />}
+        ]
+      }
     ]
   }
 ])

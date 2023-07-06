@@ -9,7 +9,7 @@ import IntroduceR from '../components/introduce/IntroduceR';
 function Manual() {
   return(
     <WriteContainer>
-      <Book2Container> 
+      <Book2Container style={{ paddingBottom: '60px'}}> 
         <BookShape2L>
           <IntroduceL />
         </BookShape2L>
