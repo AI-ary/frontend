@@ -135,9 +135,9 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
       <div>
         <ChoiceButtonContainer style={{height: '25px' ,marginTop:'2%', marginLeft:'2.2%'}}>
           <Button onClick={()=>DeleteDiary(id)}>삭제</Button>
-          <SNSImg onClick={kakaoShare} src='images/kakao.png' alt='none' />
-          <SNSImg onClick={twitterShare} src='images/twitter.png' alt='none' />
-          <SNSImg onClick={urlShare} src='images/url.png' alt='none' />
+          <SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
+          <SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
+          <SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
         </ChoiceButtonContainer>
       </div>
       <Content><ResultManuscript content={contents}/></Content>
