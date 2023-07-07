@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Bookmark from './Bookmark';
-import LogoutBtn from '../access/Logout';
-import isLogin from '../access/IsLogin';
+import LogoutBtn from '../../pages/Auth/components/Logout';
+import isLogin from '../../pages/Auth/components/IsLogin';
 import './Right.css'
-import { DiviContainer } from '../diary/DiaryContent';
-import DiaryList from '../diarylist/DiaryList';
+import { DiviContainer } from '../../pages/WriteDiary/components/DiaryContent';
+import DiaryList from '../../pages/DIaryList/components/DiaryList';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { BsArrowRight  } from 'react-icons/bs';
@@ -17,7 +17,8 @@ const AllControl = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;`
+  align-items: center;
+`  
 
 const Left = styled.div`
   background-color: #F0DB6D;
@@ -36,18 +37,14 @@ const Year = styled.div`
   font-size: 30px;
   margin: 35px;`
 
-// {children} : React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> tsx로 변환시 사용
 function BookCover({ children } : React.PropsWithChildren) {
-  // const list : Array<Object> = [];
-  // const exist : Array<Object> = [];
-  const list : any[]= [];
-  const exist : any[]=[];
-  const { choiceDate } = useStore();
-  
   let now = new Date();
-  let year = now.getFullYear();
+  let date = now.toLocaleDateString().split('.');
+  let year = date[0];
+  let month = date[1].trim();
+  let day = date[2].trim();
   return (
-    <AllControl className='slide' style={{ paddingBottom: '60px'}}>
+    <AllControl className='slide'>
       <Left/>
       <div className  ='flip'>
         <Year>
@@ -58,20 +55,16 @@ function BookCover({ children } : React.PropsWithChildren) {
         {children}
       </div>
       <div className='shapeR'>
-        {list.filter((x)=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
-        // eslint-disable-next-line no-loop-func
-          .map((data ,index )=>{
-            return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={''}/>})}
-        {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(<DiviContainer style={{zIndex: '0'}}>
-          <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
-            <img src="images/write.PNG"  style={{width: '30%'}} alt="list"/>
-            <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</p>의</div>
+        <DiviContainer style={{zIndex: '0'}}>
+         <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
+            <img src="images/write.PNG"  style={{width: '30%', margin:"0 auto"}} alt="list"/>
+            <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{year}년 {month}월 {day}일</p>의</div>
                 하루를 기록해볼까요?
-            <Link to='/write' state={{date:choiceDate}} className="listLink">
-                    일기 쓰러 가기<BsArrowRight size="2rem" />
+            <Link to='/write' className="listLink">
+                일기 쓰러 가기<BsArrowRight size="2rem" />
             </Link>
           </div>
-        </DiviContainer>)}
+        </DiviContainer>
       </div>
       <Bookmark/>
     </AllControl>

@@ -36,7 +36,7 @@ function Navbar() {
   };
 
   return(
-    <div>
+    <>
       <NavbarWrap>
         <Logo onClick={()=>navigate('main')}>GRIM-DIARY</Logo>
         <BtnContainer>
@@ -49,8 +49,8 @@ function Navbar() {
           <button><FaUserAlt size="25" /></button>
         </BtnContainer>
       </NavbarWrap>
-      <Outlet />
-    </div>
+      <Outlet/>
+    </>
   )
 }
 
@@ -58,6 +58,7 @@ function Navbar() {
 export default Navbar;
 
 const NavbarWrap = styled.div`
+  position: absolute;
   width: 100%;
   box-sizing: border-box;
   display: flex;

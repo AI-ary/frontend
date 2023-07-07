@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink, useLocation } from 'react-router-dom';
-import IsLogin from '../access/IsLogin';
+import IsLogin from '../../pages/Auth/components/IsLogin';
 import { useStore } from '../../store/store';
 
 function Bookmark() {
