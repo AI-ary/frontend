@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import styled from 'styled-components';
 import Manuscript from './Manuscript';
 import Emoji from './Emoji';
 import { BsBrightnessHighFill, BsFillCloudFill, BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
@@ -9,6 +8,7 @@ import { useStore } from '../../../store/store';
 import api from '../../../apis/axios';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
+import * as S from '../../../styles/diary/diary.style';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
@@ -196,18 +196,18 @@ function DiaryContent(props:DiaryContentProps) {
   }
 
   function WeatherBtn({mood, num }:WeatherBtnProps) {
-    return <WeatherRadioBtn type='radio' id={mood} checked={weather === num} onChange={() => weatherChange(num)} />;
+    return <S.WeatherRadioBtn type='radio' id={mood} checked={weather === num} onChange={() => weatherChange(num)} />;
   }
 
   return (
-    <DiviContainer>
-      <DateContainer>
-        <Dateline>
-          <Datetitle>날짜</Datetitle>
-          <DateContent>
+    <S.DiviContainer>
+      <S.DateContainer>
+        <S.Dateline>
+          <S.Datetitle>날짜</S.Datetitle>
+          <S.DateContent>
             {year}.{todayMonth}.{todayDate}
-          </DateContent>
-          <Weathercontainer style={{ marginTop: '5px' }}>
+          </S.DateContent>
+          <S.Weathercontainer style={{ marginTop: '5px' }}>
             <WeatherBtn mood='sunny' num={1} />
             <label htmlFor='sunny'>{weather === 1 ? <BsBrightnessHighFill size='29' color='red' /> : <BsBrightnessHighFill size='27' color='#8e8d8d' />}</label>
             <WeatherBtn mood={'cloudy'} num={2} />
@@ -230,209 +230,36 @@ function DiaryContent(props:DiaryContentProps) {
                 <BsFillCloudSnowFill size='26' style={{ paddingTop: '2px' }} color='#8e8d8d' />
               )}
             </label>
-          </Weathercontainer>
-        </Dateline>
-      </DateContainer>
-      <TitleContainer>
-        <Title>제목: </Title>
-        <Titlecontent>
+          </S.Weathercontainer>
+        </S.Dateline>
+      </S.DateContainer>
+      <S.TitleContainer>
+        <S.Title>제목: </S.Title>
+        <S.Titlecontent>
           <input type='text' onChange={onChange} value={title} />
-        </Titlecontent>
+        </S.Titlecontent>
         <Emoji getEmoji={getEmoji} />
-      </TitleContainer>
-      <Canvas>
+      </S.TitleContainer>
+      <S.Canvas>
         <Drawing grim={grim} />
-      </Canvas>
-      <ButtonContainer>
-        <Modebutton style={{ width: '100px' }} onClick={bringGrim}>
+      </S.Canvas>
+      <S.ButtonContainer>
+        <S.Modebutton style={{ width: '100px' }} onClick={bringGrim}>
           그림가져오기
-        </Modebutton>
-        <Modebutton style={{ width: '80px' }} onClick={clickedGrim}>
+        </S.Modebutton>
+        <S.Modebutton style={{ width: '80px' }} onClick={clickedGrim}>
           {grim ? '그림그리기' : '스탑'}
-        </Modebutton>
-        <Savebutton
+        </S.Modebutton>
+        <S.Savebutton
           onClick={grimDiary}>
           저장하기
-        </Savebutton>
-      </ButtonContainer>
-      <Content>
+        </S.Savebutton>
+      </S.ButtonContainer>
+      <S.Content>
         <Manuscript setContent={setContent} />
-      </Content>
-    </DiviContainer>
+      </S.Content>
+    </S.DiviContainer>
   );
 }
 
 export default DiaryContent;
-
-/*두쪽 페이지 틀에서 한쪽 영역 컨테이너*/
-export const DiviContainer = styled.div`
-  position: absolute;
-  width: 600px;
-  height: 750px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 90;
-`;
-/*날짜&날씨 container*/
-export const DateContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 500px;
-  height: 60px;
-`;
-
-export const Dateline = styled.div`
-  width: 500px;
-  height: 40px;
-  background-color: #bcbcbc;
-  display: flex;
-  align-items: center;
-  border-radius: 3px;
-`;
-
-export const Datetitle = styled.div`
-  margin-left: 5%;
-  width: 10%;
-  font-size: 25px;
-  text-align: center;
-  font-family: KyoboHand;
-`;
-
-export const DateContent = styled.div`
-  width: 25%;
-  font-size: 24px;
-  border: 2px solid transparent;
-  border-radius: 30px;
-  background: #d9d9d9;
-  margin-left: 2%;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 100%;
-  color: #4b4b4b;
-  font-family: KyoboHand;
-  padding-top: 3px;
-`;
-
-export const Weathercontainer = styled.div`
-  width: 32%;
-  text-align: right;
-  margin-left: auto;
-  padding-right: 8px;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-`;
-
-export const WeatherRadioBtn = styled.input`
-  display: none;
-`;
-
-/*제목 container*/
-export const TitleContainer = styled.div`
-  width: 500px;
-  height: 40px;
-  background: #c7c7c7;
-  display: flex;
-  align-items: center;
-  border-top-left-radius: 3px;
-  border-top=right-radius: 3px;
-  font-family: KyoboHand;
-`;
-
-export const Title = styled.div`
-  margin-left: 5%;
-  width: 10%;
-  text-align: left;
-  font-size: 25px;
-  font-family: KyoboHand;
-  z-index: 120;
-  position: absolute;
-`;
-
-export const Titlecontent = styled.div`
-  width: 60%;
-  margin-left: 13%;
-  z-index: 120;
-  position: absolute;
-  > input {
-    width: 90%;
-    margin-bottom: 0.5%;
-    font-size: 26px;
-    border: 0;
-    outline: none;
-    background: transparent;
-    padding-top: 4px;
-    font-family: KyoboHand;
-    color: #4b4b4b;
-    caret-color: transparent;
-  }
-`;
-
-/*그림판 container*/
-export const Canvas = styled.div`
-  width: 500px;
-  height: 290px;
-  background: white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`;
-
-/*버튼 컨테이너(그림 편집)*/
-export const ButtonContainer = styled.div`
-  width: 500px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  margin-top: 2%;
-`;
-export const Modebutton = styled.button`
-  width: 75px;
-  height: 30px;
-  border-radius: 20px;
-  font-size: 15px;
-  text-align: center;
-  background-color: transparent;
-  margin-right: 1.5%;
-  border: 2px solid black;
-  transition: box-shadow 250ms ease-in-out, color 200ms ease-in-out;
-  font-family: KyoboHand;
-  padding-bottom: 0.5%;
-  padding-top: 3px;
-  &:hover {
-    box-shadow: 0 0 40px 40px #404040 inset;
-    color: white;
-    border: none;
-  }
-`;
-
-export const Savebutton = styled.button`
-  width: 110px;
-  height: 30px;
-  background-color: black;
-  color: white;
-  border-radius: 15px;
-  text-align: center;
-  border: none;
-  margin-left: auto;
-  font-size: 15px;
-  padding-bottom: 0.5%;
-  overflow: hidden;
-  transition: box-shadow, color 300ms ease-in-out;
-  font-family: KyoboHand;
-  padding-top: 3px;
-  &:hover {
-    color: rgb(54, 54, 54);
-    background-color: transparent;
-    border: 3px solid rgb(54, 54, 54);
-  }
-`;
-/*내용 container*/
-export const Content = styled.div`
-  width: 520px;
-  height: 280px;
-`;

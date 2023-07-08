@@ -1,4 +1,4 @@
-import { PaperContainer, TableTd } from '../../WriteDiary/components/Manuscript';
+import * as S from '../../../styles/diary/diary.style';
 
 interface ResultManuscriptProps{
   content: string;
@@ -13,9 +13,9 @@ function ResultManuscript({ content }:ResultManuscriptProps) {
   const textlist = tr.map((tr, index) => (
     <div style={{ display: 'flex' }} key={index}>
       {td.map((td, index1) => (
-        <TableTd key={index1}>
+        <S.TableTd key={index1}>
           <div style={{ paddingTop: '5px' }}>{divi[index1 + 10 * index]}</div>
-        </TableTd>
+        </S.TableTd>
       ))}
     </div>
   ));
@@ -32,9 +32,9 @@ function ResultManuscript({ content }:ResultManuscriptProps) {
         marginLeft: '7px',
       }}
     >
-      <PaperContainer>
+      <S.PaperContainer>
         <label>{textlist}</label>
-      </PaperContainer>
+      </S.PaperContainer>
     </div>
   );
 }

@@ -11,7 +11,6 @@ import PrivatePages from './pages/Auth/components/PrivatePages';
 import PublicPages from './pages/Auth/components/PublicPages';
 import ErrorPage from './pages/ErrorPage';
 import { createTheme, ThemeProvider } from '@material-ui/core';
-import Root from './pages/Root';
 import Navbar from './components/Navbar';
 
 const theme = createTheme({

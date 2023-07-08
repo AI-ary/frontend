@@ -1,11 +1,9 @@
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
 import api from '../../apis/axios'
-import { Book2Container, WriteContainer } from '../WriteDiary/WriteGrimPage'
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import * as S from '../../styles/diary/diary.style';
 import Bookmark from '../../components/bookshape/Bookmark';
-import DiaryList from '../DIaryList/components/DiaryList';
+import DiaryList from '../DiaryList/components/DiaryList';
 
 function DiarySearchList(){
   const [searchList, setSearchList] = useState<any>([]);
@@ -43,9 +41,9 @@ function DiarySearchList(){
   },[]);
 
   return(
-    <WriteContainer>
-      <Book2Container style={{paddingBottom:'80px'}}> 
-        <BookShape2L>
+    <S.WriteContainer>
+      <S.Book2Container> 
+        <S.BookShape2Left>
           <div style={{display:'flex', flexDirection:'column'}}>
             {searchList.map((data:any,key:number)=>{
               return(
@@ -57,15 +55,16 @@ function DiarySearchList(){
               )
             })}
           </div>
-        </BookShape2L>
-        <BookShape2R>
+        </S.BookShape2Left>
+        <S.Line />
+        <S.BookShape2Right>
           {detail===undefined || detail.id===-1?'':
             <DiaryList key={detail.id} id={detail.id} title={detail.title} weather={detail.weather} draw={detail.drawing_url} contents={detail.contents} date={detail.diary_date} emoji={detail.emoji} />
           }
-        </BookShape2R>
+        </S.BookShape2Right>
         <Bookmark />
-      </Book2Container>
-    </WriteContainer>
+      </S.Book2Container>
+    </S.WriteContainer>
   )
 }
 

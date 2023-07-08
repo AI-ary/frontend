@@ -40,7 +40,7 @@ function Navbar() {
       <NavbarWrap>
         <Logo onClick={()=>navigate('main')}>GRIM-DIARY</Logo>
         <BtnContainer>
-          <button>소개</button>
+          <button onClick={()=>navigate('about')}>소개</button>
           <button>커뮤니티</button>
           <SearchContainer>
             {visible && <SearchInput visible={visible} type="text" value={search} placeholder='검색 창' onChange={onChange} onKeyDown={(e)=>handleEnter(e)} /> }
@@ -58,7 +58,7 @@ function Navbar() {
 export default Navbar;
 
 const NavbarWrap = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
   box-sizing: border-box;
   display: flex;

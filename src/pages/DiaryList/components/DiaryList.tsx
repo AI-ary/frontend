@@ -1,8 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import ResultManuscript from './ResultManuscript';
 import { BsBrightnessHighFill, BsFillCloudFill ,BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
-import { Content, DateContainer, Dateline, Datetitle, DiviContainer, Weathercontainer, DateContent, TitleContainer, Title, Titlecontent, Canvas} from '../../WriteDiary/components/DiaryContent';
-import { ChoiceButtonContainer } from '../../WriteDiary/components/GrimChoice';
+import * as S from '../../../styles/diary/diary.style';
 import api from '../../../apis/axios'
 import styled from 'styled-components';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -115,32 +114,32 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   }
 
   return(
-    <DiviContainer>
-      <DateContainer>
-        <Dateline>
-          <Datetitle>날짜</Datetitle>
-          <DateContent style={{width: '9rem', fontSize:'1.5rem'}}>{year}.{todayMonth}.{todayDate}</DateContent>
-          <Weathercontainer>
+    <S.DiviContainer>
+      <S.DateContainer>
+        <S.Dateline>
+          <S.Datetitle>날짜</S.Datetitle>
+          <S.DateContent style={{width: '9rem', fontSize:'1.5rem'}}>{year}.{todayMonth}.{todayDate}</S.DateContent>
+          <S.Weathercontainer>
             <Weather/>
-          </Weathercontainer>
-        </Dateline>
-      </DateContainer>
-      <TitleContainer>
-        <Title>제목:</Title>
-        <Titlecontent style={{fontSize: '1.5rem'}}>{title}</Titlecontent>
+          </S.Weathercontainer>
+        </S.Dateline>
+      </S.DateContainer>
+      <S.TitleContainer>
+        <S.Title>제목:</S.Title>
+        <S.Titlecontent style={{fontSize: '1.5rem'}}>{title}</S.Titlecontent>
         <div style={{width:'1em', fontSize:'1.8em',marginLeft: '460px'}}>{emoji}</div>
-      </TitleContainer>
-      <Canvas><img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} /></Canvas>
+      </S.TitleContainer>
+      <S.Canvas><img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} /></S.Canvas>
       <div>
-        <ChoiceButtonContainer style={{height: '25px' ,marginTop:'2%', marginLeft:'2.2%'}}>
+        <S.ChoiceButtonContainer style={{height: '25px' ,marginTop:'2%', marginLeft:'2.2%'}}>
           <Button onClick={()=>DeleteDiary(id)}>삭제</Button>
           <SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
           <SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
           <SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
-        </ChoiceButtonContainer>
+        </S.ChoiceButtonContainer>
       </div>
-      <Content><ResultManuscript content={contents}/></Content>
-    </DiviContainer>
+      <S.Content><ResultManuscript content={contents}/></S.Content>
+    </S.DiviContainer>
   )
 }
 

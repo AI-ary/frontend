@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import { WriteContainer, Book2Container } from '../WriteDiary/WriteGrimPage';
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import * as S from '../../styles/diary/diary.style';
 import Bookmark from '../../components/bookshape/Bookmark';
 import Calender from './components/Calender';
 import DiaryList from './components/DiaryList';
 import { useStore } from '../../store/store';
 import { format} from 'date-fns';
 import { Link } from 'react-router-dom';
-import { DiviContainer } from '../WriteDiary/components/DiaryContent';
 import { BsArrowRight  } from 'react-icons/bs';
 import './components/Calender.css';
 import api from '../../apis/axios';
@@ -46,17 +43,18 @@ function GrimList() {
     }
   }
   return(
-    <WriteContainer>
-      <Book2Container> 
-        <BookShape2L>
+    <S.WriteContainer>
+      <S.Book2Container> 
+        <S.BookShape2Left>
           <Calender list={list} exist={exist} />
-        </BookShape2L>
-        <BookShape2R>
+        </S.BookShape2Left>
+        <S.Line />
+        <S.BookShape2Right>
           {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
             // eslint-disable-next-line no-loop-func
             .map((data,index)=>{
               return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
-          {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(<DiviContainer style={{zIndex: '0'}}>
+          {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(<S.DiviContainer style={{zIndex: '0'}}>
             <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
               <img src="images/write.PNG"  style={{width: '30%', margin:"0 auto"}} alt="list"/>
               <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</p>의</div>
@@ -65,11 +63,11 @@ function GrimList() {
                     일기 쓰러 가기<BsArrowRight size="2rem" />
               </Link>
             </div>
-          </DiviContainer>)}
-        </BookShape2R>
+          </S.DiviContainer>)}
+        </S.BookShape2Right>
         <Bookmark />
-      </Book2Container>
-    </WriteContainer>
+      </S.Book2Container>
+    </S.WriteContainer>
   )
 }
 

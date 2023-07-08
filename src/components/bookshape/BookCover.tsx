@@ -4,12 +4,12 @@ import Bookmark from './Bookmark';
 import LogoutBtn from '../../pages/Auth/components/Logout';
 import isLogin from '../../pages/Auth/components/IsLogin';
 import './Right.css'
-import { DiviContainer } from '../../pages/WriteDiary/components/DiaryContent';
-import DiaryList from '../../pages/DIaryList/components/DiaryList';
+import DiaryList from '../../pages/DiaryList/components/DiaryList';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { BsArrowRight  } from 'react-icons/bs';
 import { useStore } from '../../store/store';
+import * as S from '../../styles/diary/diary.style';
 
 
 
@@ -55,7 +55,7 @@ function BookCover({ children } : React.PropsWithChildren) {
         {children}
       </div>
       <div className='shapeR'>
-        <DiviContainer style={{zIndex: '0'}}>
+        <S.DiviContainer style={{zIndex: '0'}}>
          <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
             <img src="images/write.PNG"  style={{width: '30%', margin:"0 auto"}} alt="list"/>
             <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{year}년 {month}월 {day}일</p>의</div>
@@ -64,7 +64,7 @@ function BookCover({ children } : React.PropsWithChildren) {
                 일기 쓰러 가기<BsArrowRight size="2rem" />
             </Link>
           </div>
-        </DiviContainer>
+        </S.DiviContainer>
       </div>
       <Bookmark/>
     </AllControl>
