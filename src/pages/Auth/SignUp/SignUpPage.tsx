@@ -1,31 +1,23 @@
 import BookCover from '../../../components/bookshape/BookCover';
-import { Control, Titles } from '../../Main/NonMemberMainPage';
 import SignUpForm from './components/SignUpForm';
 import { Person } from '@mui/icons-material';
-import styled from 'styled-components'
-
-const Icon = styled.div`
-  position: relative;
-  bottom:135px;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-`
+import * as S from '../../../styles/auth/common/common.style'
+import * as C from '../../../styles/common/common.style'
 
 function SignUp() {
   return(
     <BookCover>
-      <Control>
-        <Titles>회원가입</Titles>
-        <Icon>
+      <C.Control>
+        <C.Titles>회원가입</C.Titles>
+        <S.Icon>
           <Person style={{
             fontSize:'50px', 
             backgroundColor: '#F0DB6D', 
             borderRadius: '50px'
           }}/>
-        </Icon>
+        </S.Icon>
         <SignUpForm/>
-      </Control>
+      </C.Control>
     </BookCover>
     
   );

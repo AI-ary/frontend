@@ -1,40 +1,17 @@
 import { useState }  from 'react';
-import styled from 'styled-components';
 import {Button, Container, TextField, makeStyles} from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../../../apis/axios'
 import { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
+import * as S from '../../../../styles/auth/signin.style'
+import * as C from '../../../../styles/auth/common/common.style'
 
 const useStyles = makeStyles(theme => ({
   customHoverFocus: {
     '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgb(255, 215, 17)' }
   }
 }));
-
-const TypeSignIn = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-`
-
-const SignInBtn = styled.div`
-background-color: rgb(240, 219, 109);
-border-radius: 30px;
-position: relative;
-top:365px;`
-
-const SignUpBtn = styled.div`
-position: relative;
-top: 8px;
-right: 25px;
-align-self:flex-end;`
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;`
 
 function SignInForm() {
   const navigate = useNavigate();
@@ -101,13 +78,13 @@ function SignInForm() {
   }
 
   return(
-    <Wrap>
-      <SignInBtn>
+    <C.Wrap>
+      <S.SignInBtn>
         <Button className={classes.customHoverFocus} type='button' onClick={onLogin} disabled={Valid()} 
           style={Valid() ? { color: 'white', backgroundColor: '#F8EDB7', fontWeight: 'bolder', borderRadius: '30px', fontSize: '30px', width: '120px' } : { fontWeight: 'bolder', borderRadius: '30px', fontSize: '30px', width: '120px' }}>
         로그인</Button>
-      </SignInBtn>
-      <TypeSignIn>
+      </S.SignInBtn>
+      <S.TypeSignIn>
         <Container maxWidth='sm'>
           <TextField
             margin='dense'
@@ -143,8 +120,8 @@ function SignInForm() {
             }}
           />
         </Container>
-      </TypeSignIn>
-      <SignUpBtn>
+      </S.TypeSignIn>
+      <S.SignUpBtn>
         <Button style={{
           border: 'solid 2px lightgray', 
           borderRadius: '30px', 
@@ -156,8 +133,8 @@ function SignInForm() {
             textDecorationLine: 'none'
           }}>회원가입→</Link>
         </Button>
-      </SignUpBtn>
-    </Wrap>
+      </S.SignUpBtn>
+    </C.Wrap>
   );
 }
 

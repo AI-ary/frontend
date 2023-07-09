@@ -1,41 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
 import api from '../../../../apis/axios';
 import Swal from 'sweetalert2';
+import * as S from '../../../../styles/auth/signup.style'
+import * as C from '../../../../styles/auth/common/common.style'
 
 const useStyles = makeStyles((theme) => ({
   customHoverFocus: {
     '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgb(255, 215, 17)' },
   },
 }));
-
-const BackBtn = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  position: relative;
-  top: 6px;
-`;
-
-const TypeSignUp = styled.div`
-  position: relative;
-  bottom: 60px;
-`;
-
-const CreateAccountBtn = styled.div`
-  background-color: rgb(240, 219, 109);
-  border-radius: 30px;
-  position: relative;
-  top: 365px;
-`;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 function SignUpForm() {
   const navigate = useNavigate();
@@ -133,13 +108,13 @@ function SignUpForm() {
   };
 
   return (
-    <Wrap>
-      <CreateAccountBtn>
+    <C.Wrap>
+      <S.CreateAccountBtn>
         <Button className={classes.customHoverFocus} type='button' onClick={(e) => onClick(e)} disabled={Valid()} style={btnStyle}>
           계정 생성
         </Button>
-      </CreateAccountBtn>
-      <TypeSignUp>
+      </S.CreateAccountBtn>
+      <S.TypeSignUp>
         <Container maxWidth='sm'>
           <TextField
             margin='dense'
@@ -203,7 +178,7 @@ function SignUpForm() {
             error={confirm ? (!confirm ? isSame() : !isSame()) : false}
             helperText={confirm ? (!isSame() ? '비밀번호를 다시 확인해 주세요.' : '') : ''}
           />
-          <BackBtn>
+          <S.BackBtn>
             <Button
               style={{
                 border: 'solid 2px lightgray',
@@ -222,10 +197,10 @@ function SignUpForm() {
                 돌아가기
               </Link>
             </Button>
-          </BackBtn>
+          </S.BackBtn>
         </Container>
-      </TypeSignUp>
-    </Wrap>
+      </S.TypeSignUp>
+    </C.Wrap>
   );
 }
 

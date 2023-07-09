@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import './components/Modal.css';
 import api from '../../apis/axios'
 import { Button, makeStyles } from '@material-ui/core';
-import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import * as S from '../../styles/main/main.style'
 
 function AfterLogin() {
   const [selected, setSelected] = useState<string>('images/mainLogo.png');
@@ -67,12 +67,12 @@ function AfterLogin() {
     <>
       <OpenModal isOpen={isOpen} setIsOpen={setIsOpen} setSelected={setSelected} />
       <BookCover>        
-      <Nickname>{nickname}'s<br/>일기장</Nickname>
-      <Wrap>
+      <S.Nickname>{nickname}'s<br/>일기장</S.Nickname>
+      <S.Wrap>
         <div className='Img'>
           <img style={{objectFit:'cover'}} alt='star' src={!!selected ? `${selected}` : 'images/mainLogo.png'} />
         </div>
-        <SelectBtn>
+        <S.SelectBtn>
           <Button
             variant='outlined' className={classes.customHoverFocus} type='button' onClick={Other} style={{
               width: '110px',
@@ -81,8 +81,8 @@ function AfterLogin() {
               fontSize: '17px',
               fontWeight: 'bolder'
             }}>+다른 이미지</Button>
-        </SelectBtn>
-        <StartBtn>
+        </S.SelectBtn>
+        <S.StartBtn>
           <Button
             className={classes.customHoverFocus} type='button' onClick={(e)=>onClick(e)} style={{
               width: '100px',
@@ -91,8 +91,8 @@ function AfterLogin() {
               fontSize: '25px',
               fontWeight: 'bolder'
             }}>시작</Button>
-        </StartBtn>
-      </Wrap>
+        </S.StartBtn>
+      </S.Wrap>
  
       </BookCover>
     </>
@@ -106,33 +106,3 @@ const useStyles = makeStyles(theme => ({
     '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgb(255, 215, 17)' }
   }
 }));
-
-const Wrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  bottom: 20px;`
-
-const Nickname = styled.h1`
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  margin: 10px;
-  bottom: 22px;
-  font-size: 45px;`
-
-const SelectBtn = styled.div`
-  background-color: rgb(0, 0, 0, 0);
-  border-radius: 25px;
-  position: relative;
-  left: 155px;
-  bottom: 45px;
-  `
-
-const StartBtn = styled.div`
-  background-color: rgb(240, 219, 109);
-  border-radius: 25px;`

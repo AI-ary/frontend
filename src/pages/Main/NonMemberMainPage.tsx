@@ -1,52 +1,21 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BookCover from '../../components/bookshape/BookCover';
-
-const LinkBox = styled.div`
-  width: 110%;
-  margin: auto;
-  padding-bottom : 10px;
-  display: flex;
-  text-align: center;
-  position: relative;
-  left: 2.5px;
-  `
-
-const ShowImage = styled.img`
-  display: flex;
-  justify-contents : center;
-  align-items : center;
-  width: 420px;
-  heigth: 450px;
-`
-
-export const Control = styled.div`
-display: flex;
-justify-content : center;
-flex-direction : column;
-align-items : center;
-position: relative;
-top: 10px;`
-
-export const Titles = styled.div`
-display: flex;
-justify-contents : center;
-align-items : center;
-font-size: 70px;`
+import * as S from '../../styles/main/main.style'
+import * as C from '../../styles/common/common.style'
 
 function NonMemberMainPage() {
   return(
     <div style={{marginBottom:'60px'}}>
       <BookCover>
-        <Control>
-          <Titles>G.Diary</Titles>
-          <ShowImage src='images/logo.png' />
-          <LinkBox>
+        <C.Control>
+          <C.Titles>G.Diary</C.Titles>
+          <S.ShowImage src='images/logo.png' />
+          <S.LinkBox>
             <Link to='/signin' className='link'>로그인</Link>
             <Link to='/signup' className='link'>회원가입</Link>
             <Link to='/about' className='link'>소개</Link>
-          </LinkBox>
-        </Control>
+          </S.LinkBox>
+        </C.Control>
       </BookCover>  
     </div>
   );
