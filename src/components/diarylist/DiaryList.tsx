@@ -4,7 +4,7 @@ import ResultManuscript from './ResultManuscript';
 import { BsBrightnessHighFill, BsFillCloudFill ,BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
 import { Content, DateContainer, Dateline, Datetitle, DiviContainer, Weathercontainer, DateContent, TitleContainer, Title, Titlecontent, Canvas} from '../diary/DiaryContent';
 import { ChoiceButtonContainer } from '../diary/GrimChoice';
-import api from '../../apis/axios'
+import api from '../../apis/baseAxios'
 import styled from 'styled-components';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 

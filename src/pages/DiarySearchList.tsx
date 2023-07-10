@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
-import api from '../apis/axios'
+import api from '../apis/baseAxios'
 import { Book2Container, WriteContainer } from './WriteGrim'
 import BookShape2L from '../components/bookshape/BookShapeL';
 import BookShape2R from '../components/bookshape/BookShapeR';
 import Bookmark from '../components/bookshape/Bookmark';
-import DiarySearch from '../components/search/DiarySearch';
 import DiaryList from '../components/diarylist/DiaryList';
 
 function DiarySearchList(){

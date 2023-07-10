@@ -5,14 +5,13 @@ import BookShape2R from '../components/bookshape/BookShapeR';
 import Bookmark from '../components/bookshape/Bookmark';
 import Calender from '../components/diarylist/Calender';
 import DiaryList from '../components/diarylist/DiaryList';
-import DiarySearch from '../components/search/DiarySearch';
 import { useStore } from '../store/store';
 import { format} from 'date-fns';
 import { Link } from 'react-router-dom';
 import { DiviContainer } from '../components/diary/DiaryContent';
 import { BsArrowRight  } from 'react-icons/bs';
 import '../components/diarylist/Calender.css';
-import api from '../apis/axios';
+import { getDiaryListData } from '@/apis/diaryList';
 
 interface ListContent{
   user_id:number|undefined;
@@ -27,18 +26,13 @@ function GrimList() {
   const user = sessionStorage.getItem('id') || ''; //user id받아오기
 
   //일기 리스트 가져오기(전체)
-  const allList = async () =>{
-    const response = await api.get('/diaries');
-    return response.data;
-  }
+  const {isSuccess, data} = getDiaryListData();
+  
   useEffect(()=>{
-    const getAllList=async () =>{
-      const allGrimList = await allList();
-      if(allGrimList) setAdd(allGrimList);
-    };
-    getAllList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    if(isSuccess){
+      setAdd(data);
+    }
+  },[isSuccess]);
 
   for(let i=0;i<add.length;i++){
     if(add[i].user_id===parseInt(user)){

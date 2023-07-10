@@ -6,7 +6,7 @@ import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
 import { isSameMonth, isSameDay, addDays} from 'date-fns';
 import { Link } from 'react-router-dom';
 import { useStore } from '../../store/store';
-import api from '../../apis/axios';
+import api from '../../apis/baseAxios';
 
 //(date-fns 이용: 날짜 관련 함수 총 집합 라이브러리)
 //header 컴포넌트(월 이동)
