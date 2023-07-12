@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
 import api from '../../../../apis/baseAxios';
 import Swal from 'sweetalert2';
+import { useMutation } from 'react-query';
 
 const useStyles = makeStyles((theme) => ({
   customHoverFocus: {
@@ -37,6 +38,12 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
+interface SignUpProps {
+  nickname: string,
+  email: string,
+  password:string
+}
+
 function SignUpForm() {
   const navigate = useNavigate();
   const classes = useStyles();
@@ -44,6 +51,40 @@ function SignUpForm() {
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
   const [confirm, setConfirm] = useState < string > ('');
+  const signup = useMutation((data:SignUpProps) => {
+    return api.post('join', data)
+  }, {
+    onSuccess: () => {
+      Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '회원가입 성공!',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        navigate('/signin');
+    },
+    onError: (err) => {
+      if (err.response.data.email) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.response.data.email}`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        } else if (err.response.data.nickname) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `${err.response.data.nickname}`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+    }
+    }
+  )
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);
@@ -81,41 +122,11 @@ function SignUpForm() {
 
   function onClick(e: React.MouseEvent) {
     e.preventDefault();
-    api
-      .post('join', {
-        nickname: `${nickname}`,
-        email: `${email}`,
-        password: `${password}`,
-      })
-      .then(function (res) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '회원가입 성공!',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate('/signin');
-      })
-      .catch(function (res) {
-        if (res.response.data.email) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${res.response.data.email}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (res.response.data.nickname) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${res.response.data.nickname}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-      });
+    signup.mutate({
+        nickname: nickname,
+        email: email,
+        password: password,
+    })
   }
 
   function Valid() {

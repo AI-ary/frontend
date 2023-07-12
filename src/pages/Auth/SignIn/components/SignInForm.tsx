@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../../../../apis/baseAxios'
 import { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
+import { useMutation } from 'react-query';
 
 const useStyles = makeStyles(theme => ({
   customHoverFocus: {
@@ -36,6 +37,15 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;`
 
+interface SignInProps {
+  email: string,
+  password:string
+}
+
+interface RefreshProps {
+  refresh: string | null,
+}
+
 function SignInForm() {
   const navigate = useNavigate();
   const classes = useStyles();
@@ -43,6 +53,36 @@ function SignInForm() {
   const [password,setPassword] = useState<string>('');
   const JWT_EXPIRY_TIME = 1800 * 1000 // 만료시간 30분 (밀리초로 표현)
   let count : number = 0;
+
+  const signin = useMutation((data : SignInProps) => {
+    return api.post('auth', data)
+  }, {
+    onSuccess: (data) => {
+      onLoginSuccess(data)
+    },
+    onError: () => {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '아이디 혹은 비밀번호를 다시 확인해주세요.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    },
+  })
+
+  const refreshing = useMutation((data : RefreshProps) => {
+    return api.post('auth/refresh',data)
+  },
+    {
+      onSuccess: () => {
+        onLogin()
+      },
+      onError: (err) => {
+        console.log(err)
+      }
+    }
+  )
 
   function emailValid() {
     var check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -56,10 +96,8 @@ function SignInForm() {
   }
 
   function onSilentRefresh() {
-    api.post('auth/refresh', {
+    refreshing.mutate({
       refresh: sessionStorage.getItem('refresh')
-    }).then(onLogin).catch(function (err) {
-      console.log(err)
     })
   }
 
@@ -86,17 +124,9 @@ function SignInForm() {
   }
 
   function onLogin() {
-    api.post('auth', {
-      email: `${email}`,
-      password: `${password}`
-    }).then(onLoginSuccess).catch(function (res) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '아이디 혹은 비밀번호를 다시 확인해주세요.',
-        showConfirmButton: false,
-        timer: 2000
-      })
+    signin.mutate({
+      email: email,
+      password: password
     })
   }
 
