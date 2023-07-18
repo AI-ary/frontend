@@ -38,10 +38,34 @@ function DiarySearchList(){
           <div style={{display:'flex', flexDirection:'column'}}>
             {searchList.map((data:any,key:number)=>{
               return(
-                <div key={key}>
-                  <span style={{margin:'10px'}}>{data.diary_date}</span>
-                  <span style={{margin:'10px'}} onClick={()=>setDetail(data)}>{data.title}</span>
-                  <span style={{margin:'10px'}}>{data.contents}</span>
+                <div style={{display: 'flex'}} key={key}>
+                  <div style={{margin:'10px'}}>{data.diary_date}</div>
+                  <div style={{margin:'10px', cursor: 'pointer'}} onClick={()=>setDetail(data)}>
+                    {
+                      data.title.includes(search) ? (
+                        <>
+                          {data.title.split(search)[0]}
+                          <span style={{fontWeight: '800', color:'rgb(220, 153, 67'}}>{search}</span>
+                          {data.title.split(search)[1]}
+                        </>            
+                      ):(
+                        <span>{data.title}</span>
+                      )
+                    }
+                  </div>
+                  <div style={{margin:'10px', width: '350px', overflow: 'hidden', whiteSpace:'nowrap', textOverflow: 'ellipsis'}}>
+                    {
+                      data.contents.includes(search) ? (
+                        <>
+                          {data.contents.split(search)[0]}
+                          <span style={{fontWeight: '800', color:'rgb(220, 153, 67'}}>{search}</span>
+                          {data.contents.split(search)[1]}
+                        </>
+                      ):(
+                        <span>{data.contents}</span>
+                      )
+                    }
+                  </div>
                 </div>
               )
             })}
