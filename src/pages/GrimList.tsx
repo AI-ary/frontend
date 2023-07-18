@@ -6,12 +6,13 @@ import Bookmark from '../components/bookshape/Bookmark';
 import Calender from '../components/diarylist/Calender';
 import DiaryList from '../components/diarylist/DiaryList';
 import { useStore } from '../store/store';
-import { format} from 'date-fns';
+import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { DiviContainer } from '../components/diary/DiaryContent';
 import { BsArrowRight  } from 'react-icons/bs';
 import '../components/diarylist/Calender.css';
 import { getDiaryListData } from '@/apis/diaryList';
+import Loading from '../components/Loading';
 
 interface ListContent{
   user_id:number|undefined;
@@ -26,13 +27,13 @@ function GrimList() {
   const user = sessionStorage.getItem('id') || ''; //user id받아오기
 
   //일기 리스트 가져오기(전체)
-  const {isSuccess, data} = getDiaryListData();
-  
+  const {isLoading, isSuccess, data} = getDiaryListData();
+
   useEffect(()=>{
     if(isSuccess){
       setAdd(data);
     }
-  },[isSuccess]);
+  },[isSuccess, isLoading, data]);
 
   for(let i=0;i<add.length;i++){
     if(add[i].user_id===parseInt(user)){
@@ -42,6 +43,7 @@ function GrimList() {
   }
   return(
     <WriteContainer>
+      {isLoading ? <Loading /> : ''}
       <Book2Container style={{paddingBottom:'80px'}}> 
         <BookShape2L>
           <Calender list={list} exist={exist} />
