@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
-import api from '../apis/baseAxios'
 import { Book2Container, WriteContainer } from './WriteGrim'
 import BookShape2L from '../components/bookshape/BookShapeL';
 import BookShape2R from '../components/bookshape/BookShapeR';
 import Bookmark from '../components/bookshape/Bookmark';
 import DiaryList from '../components/diarylist/DiaryList';
+import { getSearchData } from '@/apis/searchDiary';
 
 function DiarySearchList(){
   const [searchList, setSearchList] = useState<any>([]);
@@ -18,29 +18,18 @@ function DiarySearchList(){
     diary_date:'',
     emoji:''
   });
+  const user = sessionStorage.getItem('id') || ''; //user id받아오기
   const param = useParams();
+  const search = param.word;
 
-  // useEffect(()=>{
-  //   // const fetchData = async () => {
-  //   //   const result=await api.get(
-  //   //     ''+param.word
-  //   //   );
-  //   //   setSearchList(result.data.result);
-  //   // }
-  //   // fetchData();
-
-  // },[]);
+  const {isLoading, isSuccess, data} = getSearchData({search, user});
 
   useEffect(()=>{
-    console.log(param.word)
-    fetch('/data/dummy.json')
-      .then(res=>res.json())
-      .then(res=>{
-        console.log(res);
-        setSearchList(res);
-        setDetail(res[0]);
-      });
-  },[]);
+    if(isSuccess){
+      setSearchList(data);
+      setDetail(data[0]);
+    }
+  },[isSuccess, isLoading, data]);
 
   return(
     <WriteContainer>
