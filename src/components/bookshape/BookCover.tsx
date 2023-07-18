@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Bookmark from './Bookmark';
-import LogoutBtn from '../access/Logout';
-import isLogin from '../access/IsLogin';
+import LogoutBtn from '../../pages/Auth/components/Logout';
+import isLogin from '../../pages/Auth/components/IsLogin';
 import './Right.css'
-import { DiviContainer } from '../diary/DiaryContent';
-import DiaryList from '../diarylist/DiaryList';
+import { DiviContainer } from '../../pages/WriteDiary/components/DiaryContent';
+import DiaryList from '../../pages/DiaryList/components/DiaryList';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { BsArrowRight  } from 'react-icons/bs';
