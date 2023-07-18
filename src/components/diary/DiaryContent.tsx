@@ -114,12 +114,20 @@ function DiaryContent(props:DiaryContentProps) {
 
     if(isKeywordSuccess){
       setGetGrimList(data);
+      setSend(false);
+      props.getLoading(false);
+    }
+
+    if(isError && comContent === ''){
       props.getLoading(false);
       setSend(false);
-    }
-    
-    if(isError && comContent===''){
-      props.getLoading(false);
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: '키워드에 맞는 이미지가 없습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      })
     }
   },[isTextSuccess, isKeywordSuccess, isError]);
 
@@ -210,6 +218,9 @@ function DiaryContent(props:DiaryContentProps) {
 }
 
 export default DiaryContent;
+
+// TODO: Swal 사용 부분 query 호출 부분으로 넘기기
+// TODO: send를 user_id 혹은 date로 enabled 확인가능하도록 변경하기
 
 /*두쪽 페이지 틀에서 한쪽 영역 컨테이너*/
 export const DiviContainer = styled.div`

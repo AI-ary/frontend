@@ -16,25 +16,21 @@ const config = {
 
 // 일기 내용 보내기
 const addText = async (formData: FormData) => {
-  console.log('일기 내용');
   await baseAxios.post('text/', formData, config);
 };
 
 // 일기 저장 보내기
 const addDiary = async (formData: FormData) => {
-  console.log('일기 저장');
   await baseAxios.post('diaries/', formData, config);
 }
 
 // 일기 이미지 보내기
 const addDiaryImg = async (formData: FormData) => {
-  console.log('이미지 전송');
   await baseAxios.post('images/upload', formData, config);
 }
 
 // 키워드 그림 가져오기
 const getKeywordDrawing = async ({date, user}:KeywordDataType) => {
-  console.log('그림');
   const response = await baseAxios.get(`results?diary_date=${date}&&user_id=${user}`);
   return response.data;
 }
@@ -63,7 +59,6 @@ export const getKeywordDrawingData = ({send, date, user, comContent}:KeywordData
       retry: 0,
       enabled: !!send,
       onSuccess: (data) => {
-        console.log('키워드 그림 추출 성공');
         if(data.result.length===0){
           Swal.fire({
             position: 'center',
@@ -75,13 +70,6 @@ export const getKeywordDrawingData = ({send, date, user, comContent}:KeywordData
         }
       },
       onError: () =>{
-        Swal.fire({
-          position: 'center',
-          icon: 'warning',
-          title: '키워드에 맞는 이미지가 없습니다.',
-          showConfirmButton: false,
-          timer: 2000
-        })
       }
     }
   );
@@ -92,7 +80,6 @@ export const addDiaryData = () => {
   const queryClient = useQueryClient();
   const {mutate, isLoading: isSaveLoading, isSuccess: isSaveSuccess, isError: isSaveError} = useMutation(addDiary, {
     onError: (error:any) => {
-      console.log('일기 저장 실패');
       if(error.response.data.title){
         Swal.fire({
           position: 'center',
@@ -120,7 +107,6 @@ export const addDiaryData = () => {
       }
     },
     onSuccess: () => {
-      console.log('일기 저장 성공');
       queryClient.invalidateQueries('diaryList')
     },
   });
