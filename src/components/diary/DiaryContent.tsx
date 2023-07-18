@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Manuscript from './Manuscript';
 import Emoji from './Emoji';
@@ -6,9 +6,9 @@ import { BsBrightnessHighFill, BsFillCloudFill, BsFillCloudSnowFill, BsFillCloud
 import { useLocation, useNavigate } from 'react-router-dom';
 import Drawing from './Drawing';
 import { useStore } from '../../store/store';
-import api from '../../apis/axios';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
+import { addDiaryData, addDiaryImage, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
@@ -27,23 +27,21 @@ function DiaryContent(props:DiaryContentProps) {
   const [weather, setWeather] = useState<number>(); //날씨 선택
   const { updateCanvas, setChoiceImg, setGetGrimList } = useStore();
   const [emoji, setEmoji] = useState<string>('');
-  const variable = useRef<RefObject>({
-    isDoubleClick: false
-  });  //더블 클릭 방지 변수
-  const date = location.state?.date;
-  let year = date.getFullYear(); //연도 구하기
-  let todayMonth = date.getMonth() + 1; //월 구하기
-  let todayDate = date.getDate(); //일 구하기
+  const [comContent, setComContent] = useState<string>('');
+  const [send, setSend] = useState<boolean>(false);
+
+  const rawDate = location.state?.date;
+  let year = rawDate.getFullYear(); //연도 구하기
+  let todayMonth = rawDate.getMonth() + 1; //월 구하기
+  let todayDate = rawDate.getDate(); //일 구하기
+  let date = format(rawDate, 'yyyy-MM-dd');
 
   //이모지 받아오기
   const getEmoji = (x:string) => {
     setEmoji(x);
   };
 
-  /**
-   * 캔버스 이미지(base64)를 다시 png로 변환하기
-   */
-
+  // 캔버스 이미지(base64)를 다시 png로 변환하기
   let myImg = updateCanvas.replace('data:image/png;base64,', '');
   const byteString = atob(myImg);
   const array = [];
@@ -56,125 +54,82 @@ function DiaryContent(props:DiaryContentProps) {
   const user = sessionStorage.getItem('id') || ''; //세션에 저장되어 있는 user id받아오기
 
   //작성한 일기 보내기
+  const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
+  const {isImgSuccess, addDiaryImgData} = addDiaryImage();
+
   const grimDiary = async () => {
+    props.getLoading(true);
     let form = new FormData();
     form.append('user_id', user);
     form.append('title', title);
     form.append('weather', String(weather));
     form.append('emoji', emoji);
     form.append('contents', content);
-    form.append('diary_date', format(date, 'yyyy-MM-dd'));
-    console.log(format(date, 'yyyy-MM-dd'));
-    
-    // 더블 클릭 방지 로직
-    if(variable.current.isDoubleClick){
-      return;
-    }
-    variable.current.isDoubleClick = true;
-    await api
-      .post('diaries/', form, {
-        headers: { 'Content-Type': 'multipart/form-data', },
-      })
-      .then(function (response) {
-        console.log(response.data)
-        drawingUrl();
-        
-      })
-      .catch(function (error) {
-        if (error.response.data.title) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '제목을 입력해 주세요.',
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (error.response.data.contents) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '내용을 입력해 주세요.',
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (error.response.data.weather) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '날씨를 선택해 주세요.',
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-      });
-  };
+    form.append('diary_date', date);
+    addDiaryContent(form);
+  }
 
   const drawingUrl = async () => {
     let form = new FormData();
     form.append('user_id', user);
-    form.append('diary_date', format(date, 'yyyy-MM-dd'));
+    form.append('diary_date', date);
     form.append('file', file);
-    await api
-      .post('images/upload', form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
-      .then(function (response) {
-        console.log(response.data)
-        setChoiceImg([]);
-        setGetGrimList([])
-        navigate('/list');
-        variable.current.isDoubleClick=false;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    addDiaryImgData(form);
   };
+
+  useEffect(()=> {
+    if(isSaveSuccess){
+      drawingUrl();
+    }
+    if(isSaveError){
+      props.getLoading(false);
+    }
+    if(isImgSuccess) {
+      props.getLoading(false);
+      setChoiceImg([]);
+      setGetGrimList([]);
+      navigate('/list');
+    }
+  },[isSaveSuccess, isSaveError, isImgSuccess]);
   
   //AI키워드 그림 가져오기 버튼
-  const bringGrim = async () => {
+  const {isTextSuccess, addTextContent} = addTextData();
+  const {isKeywordSuccess, data, isError} = getKeywordDrawingData({send, date ,user, comContent});
+
+  const bringGrim = () => {
     props.getLoading(true);
+    setComContent(content);
     setGetGrimList([]);
-    let form = new FormData();
+    const form = new FormData();
     form.append('user_id', user);
-    form.append('diary_date', format(date, 'yyyy-MM-dd'));
+    form.append('diary_date', date);
     form.append('contents', content);
-    await api.post('text/', form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',},
-    })
-      .then((res) => {
-        api.get(`results?diary_date=${format(date, 'yyyy-MM-dd')}&&user_id=${user}`)
-          .then(function (res) {
-            if (res.data.result.length === 0) {
-              Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: '키워드에 맞는 이미지가 없습니다.',
-                showConfirmButton: false,
-                timer: 2000
-              })
-              props.getLoading(false);
-            } else {
-              setGetGrimList(res.data);
-              props.getLoading(false);
-            }
-          }).catch(function (error) {
-            props.getLoading(false);
-            if (error.response.data.ERROR === 'FAIL') {
-              Swal.fire({
-                position: 'center',
-                icon: 'warning',
-                title: '키워드에 맞는 이미지가 없습니다.',
-                showConfirmButton: false,
-                timer: 2000
-              })
-            }
-          })
-      }).catch((error) => {
-        console.log(error)
-      });
-  };
-  
+    addTextContent(form);
+  }
+
+  useEffect(()=>{
+    if(isTextSuccess){
+      setSend(true);
+    }
+
+    if(isKeywordSuccess){
+      setGetGrimList(data);
+      setSend(false);
+      props.getLoading(false);
+    }
+
+    if(isError && comContent === ''){
+      props.getLoading(false);
+      setSend(false);
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: '키워드에 맞는 이미지가 없습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    }
+  },[isTextSuccess, isKeywordSuccess, isError]);
 
   //제목 내용
   const onChange = (e:any) => {
@@ -263,6 +218,9 @@ function DiaryContent(props:DiaryContentProps) {
 }
 
 export default DiaryContent;
+
+// TODO: Swal 사용 부분 query 호출 부분으로 넘기기
+// TODO: send를 user_id 혹은 date로 enabled 확인가능하도록 변경하기
 
 /*두쪽 페이지 틀에서 한쪽 영역 컨테이너*/
 export const DiviContainer = styled.div`

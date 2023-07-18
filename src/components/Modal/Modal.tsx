@@ -1,7 +1,7 @@
 import React, { useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Modal.css';
-import api from '../../apis/axios'
+import api from '../../apis/baseAxios'
 import { Button, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';

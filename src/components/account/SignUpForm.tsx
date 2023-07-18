@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
-import api from '../../apis/axios';
+import api from '../../apis/baseAxios';
 import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({

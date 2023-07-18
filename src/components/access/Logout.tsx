@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import api from '../../apis/axios'
+import api from '../../apis/baseAxios'
 import React from 'react';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 

@@ -2,7 +2,7 @@ import React,{ useState }  from 'react';
 import styled from 'styled-components';
 import {Button, Container, TextField, makeStyles} from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../apis/axios'
+import api from '../../apis/baseAxios'
 import { AxiosResponse } from 'axios';
 import Swal from 'sweetalert2';
 

@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
-import api from '../apis/axios'
 import { Book2Container, WriteContainer } from './WriteGrim'
 import BookShape2L from '../components/bookshape/BookShapeL';
 import BookShape2R from '../components/bookshape/BookShapeR';
 import Bookmark from '../components/bookshape/Bookmark';
-import DiarySearch from '../components/search/DiarySearch';
 import DiaryList from '../components/diarylist/DiaryList';
+import { getSearchData } from '@/apis/searchDiary';
 
 function DiarySearchList(){
   const [searchList, setSearchList] = useState<any>([]);
@@ -19,29 +18,18 @@ function DiarySearchList(){
     diary_date:'',
     emoji:''
   });
+  const user = sessionStorage.getItem('id') || ''; //user id받아오기
   const param = useParams();
+  const search = param.word;
 
-  // useEffect(()=>{
-  //   // const fetchData = async () => {
-  //   //   const result=await api.get(
-  //   //     ''+param.word
-  //   //   );
-  //   //   setSearchList(result.data.result);
-  //   // }
-  //   // fetchData();
-
-  // },[]);
+  const {isLoading, isSuccess, data} = getSearchData({search, user});
 
   useEffect(()=>{
-    console.log(param.word)
-    fetch('/data/dummy.json')
-      .then(res=>res.json())
-      .then(res=>{
-        console.log(res);
-        setSearchList(res);
-        setDetail(res[0]);
-      });
-  },[]);
+    if(isSuccess){
+      setSearchList(data);
+      setDetail(data[0]);
+    }
+  },[isSuccess, isLoading, data]);
 
   return(
     <WriteContainer>
@@ -50,10 +38,34 @@ function DiarySearchList(){
           <div style={{display:'flex', flexDirection:'column'}}>
             {searchList.map((data:any,key:number)=>{
               return(
-                <div key={key}>
-                  <span style={{margin:'10px'}}>{data.diary_date}</span>
-                  <span style={{margin:'10px'}} onClick={()=>setDetail(data)}>{data.title}</span>
-                  <span style={{margin:'10px'}}>{data.contents}</span>
+                <div style={{display: 'flex'}} key={key}>
+                  <div style={{margin:'10px'}}>{data.diary_date}</div>
+                  <div style={{margin:'10px', cursor: 'pointer'}} onClick={()=>setDetail(data)}>
+                    {
+                      data.title.includes(search) ? (
+                        <>
+                          {data.title.split(search)[0]}
+                          <span style={{fontWeight: '800', color:'rgb(220, 153, 67'}}>{search}</span>
+                          {data.title.split(search)[1]}
+                        </>            
+                      ):(
+                        <span>{data.title}</span>
+                      )
+                    }
+                  </div>
+                  <div style={{margin:'10px', width: '350px', overflow: 'hidden', whiteSpace:'nowrap', textOverflow: 'ellipsis'}}>
+                    {
+                      data.contents.includes(search) ? (
+                        <>
+                          {data.contents.split(search)[0]}
+                          <span style={{fontWeight: '800', color:'rgb(220, 153, 67'}}>{search}</span>
+                          {data.contents.split(search)[1]}
+                        </>
+                      ):(
+                        <span>{data.contents}</span>
+                      )
+                    }
+                  </div>
                 </div>
               )
             })}
