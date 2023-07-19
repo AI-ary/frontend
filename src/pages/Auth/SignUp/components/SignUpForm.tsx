@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
-import api from '../../../../apis/baseAxios';
 import Swal from 'sweetalert2';
-import { useMutation } from 'react-query';
+import { signUp } from '@/apis/auth';
 
 const useStyles = makeStyles((theme) => ({
   customHoverFocus: {
@@ -38,53 +37,25 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
-interface SignUpProps {
-  nickname: string,
-  email: string,
-  password:string
-}
-
 function SignUpForm() {
   const navigate = useNavigate();
   const classes = useStyles();
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
-  const [confirm, setConfirm] = useState < string > ('');
-  const signup = useMutation((data:SignUpProps) => {
-    return api.post('join', data)
-  }, {
-    onSuccess: () => {
-      Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '회원가입 성공!',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate('/signin');
-    },
-    onError: (err) => {
-      if (err.response.data.email) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${err.response.data.email}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (err.response.data.nickname) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${err.response.data.nickname}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-    }
-    }
-  )
+  const [confirm, setConfirm] = useState<string>('');
+  const { isSignUpError, isSignUpLoading, isSignUpSuccess, mutate} = signUp()
+  let isMaking = '계정 생성'
+
+  if (isSignUpLoading) {
+    isMaking = '계정 생성 중'
+  }
+  if (isSignUpError) {
+    isMaking = '계정 생성'
+  }
+  if (isSignUpSuccess) {
+    navigate('/signin')
+  }
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);
@@ -121,11 +92,10 @@ function SignUpForm() {
   }
 
   function onClick(e: React.MouseEvent) {
-    e.preventDefault();
-    signup.mutate({
-        nickname: nickname,
-        email: email,
-        password: password,
+    mutate({
+      nickname: nickname,
+      email: email,
+      password: password
     })
   }
 
@@ -146,8 +116,8 @@ function SignUpForm() {
   return (
     <Wrap>
       <CreateAccountBtn>
-        <Button className={classes.customHoverFocus} type='button' onClick={(e) => onClick(e)} disabled={Valid()} style={btnStyle}>
-          계정 생성
+        <Button className={classes.customHoverFocus} type='button' onClick={onClick} disabled={Valid()} style={btnStyle}>
+          {isMaking}
         </Button>
       </CreateAccountBtn>
       <TypeSignUp>
