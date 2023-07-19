@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import {Button, Container, TextField, makeStyles} from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+<<<<<<< HEAD:src/pages/Auth/SignIn/components/SignInForm.tsx
 import { signIn } from '@/apis/auth';
+=======
+import { useMutation } from 'react-query';
+>>>>>>> #14:src/components/account/SignInForm.tsx
 
 const useStyles = makeStyles(theme => ({
   customHoverFocus: {
@@ -35,6 +39,15 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;`
 
+interface SignInProps {
+  email: string,
+  password:string
+}
+
+interface RefreshProps {
+  refresh: string | null,
+}
+
 function SignInForm() {
   const navigate = useNavigate();
   const classes = useStyles();
@@ -42,6 +55,36 @@ function SignInForm() {
   const [password, setPassword] = useState<string>('');
   let isSigning = '로그인'
   let count : number = 0;
+
+  const signin = useMutation((data : SignInProps) => {
+    return api.post('auth', data)
+  }, {
+    onSuccess: (data) => {
+      onLoginSuccess(data)
+    },
+    onError: () => {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '아이디 혹은 비밀번호를 다시 확인해주세요.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    },
+  })
+
+  const refreshing = useMutation((data : RefreshProps) => {
+    return api.post('auth/refresh',data)
+  },
+    {
+      onSuccess: () => {
+        onLogin()
+      },
+      onError: (err) => {
+        console.log(err)
+      }
+    }
+  )
 
   function emailValid() {
     var check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -54,10 +97,17 @@ function SignInForm() {
     } else return true;
   }
 
+<<<<<<< HEAD:src/pages/Auth/SignIn/components/SignInForm.tsx
   const {isSignInLoading, isSignInSuccess, isSignInError, mutate } = signIn()
   
   if (isSignInLoading) {
     isSigning = '로그인 중'
+=======
+  function onSilentRefresh() {
+    refreshing.mutate({
+      refresh: sessionStorage.getItem('refresh')
+    })
+>>>>>>> #14:src/components/account/SignInForm.tsx
   }
   if (isSignInError) {
     isSigning = '로그인'
@@ -76,8 +126,13 @@ function SignInForm() {
     }
   }
 
+<<<<<<< HEAD:src/pages/Auth/SignIn/components/SignInForm.tsx
   const onClick = () => {
     mutate({
+=======
+  function onLogin() {
+    signin.mutate({
+>>>>>>> #14:src/components/account/SignInForm.tsx
       email: email,
       password: password
     })
