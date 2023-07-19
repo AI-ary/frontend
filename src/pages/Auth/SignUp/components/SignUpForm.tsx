@@ -3,11 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
 import Swal from 'sweetalert2';
-<<<<<<< HEAD:src/pages/Auth/SignUp/components/SignUpForm.tsx
 import { signUp } from '@/apis/auth';
-=======
-import { useMutation } from 'react-query';
->>>>>>> #14:src/components/account/SignUpForm.tsx
 
 const useStyles = makeStyles((theme) => ({
   customHoverFocus: {
@@ -53,7 +49,6 @@ function SignUpForm() {
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
-<<<<<<< HEAD:src/pages/Auth/SignUp/components/SignUpForm.tsx
   const [confirm, setConfirm] = useState<string>('');
   const { isSignUpError, isSignUpLoading, isSignUpSuccess, mutate} = signUp()
   let isMaking = '계정 생성'
@@ -67,43 +62,6 @@ function SignUpForm() {
   if (isSignUpSuccess) {
     navigate('/signin')
   }
-=======
-  const [confirm, setConfirm] = useState < string > ('');
-  const signup = useMutation((data:SignUpProps) => {
-    return api.post('join', data)
-  }, {
-    onSuccess: () => {
-      Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '회원가입 성공!',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate('/signin');
-    },
-    onError: (err) => {
-      if (err.response.data.email) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${err.response.data.email}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (err.response.data.nickname) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${err.response.data.nickname}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-    }
-    }
-  )
->>>>>>> #14:src/components/account/SignUpForm.tsx
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);
@@ -140,18 +98,10 @@ function SignUpForm() {
   }
 
   function onClick(e: React.MouseEvent) {
-<<<<<<< HEAD:src/pages/Auth/SignUp/components/SignUpForm.tsx
     mutate({
       nickname: nickname,
       email: email,
       password: password
-=======
-    e.preventDefault();
-    signup.mutate({
-        nickname: nickname,
-        email: email,
-        password: password,
->>>>>>> #14:src/components/account/SignUpForm.tsx
     })
   }
 
