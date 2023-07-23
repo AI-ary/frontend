@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import * as S from '../../styles/main/main.style'
+import * as C from '../../styles/common.style'
 import ClosedBook from '@/components/bookshape/ClosedBook';
 
 export const Control = styled.div`
@@ -25,8 +26,8 @@ function Main() {
       <S.Aiary src='/images/aiary.png' alt='로고 이미지' />
       <S.Logo src='/images/rainbow.png' alt='로고 이미지' />
       <S.ButtonWrap>
-        <S.SignInButton onClick={()=>navigate('/signin')}>로그인</S.SignInButton>
-        <S.SignUpButton onClick={()=>navigate('/signup')}>회원가입</S.SignUpButton>
+        <C.CommonFilledBtn onClick={()=>navigate('/signin')} isValid={false}>로그인</C.CommonFilledBtn>
+        <C.CommonEmptyBtn onClick={()=>navigate('/signup')} isValid={false}>회원가입</C.CommonEmptyBtn>
       </S.ButtonWrap>
     </ClosedBook>
   );

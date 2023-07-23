@@ -1,32 +1,18 @@
-import BookCover from '../../../components/bookshape/BookCover';
-import { Control, Titles } from '../../Main/NonMemberMainPage';
 import SignInForm from './components/SignInForm';
-import { LockOutlined } from '@mui/icons-material';
-import styled from 'styled-components';
-
-const Icon = styled.div`
-  position: relative;
-  bottom:135px;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-`
+import ClosedBook from '@/components/bookshape/ClosedBook';
+import * as S from '../../../styles/auth/auth.style'
+import { MdLockOutline } from "react-icons/md";
+import '../auth.css'
 
 function SignIn() {
-  return(
-    <BookCover>
-      <Control>
-        <Titles>로그인</Titles>
-        <Icon>
-          <LockOutlined style={{
-            fontSize:'50px', 
-            backgroundColor: '#F0DB6D',
-            borderRadius: '50px'
-          }}/>
-        </Icon>
-        <SignInForm />
-      </Control>
-    </BookCover>
+  return (
+    <ClosedBook>
+      <S.TitleWrap>
+        <MdLockOutline size={70} className='icon'/>
+        <S.Title>로그인</S.Title>
+      </S.TitleWrap>
+      <SignInForm/>
+    </ClosedBook>
   );
 }
 

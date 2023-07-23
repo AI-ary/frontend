@@ -1,46 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { Button, Container, TextField, makeStyles } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
 import api from '../../../../apis/baseAxios';
 import Swal from 'sweetalert2';
 import * as S from '../../../../styles/auth/auth.style'
-
-const useStyles = makeStyles((theme) => ({
-  customHoverFocus: {
-    '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgb(255, 215, 17)' },
-  },
-}));
-
-const BackBtn = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  position: relative;
-  top: 6px;
-`;
-
-const TypeSignUp = styled.div`
-  position: relative;
-  bottom: 60px;
-`;
-
-const CreateAccountBtn = styled.div`
-  background-color: rgb(240, 219, 109);
-  border-radius: 30px;
-  position: relative;
-  top: 365px;
-`;
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+import * as C from '../../../../styles/common.style'
 
 function SignUpForm() {
   const navigate = useNavigate();
-  const classes = useStyles();
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
@@ -135,105 +101,14 @@ function SignUpForm() {
 
   return (
     <S.Container>
-      <S.Input type="text" placeholder="닉네임" value={nickname} onChange={nameInput} isValid={nicknameValid()} />
-      <S.Input type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} isValid={email ? !emailValid() : emailValid()} />
-      <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e)=>setPassword(e.target.value)} isValid={password ? !passwordValid() : passwordValid()} />
-      <S.Input type="password" placeholder="비밀번호 확인" value={confirm} onChange={(e)=>setConfirm(e.target.value)} isValid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
-      <S.CreateBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</S.CreateBtn>
+      <S.InputWrap>
+        <S.Input type="text" placeholder="닉네임" value={nickname} onChange={nameInput} isValid={nicknameValid()} />
+        <S.Input type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} isValid={email ? !emailValid() : emailValid()} />
+        <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e)=>setPassword(e.target.value)} isValid={password ? !passwordValid() : passwordValid()} />
+        <S.Input type="password" placeholder="비밀번호 확인" value={confirm} onChange={(e)=>setConfirm(e.target.value)} isValid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
+      </S.InputWrap>
+      <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</C.CommonFilledBtn>
     </S.Container>
-    // <Wrap>
-    //   <CreateAccountBtn>
-    //     <Button className={classes.customHoverFocus} type='button' onClick={(e) => onClick(e)} disabled={Valid()} style={btnStyle}>
-    //       계정 생성
-    //     </Button>
-    //   </CreateAccountBtn>
-    //   <TypeSignUp>
-    //     <Container maxWidth='sm'>
-    //       <TextField
-    //         margin='dense'
-    //         fullWidth
-    //         variant='filled'
-    //         required
-    //         label='닉네임'
-    //         name='Nickname'
-    //         autoComplete='freeSolo'
-    //         autoFocus
-    //         value={nickname}
-    //         onChange={nameInput}
-    //         error={nicknameValid()}
-    //         helperText={nicknameValid() ? '특수문자 혹은 모음, 자음은 사용하실 수 없습니다.' : ''}
-    //       />
-    //       <TextField
-    //         margin='dense'
-    //         fullWidth
-    //         variant='filled'
-    //         required
-    //         label='이메일'
-    //         name='email'
-    //         autoComplete='email'
-    //         type='text'
-    //         value={email}
-    //         onChange={(e) => {
-    //           setEmail(e.target.value);
-    //         }}
-    //         error={email ? !emailValid() : emailValid()}
-    //         helperText={email ? (!emailValid() ? '이메일 형식으로 입력해 주세요.' : '') : ''}
-    //       />
-    //       <TextField
-    //         margin='dense'
-    //         fullWidth
-    //         variant='filled'
-    //         required
-    //         type='password'
-    //         label='비밀번호'
-    //         name='Password'
-    //         autoComplete='new-password'
-    //         value={password}
-    //         onChange={(e) => {
-    //           setPassword(e.target.value);
-    //         }}
-    //         error={password ? !passwordValid() : passwordValid()}
-    //         helperText={password ? (!passwordValid() ? '숫자, 특수문자를 포함하여 8글자 이상 입력해 주세요.' : '') : ''}
-    //       />
-    //       <TextField
-    //         margin='dense'
-    //         fullWidth
-    //         variant='filled'
-    //         required
-    //         type='password'
-    //         label='비밀번호 확인'
-    //         name='Confirm'
-    //         autoComplete='new-password'
-    //         value={confirm}
-    //         onChange={(e) => {
-    //           setConfirm(e.target.value);
-    //         }}
-    //         error={confirm ? (!confirm ? isSame() : !isSame()) : false}
-    //         helperText={confirm ? (!isSame() ? '비밀번호를 다시 확인해 주세요.' : '') : ''}
-    //       />
-    //       <BackBtn>
-    //         <Button
-    //           style={{
-    //             border: 'solid 2px lightgray',
-    //             borderRadius: '30px',
-    //             fontWeight: 'bolder',
-    //             fontSize: '20px',
-    //           }}
-    //         >
-    //           <Link
-    //             to='/signin'
-    //             style={{
-    //               color: 'black',
-    //               textDecorationLine: 'none',
-    //             }}
-    //           >
-    //             돌아가기
-    //           </Link>
-    //         </Button>
-    //       </BackBtn>
-    //     </Container>
-    //   </TypeSignUp>
-    // </Wrap>
   );
 }
 

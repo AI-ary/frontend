@@ -1,17 +1,9 @@
-import styled, { css, keyframes } from "styled-components";
-
-interface ValidProps {
-  nValid: boolean;
-  eValid: boolean;
-  pValid: boolean;
-  sValid: boolean
-}
+import styled, { css } from "styled-components";
 
 export const TitleWrap = styled.div`
   display : flex;
   flex-direction : column;
   align-items : center;
-  margin-top : 60px;
 `
 
 export const Title = styled.div`
@@ -22,6 +14,8 @@ export const Container = styled.div`
   display : flex;
   flex-direction : column;
   align-items : center;
+  height : 100%;
+  justify-content : space-between;
 `
 
 export const Input = styled.input<{isValid : boolean}>`
@@ -36,17 +30,14 @@ export const Input = styled.input<{isValid : boolean}>`
   `}
 `
 
-export const CreateBtn = styled.button<{isValid : boolean}>`
-  padding : 12px 36px;
-  font-size : 32px;
-  border-radius : 36px;
-  margin : 36px 0px 64px 0px;
-  color : #FFFFFF;
-  ${(props) => css`
-    background-color : ${props.isValid ? 'rgba(235, 136, 136, 0.3)' : '#EB8888'};
-    &:hover {
-      background-color : ${props.isValid ? '' : '#FDAEBE'};
-    } 
-  `
-  }
+export const InputWrap = styled.div`
+  display : flex;
+  flex-direction : column;
+  height : 100%;
+  justify-content : center;
+`
+
+export const BtnWrap = styled.div`
+  display : flex;
+  flex-direction : column;
 `

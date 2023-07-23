@@ -37,7 +37,7 @@ export const BackBtn = styled.button<{path : string}>`
   margin : 35px 0px 0px 35px;
   color : #FFFFFF;
   ${(props) => css`
-    display : ${props.path === '/signup' ? 'black' : 'none'};
+    display : ${props.path === '/signup' ? '' : 'none'};
   `}
 `
 
@@ -49,6 +49,7 @@ export const Mid = styled.div`
   flex-direction : column;
   align-items : center;
   justify-content : space-between;
+  padding : 64px 0px;
 `
 
 export const Right = styled.div`
@@ -71,6 +72,7 @@ export const Label = styled.button<LabelProps>`
   font-size : 18px;
   ${(props) => css`
     margin-top : ${props.name === '홈' ? '55px' : '20px'};
-    background-color : ${(props.path === '/' || props.path === '/signin' || props.path === '/signup' || props.path === '/main') && props.name === '홈' ? '#FDAEBE' : '#FFD2DC'};
+    // 현재 위치가 어디냐에 따라 책갈피 색상 바뀌게 설정
+    background-color : ${(props.path === '/' || props.path === '/signin' || props.path === '/signup' || props.path === '/main') && props.name === '홈' || (props.path === '/write' || props.path === '/list') && props.name === '일기 쓰기'? '#FDAEBE' : '#FFD2DC'};
   `}
 `
