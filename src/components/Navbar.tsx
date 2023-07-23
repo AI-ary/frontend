@@ -128,12 +128,12 @@ const SearchInput = styled.input<SearchInputProps>`
 `
 
 const ToggleTheme = styled.ul`
-  background-color: white;
+  background-color: ${props => props.theme.bgColor}; 
   width: 200px;
   height: 400px;
   position: absolute;
   right: 30px;
-  transition: all 0.5s;
+  transition: all 0.3s;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

@@ -4,14 +4,21 @@ export const blueTheme = {
   lineColor: 'rgba(82, 134, 186, 1)',
   fontColor: '#FFFFFF',
   btnColor:'#6599CD',
+  btnFontColor: '#FFFFFF',
+  bookMarkBg: '#6599CD',
+  bookMarkActiveBg: '#6599CD',
+  bookMarkFont:'#FFFFFF',
 }
 export const rainbowTheme = {
   bgImg:'/images/bg-rainbow.svg',
-  bgColor: 'pink',
+  bgColor: '#FEE6EB',
   lineColor: 'rgba(253, 189, 202, 1)',
-  fontColor: '#FFFFFF',
+  fontColor: '#373737',
   btnColor:'#EB8888',
   btnFontColor: '#FFFFFF',
+  bookMarkBg: '#FFD2DC',
+  bookMarkActiveBg: '#FDAEBE',
+  bookMarkFont:'#373737',
 }
 export const originTheme = {
   bgImg:'/images/background.PNG',
@@ -20,6 +27,9 @@ export const originTheme = {
   fontColor: '#373737',
   btnColor:'#F0D15D',
   btnFontColor: '#FFFFFF',
+  bookMarkBg: '#F0D15D',
+  bookMarkActiveBg: '#F0D15D',
+  bookMarkFont:'#373737',
 }
 
 export const theme = {

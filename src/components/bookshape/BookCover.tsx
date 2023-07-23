@@ -11,8 +11,6 @@ import { Link } from 'react-router-dom';
 import { BsArrowRight  } from 'react-icons/bs';
 import { useStore } from '../../store/store';
 
-
-
 const AllControl = styled.div`
   height: 100vh;
   display: flex;
@@ -20,7 +18,7 @@ const AllControl = styled.div`
   align-items: center;`
 
 const Left = styled.div`
-  background-color: #F0DB6D;
+  background-color: ${props => props.theme.lineColor};
   float: left;
   width: 55px;
   height: 760px;
@@ -36,6 +34,10 @@ const Year = styled.div`
   font-size: 30px;
   margin: 35px;`
 
+const FlipContainer = styled.div`
+  background-color: ${props => props.theme.bgColor};
+`
+
 // {children} : React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> tsx로 변환시 사용
 function BookCover({ children } : React.PropsWithChildren) {
   // const list : Array<Object> = [];
@@ -49,14 +51,14 @@ function BookCover({ children } : React.PropsWithChildren) {
   return (
     <AllControl className='slide' style={{ paddingBottom: '60px'}}>
       <Left/>
-      <div className  ='flip'>
+      <FlipContainer className='flip'>
         <Year>
           {year}
           {/* {isLogin() ? <LogoutBtn/> : ''} */}
           <LogoutBtn/>
         </Year>
         {children}
-      </div>
+      </FlipContainer>
       <div className='shapeR'>
         {list.filter((x)=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
         // eslint-disable-next-line no-loop-func

@@ -4,6 +4,7 @@ import reset from 'styled-reset';
 type DefaultTheme = {
   bgImg?: string;
   bgColor?: string;
+  fontColor?: string;
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -23,11 +24,12 @@ export const GlobalStyle = createGlobalStyle`
   }
   body{
     overflow: hidden;
-    fontFamily:'KyoboHand';
+    font-family:'KyoboHand';
     background-image: url(${(props:ThemeProps<DefaultTheme>)=> props.theme.bgImg});
     background-color: ${props => props.theme.bgColor}; 
     background-repeat: no-repeat;
     background-size: cover;
+    color: ${props => props.theme.fontColor};
   }
   .link {
     width:30.5%;
