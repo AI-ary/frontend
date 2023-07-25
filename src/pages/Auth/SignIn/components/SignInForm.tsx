@@ -73,7 +73,7 @@ function SignInForm() {
     <S.Container>
       <S.InputWrap>
         <S.Input type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} isValid={email ? !emailValid() : emailValid()} />
-        <S.Input type="text" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} />
+        <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} />
       </S.InputWrap>
       <S.BtnWrap>
         <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={()=>onLogin()}>로그인</C.CommonFilledBtn>
