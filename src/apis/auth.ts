@@ -20,11 +20,17 @@ interface RefreshProps {
 const JWT_EXPIRY_TIME = 1800 * 1000 // 만료시간 30분 (밀리초로 표현)
 let temp : SignInProps;
 
+const onSigning = (data : SignInProps) => {
+    temp = data
+    return baseAxios.post('auth', data)
+}
+
+const onRefreshing = (data : RefreshProps) => {
+    return baseAxios.post('auth/refresh',data)
+}
+
 export const signIn = () => {
-    const { mutate, isLoading:isSignInLoading, isSuccess: isSignInSuccess, isError: isSignInError } = useMutation((data : SignInProps) => {
-        temp = data
-        return baseAxios.post('auth', data)
-    }, {
+    const { mutate, isLoading:isSignInLoading, isSuccess: isSignInSuccess, isError: isSignInError } = useMutation(onSigning, {
         onSuccess: (res: any) => {
             const access = res.data.token.access;
             const refresh = res.data.token.refresh;
@@ -48,9 +54,7 @@ export const signIn = () => {
     const onSilentRefresh = () => {
         refreshing.mutate({refresh: sessionStorage.getItem('refresh')})
     }
-    const refreshing = useMutation((data : RefreshProps) => {
-        return baseAxios.post('auth/refresh',data)
-    },
+    const refreshing = useMutation(onRefreshing,
         {
         onSuccess: () => {
             mutate(temp)
