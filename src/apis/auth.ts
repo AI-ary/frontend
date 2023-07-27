@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query';
 import baseAxios from './baseAxios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 interface SignUpProps {
   nickname: string,
@@ -33,9 +34,23 @@ const onSignUp = (data: SignUpProps) => {
   return baseAxios.post('join', data)
 }
 
+let count = 0;
+
 export const signIn = () => {
-  const { mutate, isLoading:isSignInLoading, isSuccess: isSignInSuccess, isError: isSignInError } = useMutation(onSignIn, {
+  const navigate = useNavigate();
+  const { mutate, isLoading:isSignInLoading, isError: isSignInError } = useMutation(onSignIn, {
     onSuccess: (res: any) => {
+      if (count === 0) {  
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '로그인 성공!',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        navigate('/main')
+        count++;
+      }
       const access = res.data.token.access;
       const refresh = res.data.token.refresh;
       setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
@@ -69,7 +84,7 @@ export const signIn = () => {
     }
   )
     
-  return {isSignInSuccess, isSignInLoading, isSignInError, mutate}
+  return {isSignInLoading, isSignInError, mutate}
 }
 
 export const signUp = () => {

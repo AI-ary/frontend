@@ -1,8 +1,7 @@
 import { useState }  from 'react';
 import styled from 'styled-components';
 import {Button, Container, TextField, makeStyles} from '@material-ui/core';
-import { Link, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 import { signIn } from '@/apis/auth';
 
 const useStyles = makeStyles(theme => ({
@@ -36,12 +35,10 @@ const Wrap = styled.div`
   align-items: center;`
 
 function SignInForm() {
-  const navigate = useNavigate();
   const classes = useStyles();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   let isSigning = '로그인'
-  let count : number = 0;
 
   function emailValid() {
     var check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -54,26 +51,13 @@ function SignInForm() {
     } else return true;
   }
 
-  const {isSignInLoading, isSignInSuccess, isSignInError, mutate } = signIn()
+  const {isSignInLoading, isSignInError, mutate } = signIn()
   
   if (isSignInLoading) {
     isSigning = '로그인 중'
   }
   if (isSignInError) {
     isSigning = '로그인'
-  }
-  if (isSignInSuccess) {
-    if (count === 0) {  
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '로그인 성공!',
-            showConfirmButton: false,
-            timer: 2000
-        })
-        navigate('/main')
-        count++;
-    }
   }
 
   const onClick = () => {
@@ -88,7 +72,7 @@ function SignInForm() {
       <SignInBtn>
         <Button className={classes.customHoverFocus} type='button' onClick={onClick} disabled={Valid()} 
           style={Valid() ? { color: 'white', backgroundColor: '#F8EDB7', fontWeight: 'bolder', borderRadius: '30px', fontSize: '30px', width: '120px' } : { fontWeight: 'bolder', borderRadius: '30px', fontSize: '30px', width: '120px' }}>
-        {isSigning}</Button>
+          {isSigning}</Button>
       </SignInBtn>
       <TypeSignIn>
         <Container maxWidth='sm'>
