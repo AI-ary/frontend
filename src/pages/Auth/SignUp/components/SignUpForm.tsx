@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
-import api from '../../../../apis/baseAxios';
 import Swal from 'sweetalert2';
+import { signUp } from '@/apis/auth';
 
 const useStyles = makeStyles((theme) => ({
   customHoverFocus: {
@@ -37,13 +37,31 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
+interface SignUpProps {
+  nickname: string,
+  email: string,
+  password:string
+}
+
 function SignUpForm() {
   const navigate = useNavigate();
   const classes = useStyles();
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
-  const [confirm, setConfirm] = useState < string > ('');
+  const [confirm, setConfirm] = useState<string>('');
+  const { isSignUpError, isSignUpLoading, isSignUpSuccess, mutate} = signUp()
+  let isMaking = '계정 생성'
+
+  if (isSignUpLoading) {
+    isMaking = '계정 생성 중'
+  }
+  if (isSignUpError) {
+    isMaking = '계정 생성'
+  }
+  if (isSignUpSuccess) {
+    navigate('/signin')
+  }
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);
@@ -80,42 +98,11 @@ function SignUpForm() {
   }
 
   function onClick(e: React.MouseEvent) {
-    e.preventDefault();
-    api
-      .post('join', {
-        nickname: `${nickname}`,
-        email: `${email}`,
-        password: `${password}`,
-      })
-      .then(function (res) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '회원가입 성공!',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate('/signin');
-      })
-      .catch(function (res) {
-        if (res.response.data.email) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${res.response.data.email}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (res.response.data.nickname) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${res.response.data.nickname}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-      });
+    mutate({
+      nickname: nickname,
+      email: email,
+      password: password
+    })
   }
 
   function Valid() {
@@ -135,8 +122,8 @@ function SignUpForm() {
   return (
     <Wrap>
       <CreateAccountBtn>
-        <Button className={classes.customHoverFocus} type='button' onClick={(e) => onClick(e)} disabled={Valid()} style={btnStyle}>
-          계정 생성
+        <Button className={classes.customHoverFocus} type='button' onClick={onClick} disabled={Valid()} style={btnStyle}>
+          {isMaking}
         </Button>
       </CreateAccountBtn>
       <TypeSignUp>
