@@ -88,7 +88,8 @@ export const signIn = () => {
 }
 
 export const signUp = () => {
-  const { mutate, isLoading: isSignUpLoading, isSuccess: isSignUpSuccess, isError: isSignUpError } = useMutation(onSignUp, {
+  const navigate = useNavigate();
+  const { mutate, isLoading: isSignUpLoading, isError: isSignUpError } = useMutation(onSignUp, {
     onSuccess: () => {
       Swal.fire({
         position: 'center',
@@ -97,6 +98,7 @@ export const signUp = () => {
         showConfirmButton: false,
         timer: 2000,
       });
+      navigate('/signin')
     },
     onError: (err:any) => {
       if (err.response.data.email) {
@@ -118,5 +120,5 @@ export const signUp = () => {
       }
     }
   })
-  return { isSignUpError, isSignUpLoading, isSignUpSuccess, mutate}
+  return { isSignUpError, isSignUpLoading, mutate}
 }

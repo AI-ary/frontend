@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Container, TextField, makeStyles } from '@material-ui/core';
 import Swal from 'sweetalert2';
@@ -44,13 +44,12 @@ interface SignUpProps {
 }
 
 function SignUpForm() {
-  const navigate = useNavigate();
   const classes = useStyles();
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
   const [confirm, setConfirm] = useState<string>('');
-  const { isSignUpError, isSignUpLoading, isSignUpSuccess, mutate} = signUp()
+  const { isSignUpError, isSignUpLoading, mutate} = signUp()
   let isMaking = '계정 생성'
 
   if (isSignUpLoading) {
@@ -58,9 +57,6 @@ function SignUpForm() {
   }
   if (isSignUpError) {
     isMaking = '계정 생성'
-  }
-  if (isSignUpSuccess) {
-    navigate('/signin')
   }
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
