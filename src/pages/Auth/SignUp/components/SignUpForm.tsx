@@ -4,12 +4,6 @@ import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
 import { signUp } from '@/apis/auth';
 
-interface SignUpProps {
-  nickname: string,
-  email: string,
-  password:string
-}
-
 function SignUpForm() {
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
@@ -72,14 +66,6 @@ function SignUpForm() {
       return false;
     } else return true;
   }
-
-  const btnStyle = {
-    fontWeight: 'bolder',
-    borderRadius: '30px',
-    fontSize: '30px',
-    color: !Valid() ? '' : 'white',
-    backgroundColor: !Valid() ? '' : '#F8EDB7',
-  };
 
   return (
     <S.Container>

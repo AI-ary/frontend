@@ -1,10 +1,13 @@
 import { useState }  from 'react';
 import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
+import { signIn } from '@/apis/auth';
+import { useNavigate } from 'react-router-dom';
 
 function SignInForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const navigate = useNavigate()
   let isSigning = '로그인'
 
   function emailValid() {
@@ -41,7 +44,7 @@ function SignInForm() {
         <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} />
       </S.InputWrap>
       <S.BtnWrap>
-        <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={()=>onLogin()}>로그인</C.CommonFilledBtn>
+        <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={()=>onClick()}>로그인</C.CommonFilledBtn>
         <C.CommonOutlinedBtn onClick={()=>navigate('/signup')}>회원가입</C.CommonOutlinedBtn>
       </S.BtnWrap>
     </S.Container>
