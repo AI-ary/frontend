@@ -134,5 +134,10 @@ const SelectBtn = styled.div`
   `
 
 const StartBtn = styled.div`
-  background-color: rgb(240, 219, 109);
-  border-radius: 25px;`
+  background-color: ${props => props.theme.btnColor};   
+  border-radius: 25px;
+  > button {
+    color: ${props => props.theme.btnFontColor}; 
+    font-family: 'KyoboHand';
+  }
+`

@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../../../apis/baseAxios';
 import Swal from 'sweetalert2';
 import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
+import { signUp } from '@/apis/auth';
+
+interface SignUpProps {
+  nickname: string,
+  email: string,
+  password:string
+}
 
 function SignUpForm() {
-  const navigate = useNavigate();
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
-  const [confirm, setConfirm] = useState < string > ('');
+  const [confirm, setConfirm] = useState<string>('');
+  const { isSignUpError, isSignUpLoading, mutate} = signUp()
+  let isMaking = '계정 생성'
+
+  if (isSignUpLoading) {
+    isMaking = '계정 생성 중'
+  }
+  if (isSignUpError) {
+    isMaking = '계정 생성'
+  }
 
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);
@@ -47,42 +60,11 @@ function SignUpForm() {
   }
 
   function onClick(e: React.MouseEvent) {
-    e.preventDefault();
-    api
-      .post('join', {
-        nickname: `${nickname}`,
-        email: `${email}`,
-        password: `${password}`,
-      })
-      .then(function (res) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '회원가입 성공!',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-        navigate('/signin');
-      })
-      .catch(function (res) {
-        if (res.response.data.email) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${res.response.data.email}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        } else if (res.response.data.nickname) {
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: `${res.response.data.nickname}`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
-        }
-      });
+    mutate({
+      nickname: nickname,
+      email: email,
+      password: password
+    })
   }
 
   function Valid() {
