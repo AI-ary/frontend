@@ -69,12 +69,12 @@ const StyledNavLink = styled(NavLink)`
   border-radius: 0 5px 5px 0;
   text-align: center;
   line-height: 43px;
-  color: white;
+  color: ${props => props.theme.bookMarkFont};
   border: 0.8px groove gray;
   border-left: none;
   font-weight: 400;
   opacity: 0.9;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: ${props => props.theme.bookMarkBg};
   &:link {
     transition: 0.5s;
     text-decoration: none;
@@ -83,8 +83,8 @@ const StyledNavLink = styled(NavLink)`
     color: gray;
   }
   &.active {
-    background-color: #f0db6d;
-    color: black;
+    background-color: ${props => props.theme.bookMarkActiveBg};
+    color: ${props => props.theme.bookMarkFont};
     font-weight: 700;
   }
 `;
