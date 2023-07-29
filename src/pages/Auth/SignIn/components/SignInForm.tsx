@@ -45,7 +45,7 @@ function SignInForm() {
       </S.InputWrap>
       <S.BtnWrap>
         <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={()=>onClick()}>로그인</C.CommonFilledBtn>
-        <C.CommonOutlinedBtn onClick={()=>navigate('/signup')}>회원가입</C.CommonOutlinedBtn>
+        <C.CommonEmptyBtn onClick={()=>navigate('/signup')} isValid={false}>회원가입</C.CommonEmptyBtn>
       </S.BtnWrap>
     </S.Container>
   );
