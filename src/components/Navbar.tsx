@@ -74,6 +74,7 @@ function Navbar() {
 export default Navbar;
 
 const NavbarWrap = styled.div`
+  position: fixed;
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -135,6 +136,7 @@ const ToggleTheme = styled.ul`
   width: 200px;
   height: 400px;
   position: absolute;
+  top: 60px;
   right: 30px;
   transition: all 0.3s;
   display: flex;

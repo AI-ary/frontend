@@ -69,39 +69,31 @@ function AfterLogin() {
         }
       }, 800);
     }
-    //   console.log(Toast)
-    //   Toast.fire({
-    //     icon: 'success',
-    //     title: '표지 설정 완료!'
-    //   })
-    // }).catch(function (err) {
-    //   console.log(err)
-    // })
   }
 
   return (
     <ClosedBook>
-        <CoverYear>{year}</CoverYear>
-        <Nickname><span>{nickname}</span>'s<br/>GRIM-DIARY</Nickname>
-        <Profile>
-          <img alt='star' src={!!selected ? `${selected}` : 'images/rainbow.png'} />
-        </Profile>
-        <SelectBtn htmlFor="input-file">
-            <MdPhotoLibrary size="28" className='profile'/>
-        </SelectBtn>
-        <input type="file" id="input-file" accept="image/png, image/jpeg" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
-        {/* <StartBtn>
-          <Button
-            className={classes.customHoverFocus} type='button' onClick={(e)=>onClick(e)} style={{
-              width: '100px',
-              height: '40px',
-              borderRadius: '25px',
-              fontSize: '25px',
-              fontWeight: 'bolder'
-            }}>시작</Button>
-        </StartBtn> */}
-        <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>
-        <LogoutBtn/>
+      <CoverYear>{year}</CoverYear>
+      <Nickname><p><span>{nickname}</span>'s</p><p>GRIM-DIARY</p></Nickname>
+      <Profile>
+        <img alt='star' src={!!selected ? `${selected}` : 'images/rainbow.png'} />
+      </Profile>
+      <SelectBtn htmlFor="input-file">
+          <MdPhotoLibrary size="28" className='profile'/>
+      </SelectBtn>
+      <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
+      {/* <StartBtn>
+        <Button
+          className={classes.customHoverFocus} type='button' onClick={(e)=>onClick(e)} style={{
+            width: '100px',
+            height: '40px',
+            borderRadius: '25px',
+            fontSize: '25px',
+            fontWeight: 'bolder'
+          }}>시작</Button>
+      </StartBtn> */}
+      <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>
+      <LogoutBtn/>
     </ClosedBook>
   );
 }
@@ -116,13 +108,14 @@ const CoverYear = styled.div`
 
 const Nickname = styled.h1`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   text-align: center;
   position: relative;
   bottom: 22px;
   font-size: 45px;
   font-family:'Itim';
-  > p {
+  > p > span {
     font-family:'Poor Story';
   }
 `
@@ -139,7 +132,6 @@ const Profile = styled.div`
     width: 100%;
     height: 100%; 
     object-fit: cover;
-
   }
 `
 const SelectBtn = styled.label`

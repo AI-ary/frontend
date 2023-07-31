@@ -5,11 +5,12 @@ export const CommonFilledBtn = styled.button<{ isValid: boolean }>`
   font-size : 32px;
   border-radius : 36px;
   color : #FFFFFF;
+  font-family:'Poor Story';
 //   transition : background-color 1s;  // hover on&off 시 색상 천천히 변하는 효과, 넣을지 말지 얘기해보기
   ${(props) => css`
-    background-color : ${props.isValid ? 'rgba(235, 136, 136, 0.3)' : '#EB8888'};
+    background-color : ${props.isValid ? props.theme.btnDisabledColor : props.theme.btnColor};
     &:hover {
-      background-color : ${props.isValid ? '' : '#FDAEBE'};
+      background-color : ${props.isValid ? '' : props.theme.btnHoverColor};
     } 
   `
   }
