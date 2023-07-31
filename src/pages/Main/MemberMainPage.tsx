@@ -1,19 +1,21 @@
-import {useState, useEffect} from 'react';
-import BookCover from '../../components/bookshape/BookCover';
-import OpenModal from './components/OpenModal';
+import {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './components/Modal.css';
 import api from '../../apis/baseAxios'
-import { Button, makeStyles } from '@material-ui/core';
+import * as C from '../../styles/common.style'
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import ClosedBook from '@/components/bookshape/ClosedBook';
+import LogoutBtn from '../../pages/Auth/components/Logout';
+import { MdPhotoLibrary } from "react-icons/md";
+
 
 function AfterLogin() {
-  const [selected, setSelected] = useState<string>('images/mainLogo.png');
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string>('images/rainbow.png');
   const navigate = useNavigate();
-  const classes = useStyles();
   const nickname = sessionStorage.getItem('nickname');
+  const imgRef = useRef<HTMLInputElement | null>(null);
+
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -22,6 +24,9 @@ function AfterLogin() {
     timerProgressBar: true
   })
   
+  let now = new Date();
+  let year = now.getFullYear();
+
   useEffect(() => {
     api.get(`/users/${sessionStorage.getItem('id')}`).then(function (res) {
       setSelected(res.data.cover_image_url)
@@ -29,9 +34,19 @@ function AfterLogin() {
       console.log(err)
     })
   }, [])
-  
-  function Other() {
-    setIsOpen(true);
+
+
+
+  const addFile = ()=>{
+    const imgFile = imgRef.current;
+    if (imgFile?.files) {
+      const file=imgFile?.files[0];
+      const reader=new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend=()=>{
+        setSelected(reader.result as string);
+      }
+    }
   }
 
   function onClick(e : React.MouseEvent ) {
@@ -65,79 +80,78 @@ function AfterLogin() {
   }
 
   return (
-    <>
-      <OpenModal isOpen={isOpen} setIsOpen={setIsOpen} setSelected={setSelected} />
-      <BookCover>
-        <Nickname>{nickname}'s<br/>일기장</Nickname>
-        <Wrap>
-          <div className='Img'>
-            <img style={{objectFit:'cover'}} alt='star' src={!!selected ? `${selected}` : 'images/mainLogo.png'} />
-          </div>
-          <SelectBtn>
-            <Button
-              variant='outlined' className={classes.customHoverFocus} type='button' onClick={Other} style={{
-                width: '110px',
-                height: '30px',
-                borderRadius: '25px',
-                fontSize: '17px',
-                fontWeight: 'bolder'
-              }}>+다른 이미지</Button>
-          </SelectBtn>
-          <StartBtn>
-            <Button
-              className={classes.customHoverFocus} type='button' onClick={(e)=>onClick(e)} style={{
-                width: '100px',
-                height: '40px',
-                borderRadius: '25px',
-                fontSize: '25px',
-                fontWeight: 'bolder'
-              }}>시작</Button>
-          </StartBtn>
-        </Wrap>
-      </BookCover>
-    </>
+    <ClosedBook>
+        <CoverYear>{year}</CoverYear>
+        <Nickname><span>{nickname}</span>'s<br/>GRIM-DIARY</Nickname>
+        <Profile>
+          <img alt='star' src={!!selected ? `${selected}` : 'images/rainbow.png'} />
+        </Profile>
+        <SelectBtn htmlFor="input-file">
+            <MdPhotoLibrary size="28" className='profile'/>
+        </SelectBtn>
+        <input type="file" id="input-file" accept="image/png, image/jpeg" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
+        {/* <StartBtn>
+          <Button
+            className={classes.customHoverFocus} type='button' onClick={(e)=>onClick(e)} style={{
+              width: '100px',
+              height: '40px',
+              borderRadius: '25px',
+              fontSize: '25px',
+              fontWeight: 'bolder'
+            }}>시작</Button>
+        </StartBtn> */}
+        <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>
+        <LogoutBtn/>
+    </ClosedBook>
   );
 }
 
 export default AfterLogin;
 
-const useStyles = makeStyles(theme => ({
-  customHoverFocus: {
-    '&:hover, &.Mui-focusVisible': { backgroundColor: 'rgb(255, 215, 17)' }
-  }
-}));
-
-const Wrap = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  bottom: 20px;`
+const CoverYear = styled.div`
+  font-size: 24px;
+  font-family:'Itim';
+  margin-bottom: 10px;
+`
 
 const Nickname = styled.h1`
   display: flex;
   justify-content: center;
   text-align: center;
   position: relative;
-  margin: 10px;
   bottom: 22px;
-  font-size: 45px;`
-
-const SelectBtn = styled.div`
-  background-color: rgb(0, 0, 0, 0);
-  border-radius: 25px;
-  position: relative;
-  left: 155px;
-  bottom: 45px;
-  `
-
-const StartBtn = styled.div`
-  background-color: ${props => props.theme.btnColor};   
-  border-radius: 25px;
-  > button {
-    color: ${props => props.theme.btnFontColor}; 
-    font-family: 'KyoboHand';
+  font-size: 45px;
+  font-family:'Itim';
+  > p {
+    font-family:'Poor Story';
   }
 `
+const Profile = styled.div`
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  padding: 20px;
+  background-color: white;
+  border: 8px solid ${props => props.theme.profileBg};
+  overflow: hidden;
+  background-image: url('/images/profileBg.svg');
+  > img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+
+  }
+`
+const SelectBtn = styled.label`
+  background-color: ${props => props.theme.profileBg};
+  position: relative;
+  top: -80px;
+  left: 90px;
+  border-radius: 50%;
+  padding: 18px;
+  cursor: pointer;
+  box-sizing: border-box;
+  .profile {
+    color: ${props => props.theme.profileColor};
+  }
+  `

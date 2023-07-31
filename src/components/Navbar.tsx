@@ -1,9 +1,7 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import {FaUserAlt, FaSearch} from 'react-icons/fa';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeType, useThemeContext } from '../App'
-import { GlobalStyle } from '../theme/GlobalStyle';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
