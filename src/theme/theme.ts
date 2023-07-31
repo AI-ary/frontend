@@ -33,6 +33,7 @@ export const originTheme = {
 }
 
 export const theme = {
+  fontLogo: "'Poor Story', serif",
   blueTheme,
   rainbowTheme,
   originTheme

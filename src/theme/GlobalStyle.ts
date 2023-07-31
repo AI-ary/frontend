@@ -7,6 +7,8 @@ type DefaultTheme = {
   fontColor?: string;
 };
 
+
+
 export const GlobalStyle = createGlobalStyle`
   ${reset}
   @font-face {
