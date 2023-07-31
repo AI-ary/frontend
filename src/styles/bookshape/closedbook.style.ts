@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const Left = styled.div`
   width : 55px;
   height : 780px;
-  background : linear-gradient( to right, #FEE6EB, #FDBDCA);
+  background : ${props => props.theme.lineColor};
   border-radius : 8px 0px 0px 8px;
 `
 
@@ -44,7 +44,7 @@ export const BackBtn = styled.button<{path : string}>`
 export const Mid = styled.div`
   width : 695px;
   height : 780px;
-  background-color : #FEE6EB;
+  background-color : ${props => props.theme.bgColor};
   display : flex;
   flex-direction : column;
   align-items : center;
@@ -55,24 +55,24 @@ export const Mid = styled.div`
 export const Right = styled.div`
   width : 10px;
   height : 780px;
-  background : linear-gradient( to right, #FEE6EB, #FDBDCA);
+  background : ${props => props.theme.lineColor};
   border-radius : 0px 8px 8px 0px;
 `
 
-export const LabelWrap = styled.div`
-  display : flex;
-  flex-direction : column;
-`
+// export const LabelWrap = styled.div`
+//   display : flex;
+//   flex-direction : column;
+// `
 
-export const Label = styled.button<LabelProps>`
-  background-color : #FFD2DC;
-  width : 90px;
-  height : 60px;
-  border-radius : 0px 8px 8px 0px;
-  font-size : 18px;
-  ${(props) => css`
-    margin-top : ${props.name === '홈' ? '55px' : '20px'};
-    // 현재 위치가 어디냐에 따라 책갈피 색상 바뀌게 설정
-    background-color : ${(props.path === '/' || props.path === '/signin' || props.path === '/signup' || props.path === '/main') && props.name === '홈' || (props.path === '/write' || props.path === '/list') && props.name === '일기 쓰기'? '#FDAEBE' : '#FFD2DC'};
-  `}
-`
+// export const Label = styled.button<LabelProps>`
+//   background-color : ${props => props.theme.bookMarkBg};
+//   width : 90px;
+//   height : 60px;
+//   border-radius : 0px 8px 8px 0px;
+//   font-size : 18px;
+//   ${(props) => css`
+//     margin-top : ${props.name === '홈' ? '55px' : '20px'};
+//     // 현재 위치가 어디냐에 따라 책갈피 색상 바뀌게 설정
+//     background-color : ${(props.path === '/' || props.path === '/signin' || props.path === '/signup' || props.path === '/main') && props.name === '홈' || (props.path === '/write' || props.path === '/list') && props.name === '일기 쓰기'? '#FDAEBE' : '#FFD2DC'};
+//   `}
+// `
