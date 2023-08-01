@@ -123,7 +123,6 @@ const Profile = styled.div`
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  padding: 20px;
   background-color: white;
   border: 8px solid ${props => props.theme.profileBg};
   overflow: hidden;
