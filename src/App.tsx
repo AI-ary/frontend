@@ -46,9 +46,9 @@ const router= createBrowserRouter([
       {path:'/write', element:<PrivatePages Component={WriteGrim}/>},
       {path:'/write', element:<WriteGrim />},
       {
-        path:'/', element:<PrivatePages Component={Navbar} />,
+        path:'/', element:<PrivatePages Component={Navbar}/>,
         children:[
-          {path:'main', element:<PrivatePages Component={AfterLogin} />},
+          {path:'main', element:<PrivatePages Component={AfterLogin}/>},
           {path:'about', element:<PublicPages Component={Manual} restricted />},
           {path:'list', element:<PrivatePages Component={GrimList}/>},
           {path:'/search/:word', element:<DiarySearchList />}

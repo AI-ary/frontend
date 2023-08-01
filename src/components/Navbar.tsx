@@ -1,6 +1,5 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import {FaUserAlt, FaSearch} from 'react-icons/fa';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeType, useThemeContext } from '../App'
 
@@ -48,15 +47,17 @@ function Navbar() {
   return(
     <div>
       <NavbarWrap>
-        <Logo onClick={()=>navigate('main')}>GRIM-DIARY</Logo>
+        <Logo onClick={()=>navigate('main')}>
+          <img src="images/aiary.png" alt="logo" />
+        </Logo>
         <BtnContainer>
           <button>소개</button>
           <button>커뮤니티</button>
           <SearchContainer>
             {visible && <SearchInput visible={visible} type="text" value={search} placeholder='검색 창' onChange={onChange} onKeyDown={(e)=>handleEnter(e)} /> }
-            <FaSearch size="25" style={{cursor:'pointer'}} onClick={handleSearch} />
+            <img src="images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
           </SearchContainer>
-          <button onClick={toggleThemeMenu}><FaUserAlt size="25" /></button>
+          <button onClick={toggleThemeMenu}><img src="images/person.svg" alt="person" /></button>
         </BtnContainer>
       </NavbarWrap>
       <ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
@@ -73,29 +74,32 @@ function Navbar() {
 export default Navbar;
 
 const NavbarWrap = styled.div`
+  position: fixed;
   width: 100%;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 100px;
+  padding: 8px 130px;
   color: black;
-  background-color: white;
 `
 
 const Logo = styled.div`
-  font-size: 2.3rem;
   cursor: pointer;
+  > img {
+    width: 130px;
+  }
 `
 
 const BtnContainer = styled.div`
   width: 50rem;
-  font-size: 1.4rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   >button{
-    margin-right: 30px;
+    font-family:'Poor Story';
+    margin-right: 35px;
+    font-size: 20px;
   }
   >button:last-child{
     margin-left: 30px;
@@ -132,6 +136,7 @@ const ToggleTheme = styled.ul`
   width: 200px;
   height: 400px;
   position: absolute;
+  top: 60px;
   right: 30px;
   transition: all 0.3s;
   display: flex;

@@ -1,9 +1,9 @@
-import { Button } from '@material-ui/core';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../apis/baseAxios'
-import React from 'react';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-
+import styled from 'styled-components';
+import { IoLogOutOutline } from "react-icons/io5";
 
 type Props = SweetAlertResult<any>;
 
@@ -37,6 +37,27 @@ export default function LogoutBtn() {
     })
   }
   return (
-    <Button type='button' onClick={(e)=>onClick(e)} style={{ fontWeight: 'bolder' }}>로그아웃</Button>
+    <LogOutBtn type='button' onClick={(e:any)=>onClick(e)}>
+      <span>로그아웃</span>
+      <IoLogOutOutline size="24" className='logOutIcon'/>
+    </LogOutBtn>
   )
 }
+
+const LogOutBtn = styled.button`
+  padding: 20px;
+  box-sizing: border-box;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > span {
+    font-size: 18px;
+    font-family:'Poor Story';
+    color: ${props => props.theme.btnColor};
+    margin-right: 5px;
+  }
+  .logOutIcon {
+    color: ${props => props.theme.btnColor};
+  }
+`

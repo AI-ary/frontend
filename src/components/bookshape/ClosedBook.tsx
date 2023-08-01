@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import * as S from '../../styles/bookshape/closedbook.style'
 import { RiArrowLeftSLine } from "react-icons/ri";
+import Bookmark from './Bookmark';
 
 const ClosedBook = ({ children }: React.PropsWithChildren) => {
     const path = window.location.pathname;
@@ -18,10 +19,11 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
                     {children}
                 </S.Mid>
                 <S.Right />
-                <S.LabelWrap>
+                <Bookmark />
+                {/* <S.LabelWrap>
                     <S.Label name={'홈'} path={path} onClick={()=>navigate('/')}>홈</S.Label>
                     <S.Label name={'일기 쓰기'} path={path} >일기 쓰기</S.Label>
-                </S.LabelWrap>
+                </S.LabelWrap> */}
             </S.Flip>
         </S.Container>
     )

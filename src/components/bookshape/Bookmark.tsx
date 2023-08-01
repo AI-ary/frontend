@@ -36,17 +36,13 @@ function Bookmark() {
   return (
     <BookMark>
       <StyledNavLink to={IsLogin() ? '/main' : '/'} onClick={onClick}>
-        <div id='home' style={{ borderRadius: '0 5px 5px 0' }}>
+        <div id='home'>
           홈
         </div>
       </StyledNavLink>
       <StyledNavLink id='write' to='/list' onClick={onClick}>
         {/* style={{ pointerEvents: Valid() }}  */}
         일기 쓰기
-      </StyledNavLink>
-      <StyledNavLink to='/about' onClick={onClick}>
-        {/* style={{ pointerEvents: loca === '/main' ? 'none' : '' }} */}
-        소개
       </StyledNavLink>
     </BookMark>
   );
@@ -55,32 +51,28 @@ function Bookmark() {
 export default Bookmark;
 
 const BookMark = styled.div`
-  width: 70px;
-  height: 700px;
-  z-index: 0;
+  display : flex;
+  flex-direction : column;
+  height: 400px;
+  margin-top: 40px;
 `;
 const StyledNavLink = styled(NavLink)`
-  display: block;
-  width: 65px;
-  height: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width : 90px;
+  height : 60px;
   text-decoration: none;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-size: 18px;
-  border-radius: 0 5px 5px 0;
+  font-family: 'Poor Story';
+  border-radius : 0px 8px 8px 0px;
   text-align: center;
-  line-height: 43px;
   color: ${props => props.theme.bookMarkFont};
-  border: 0.8px groove gray;
-  border-left: none;
-  font-weight: 400;
-  opacity: 0.9;
   background-color: ${props => props.theme.bookMarkBg};
   &:link {
     transition: 0.5s;
     text-decoration: none;
-  }
-  &:hover {
-    color: gray;
   }
   &.active {
     background-color: ${props => props.theme.bookMarkActiveBg};
