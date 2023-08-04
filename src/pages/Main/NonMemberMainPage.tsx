@@ -27,7 +27,7 @@ function Main() {
       <S.Logo src='/images/rainbow.png' alt='로고 이미지' />
       <S.ButtonWrap>
         <C.CommonFilledBtn onClick={()=>navigate('/signin')} isValid={false}>로그인</C.CommonFilledBtn>
-        <C.CommonEmptyBtn onClick={()=>navigate('/signup')} isValid={false}>회원가입</C.CommonEmptyBtn>
+        <C.CommonOutlinedBtn onClick={()=>navigate('/signup')}>회원가입</C.CommonOutlinedBtn>
       </S.ButtonWrap>
     </ClosedBook>
   );
