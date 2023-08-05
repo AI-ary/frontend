@@ -1,7 +1,7 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { ThemeType, useThemeContext } from '../App'
+import { ThemeType, useThemeContext } from '../App';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
@@ -45,7 +45,7 @@ function Navbar() {
   }
 
   return(
-    <div>
+    <>
       <NavbarWrap>
         <Logo onClick={()=>navigate('main')}>
           <img src="images/aiary.png" alt="logo" />
@@ -66,7 +66,7 @@ function Navbar() {
         <li onClick={()=>handleThemeChange('originTheme')}>origin</li>
       </ToggleTheme>
       <Outlet />
-    </div>
+    </>
   )
 }
 
@@ -74,7 +74,7 @@ function Navbar() {
 export default Navbar;
 
 const NavbarWrap = styled.div`
-  position: fixed;
+  position: sticky;
   width: 100%;
   box-sizing: border-box;
   display: flex;

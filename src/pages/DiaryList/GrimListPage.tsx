@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
-import { WriteContainer, Book2Container } from '../WriteDiary/WriteGrimPage';
+import { useStore } from '../../store/store';
+import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+import { getDiaryListData } from '@/apis/diaryList';
 import BookShape2L from '../../components/bookshape/BookShapeL';
 import BookShape2R from '../../components/bookshape/BookShapeR';
 import Bookmark from '../../components/bookshape/Bookmark';
 import Calender from './components/Calender';
 import DiaryList from './components/DiaryList';
-import { useStore } from '../../store/store';
-import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
 import { DiviContainer } from '../WriteDiary/components/DiaryContent';
-import { BsArrowRight  } from 'react-icons/bs';
-import { getDiaryListData } from '@/apis/diaryList';
 import Loading from '../../components/Loading';
+import { BsArrowRight  } from 'react-icons/bs';
+import * as O from '../../styles/bookshape/opendbook.style';
+import * as C from '../../styles/bookshape/closedbook.style';
 
 interface ListContent{
   user_id:number|undefined;
@@ -41,14 +42,14 @@ function GrimList() {
     }
   }
   return(
-    <WriteContainer>
+    <C.Container>
+      <O.OpenBookContainer > 
       {isLoading ? <Loading /> : ''}
-      <Book2Container style={{paddingBottom:'80px'}}> 
         <BookShape2L>
-          <Calender list={list} exist={exist} />
+          {/* <Calender list={list} exist={exist} /> */}
         </BookShape2L>
         <BookShape2R>
-          {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
+          {/* {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
             // eslint-disable-next-line no-loop-func
             .map((data,index)=>{
               return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
@@ -61,11 +62,11 @@ function GrimList() {
                     일기 쓰러 가기<BsArrowRight size="2rem" />
               </Link>
             </div>
-          </DiviContainer>)}
+          </DiviContainer>)} */}
         </BookShape2R>
         <Bookmark />
-      </Book2Container>
-    </WriteContainer>
+      </O.OpenBookContainer>
+    </C.Container>
   )
 }
 
