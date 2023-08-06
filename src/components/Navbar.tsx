@@ -48,16 +48,16 @@ function Navbar() {
     <>
       <NavbarWrap>
         <Logo onClick={()=>navigate('main')}>
-          <img src="images/aiary.png" alt="logo" />
+          <img src="/images/aiary.png" alt="logo" />
         </Logo>
         <BtnContainer>
           <button>소개</button>
           <button>커뮤니티</button>
           <SearchContainer>
             {visible && <SearchInput visible={visible} type="text" value={search} placeholder='검색 창' onChange={onChange} onKeyDown={(e)=>handleEnter(e)} /> }
-            <img src="images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
+            <img src="/images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
           </SearchContainer>
-          <button onClick={toggleThemeMenu}><img src="images/person.svg" alt="person" /></button>
+          <button onClick={toggleThemeMenu}><img src="/images/person.svg" alt="person" /></button>
         </BtnContainer>
       </NavbarWrap>
       <ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>

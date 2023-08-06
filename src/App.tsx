@@ -48,7 +48,7 @@ const router= createBrowserRouter([
         children:[
           {path:'main', element:<PrivatePages Component={AfterLogin}/>},
           {path:'list', element:<PrivatePages Component={GrimList}/>},
-          // {path:'/search/:word', element:<DiarySearchList />}
+          {path:'/search/:word', element:<DiarySearchList />}
         ]
       }
     ]

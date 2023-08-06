@@ -140,13 +140,13 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
         <D.Canvas>
           <img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} />
           <DL.ShareWrap className={shareMenu ? "show-menu" : "hide-menu"}>
-            <DL.SNSImg onClick={kakaoShare} src='images/kakao.png' alt='none' />
-            <DL.SNSImg onClick={twitterShare} src='images/twitter.png' alt='none' />
-            <DL.SNSImg onClick={urlShare} src='images/url.png' alt='none' />
+            <DL.SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
+            <DL.SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
+            <DL.SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
           </DL.ShareWrap>
           <D.ChoiceButtonContainer>
-            <D.ButtonItem onClick={toggleshareMenu}><img src="images/share.svg" alt="공유" /></D.ButtonItem>
-            <D.ButtonItem onClick={()=>DeleteDiary(id)}><img src="images/update.svg" alt="" /></D.ButtonItem>
+            <D.ButtonItem onClick={toggleshareMenu}><img src="/images/share.svg" alt="공유" /></D.ButtonItem>
+            <D.ButtonItem onClick={()=>DeleteDiary(id)}><img src="/images/update.svg" alt="" /></D.ButtonItem>
           </D.ChoiceButtonContainer>
         </D.Canvas>
         <D.Content><ResultManuscript content={contents}/></D.Content>
