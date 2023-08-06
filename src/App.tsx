@@ -44,13 +44,12 @@ const router= createBrowserRouter([
       {path:'/signin', element:<PublicPages Component={SignIn} restricted/>},
       {path:'/signup', element:<PublicPages Component={SignUp} restricted/>},
       {path:'/write', element:<PublicPages Component={WriteGrim} restricted/>},
-      {path:'list', element:<GrimList  />},
 
       {
         path:'/', element:<Navbar />,
         children:[
           {path:'main', element:<PrivatePages Component={AfterLogin}/>},
-          {path:'list', element:<GrimList  />},
+          {path:'list', element:<PrivatePages Component={GrimList}/>},
           // {path:'/search/:word', element:<DiarySearchList />}
         ]
       }

@@ -168,7 +168,8 @@ export const DaysCol =styled.div`
   }
   &.cell.selected{
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);   
+    transform: scale(1.01);
     border: none;
     background-color: #FFD2DC;
     color: #e55218;

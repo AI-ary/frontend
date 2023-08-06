@@ -44,16 +44,7 @@ function Manuscript(props:any) {
 
 export default Manuscript;
 
-export const PaperContainer = styled.div`
-  --line-length: 10;
-  box-sizing: content-box;
-  border: 2px groove transparent;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: calc(var(--line-length));
-  font-size: calc(450px / var(--line-length) / 1.5);
-`
+
 export const PaperSpan = styled.div`
   box-sizing: border-box;
   flex: 1 0 auto;
@@ -93,13 +84,3 @@ export const GridContent =styled.textarea`
   top: -800px;
 `
 
-export const TableTd =styled.div`
-  border: 1px solid black;
-  width: 47.3px;
-  height: 47.3px;
-  font-size: 30px;
-  text-align: center;
-  z-index: 1;
-  margin-bottom: 5px;
-  margin:1px;
-`

@@ -223,112 +223,11 @@ export default DiaryContent;
 // TODO: Swal 사용 부분 query 호출 부분으로 넘기기
 // TODO: send를 user_id 혹은 date로 enabled 확인가능하도록 변경하기
 
-/*날짜&날씨 container*/
-export const DateContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 500px;
-  height: 60px;
-`;
 
-export const Dateline = styled.div`
-  width: 500px;
-  height: 40px;
-  background-color: #bcbcbc;
-  display: flex;
-  align-items: center;
-  border-radius: 3px;
-`;
 
-export const Datetitle = styled.div`
-  margin-left: 5%;
-  width: 10%;
-  font-size: 25px;
-  text-align: center;
-  font-family: KyoboHand;
-`;
 
-export const DateContent = styled.div`
-  width: 25%;
-  font-size: 24px;
-  border: 2px solid transparent;
-  border-radius: 30px;
-  background: #d9d9d9;
-  margin-left: 2%;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 100%;
-  color: #4b4b4b;
-  font-family: KyoboHand;
-  padding-top: 3px;
-`;
 
-export const Weathercontainer = styled.div`
-  width: 32%;
-  text-align: right;
-  margin-left: auto;
-  padding-right: 8px;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-`;
 
-export const WeatherRadioBtn = styled.input`
-  display: none;
-`;
-
-/*제목 container*/
-export const TitleContainer = styled.div`
-  width: 500px;
-  height: 40px;
-  background: #c7c7c7;
-  display: flex;
-  align-items: center;
-  border-top-left-radius: 3px;
-  border-top=right-radius: 3px;
-  font-family: KyoboHand;
-`;
-
-export const Title = styled.div`
-  margin-left: 5%;
-  width: 10%;
-  text-align: left;
-  font-size: 25px;
-  font-family: KyoboHand;
-  z-index: 120;
-  position: absolute;
-`;
-
-export const Titlecontent = styled.div`
-  width: 60%;
-  margin-left: 13%;
-  z-index: 120;
-  position: absolute;
-  > input {
-    width: 90%;
-    margin-bottom: 0.5%;
-    font-size: 26px;
-    border: 0;
-    outline: none;
-    background: transparent;
-    padding-top: 4px;
-    font-family: KyoboHand;
-    color: #4b4b4b;
-    caret-color: transparent;
-  }
-`;
-
-/*그림판 container*/
-export const Canvas = styled.div`
-  width: 500px;
-  height: 290px;
-  background: white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`;
 
 /*버튼 컨테이너(그림 편집)*/
 export const ButtonContainer = styled.div`

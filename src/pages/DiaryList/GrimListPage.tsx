@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useStore } from '../../store/store';
 import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
 import { getDiaryListData } from '@/apis/diaryList';
 import OpenBookLeft from '../../components/bookshape/OpenBookLeft';
 import OpenBookRight from '../../components/bookshape/OpenBookRight';
@@ -9,7 +8,6 @@ import Bookmark from '../../components/bookshape/Bookmark';
 import Calender from './components/Calender';
 import DiaryList from './components/DiaryList';
 import Loading from '../../components/Loading';
-import { BsArrowRight  } from 'react-icons/bs';
 import * as O from '../../styles/bookshape/opendbook.style';
 import * as C from '../../styles/bookshape/closedbook.style';
 import * as D from '../../styles/diary/diary.style';
@@ -50,10 +48,9 @@ function GrimList() {
           <Calender list={list} exist={exist} />
         </OpenBookLeft>
         <OpenBookRight>
-          {/* {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
-            // eslint-disable-next-line no-loop-func
+          {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
             .map((data,index)=>{
-              return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})} */}
+              return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
           {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
           <D.DiviContainer style={{zIndex: '0'}}>
             <DL.NonDiaryContainer>

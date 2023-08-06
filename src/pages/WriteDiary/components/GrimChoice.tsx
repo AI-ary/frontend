@@ -108,14 +108,6 @@ const ChoiceGrim = styled.img`
     margin: 2rem;
 `
 
-export const ChoiceButtonContainer = styled.div`
-    width: 500px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-`
-
 export const Choicebutton = styled.button`
     width: 90px;
     height: 35px;
