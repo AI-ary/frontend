@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
 import { Book2Container, WriteContainer } from '../WriteDiary/WriteGrimPage'
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import BookShape2L from '../../components/bookshape/OpenBookLeft';
+import BookShape2R from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import DiaryList from '../DiaryList/components/DiaryList'
 import { getSearchData } from '@/apis/searchDiary';

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import DiaryContent from './components/DiaryContent';
 import GrimChoice from '../WriteDiary/components/GrimChoice';
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import BookShape2L from '../../components/bookshape/OpenBookLeft';
+import BookShape2R from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import Loading from '../../components/Loading';
 import * as O from '../../styles/bookshape/opendbook.style'

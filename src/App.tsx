@@ -43,15 +43,15 @@ const router= createBrowserRouter([
       {path:'/', element:<PublicPages Component={Main} restricted/>},
       {path:'/signin', element:<PublicPages Component={SignIn} restricted/>},
       {path:'/signup', element:<PublicPages Component={SignUp} restricted/>},
-      {path:'/write', element:<PrivatePages Component={WriteGrim}/>},
-      {path:'/write', element:<WriteGrim />},
+      {path:'/write', element:<PublicPages Component={WriteGrim} restricted/>},
+      {path:'list', element:<GrimList  />},
+
       {
-        path:'/', element:<PrivatePages Component={Navbar}/>,
+        path:'/', element:<Navbar />,
         children:[
           {path:'main', element:<PrivatePages Component={AfterLogin}/>},
-          {path:'about', element:<PublicPages Component={Manual} restricted />},
-          {path:'list', element:<PrivatePages Component={GrimList}/>},
-          {path:'/search/:word', element:<DiarySearchList />}
+          {path:'list', element:<GrimList  />},
+          // {path:'/search/:word', element:<DiarySearchList />}
         ]
       }
     ]

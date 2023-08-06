@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Manuscript from './Manuscript';
-import Emoji from './Emoji';
-import { BsBrightnessHighFill, BsFillCloudFill, BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Drawing from './Drawing';
 import { useStore } from '../../../store/store';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { addDiaryData, addDiaryImage, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
-import { addDiaryData, addDiaryImage, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
+import styled from 'styled-components';
+import * as D from '../../../styles/diary/diary.style';
+import Manuscript from './Manuscript';
+import Emoji from './Emoji';
+import Drawing from './Drawing';
+import { BsBrightnessHighFill, BsFillCloudFill, BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
@@ -155,7 +156,7 @@ function DiaryContent(props:DiaryContentProps) {
   }
 
   return (
-    <DiviContainer>
+    <D.DiviContainer>
       <DateContainer>
         <Dateline>
           <Datetitle>날짜</Datetitle>
@@ -213,7 +214,7 @@ function DiaryContent(props:DiaryContentProps) {
       <Content>
         <Manuscript setContent={setContent} />
       </Content>
-    </DiviContainer>
+    </D.DiviContainer>
   );
 }
 
@@ -222,17 +223,6 @@ export default DiaryContent;
 // TODO: Swal 사용 부분 query 호출 부분으로 넘기기
 // TODO: send를 user_id 혹은 date로 enabled 확인가능하도록 변경하기
 
-/*두쪽 페이지 틀에서 한쪽 영역 컨테이너*/
-export const DiviContainer = styled.div`
-  position: absolute;
-  width: 600px;
-  height: 750px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 90;
-`;
 /*날짜&날씨 container*/
 export const DateContainer = styled.div`
   display: flex;

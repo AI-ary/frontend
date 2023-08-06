@@ -1,11 +1,11 @@
 import React from 'react';
 import * as O from '../../styles/bookshape/opendbook.style';
 
-type BookShape2LProps = {
+type OpenBookLeftProps = {
   children:React.ReactNode;
 }
 
-function BookShape2L({ children }:BookShape2LProps) {
+function OpenBookLeft({ children }:OpenBookLeftProps) {
   return( 
     <O.OpenBookLeft>
       {children}
@@ -14,5 +14,5 @@ function BookShape2L({ children }:BookShape2LProps) {
   )
 }
 
-export default BookShape2L;
+export default OpenBookLeft;
 
