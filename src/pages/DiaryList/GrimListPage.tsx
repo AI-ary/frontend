@@ -59,7 +59,7 @@ function GrimList() {
                 <span>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</span>
                 의<br />하루를 기록해볼까요?
               </div>
-              <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}} className='.link'>
+              <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}}>
                 일기 쓰러 가기
               </DL.GotoDiaryWrite>
             </DL.NonDiaryContainer>

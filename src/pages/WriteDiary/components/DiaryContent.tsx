@@ -4,12 +4,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { addDiaryData, addDiaryImage, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
-import styled from 'styled-components';
-import * as D from '../../../styles/diary/diary.style';
 import Manuscript from './Manuscript';
 import Emoji from './Emoji';
 import Drawing from './Drawing';
-import { BsBrightnessHighFill, BsFillCloudFill, BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
+import * as D from '../../../styles/diary/diary.style';
+import * as DW from '../../../styles/diary/diarywrite.style';
+
+import { ReactComponent as Sunny } from '../../../../public/images/sunny.svg';
+import { ReactComponent as Cloud } from '../../../../public/images/cloud.svg';
+import { ReactComponent as Rainy } from '../../../../public/images/rainy.svg';
+import { ReactComponent as Snow } from '../../../../public/images/snow.svg';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
@@ -31,10 +35,16 @@ function DiaryContent(props:DiaryContentProps) {
   const [comContent, setComContent] = useState<string>('');
   const [send, setSend] = useState<boolean>(false);
 
+  const getDayOfWeek = (date:string) => {
+    const week=['일', '월', '화', '수', '목', '금', '토'];
+    const dayOfWeek = week[new Date(date).getDay()];
+    return dayOfWeek;
+  }
+
   const rawDate = location.state?.date;
-  let year = rawDate.getFullYear(); //연도 구하기
   let todayMonth = rawDate.getMonth() + 1; //월 구하기
   let todayDate = rawDate.getDate(); //일 구하기
+  let todayDay = getDayOfWeek(rawDate);
   let date = format(rawDate, 'yyyy-MM-dd');
 
   //이모지 받아오기
@@ -152,68 +162,53 @@ function DiaryContent(props:DiaryContentProps) {
   }
 
   function WeatherBtn({mood, num }:WeatherBtnProps) {
-    return <WeatherRadioBtn type='radio' id={mood} checked={weather === num} onChange={() => weatherChange(num)} />;
+    return <D.WeatherRadioBtn type='radio' id={mood} checked={weather === num} onChange={() => weatherChange(num)} />;
   }
 
   return (
     <D.DiviContainer>
-      <DateContainer>
-        <Dateline>
-          <Datetitle>날짜</Datetitle>
-          <DateContent>
-            {year}.{todayMonth}.{todayDate}
-          </DateContent>
-          <Weathercontainer style={{ marginTop: '5px' }}>
+      <D.DiaryContainer>
+        <D.DateContainer>
+          <D.DateContent>{todayMonth}월 {todayDate}일 {todayDay}요일</D.DateContent>
+          <D.WeatherWrap>
             <WeatherBtn mood='sunny' num={1} />
-            <label htmlFor='sunny'>{weather === 1 ? <BsBrightnessHighFill size='29' color='red' /> : <BsBrightnessHighFill size='27' color='#8e8d8d' />}</label>
+            <label htmlFor='sunny'><Sunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' /></label>
             <WeatherBtn mood={'cloudy'} num={2} />
-            <label htmlFor='cloudy'>
-              {weather === 2 ? <BsFillCloudFill size='29' color='rgb(36 75 147)' /> : <BsFillCloudFill size='28' color='#8e8d8d' />}
-            </label>
+            <label htmlFor='cloudy'><Cloud fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' /></label>
             <WeatherBtn mood={'rainy'} num={3} />
-            <label htmlFor='rainy'>
-              {weather === 3 ? (
-                <BsFillCloudRainFill size='28' style={{ paddingTop: '1.5px' }} color='rgb(76 76 76)' />
-              ) : (
-                <BsFillCloudRainFill size='26.5' style={{ paddingTop: '1.5px' }} color='#8e8d8d' />
-              )}
-            </label>
+            <label htmlFor='rainy'><Rainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' /></label>
             <WeatherBtn mood={'snow'} num={4} />
-            <label htmlFor='snow'>
-              {weather === 4 ? (
-                <BsFillCloudSnowFill size='28' style={{ paddingTop: '2px' }} color='#FFFAFA' />
-              ) : (
-                <BsFillCloudSnowFill size='26' style={{ paddingTop: '2px' }} color='#8e8d8d' />
-              )}
-            </label>
-          </Weathercontainer>
-        </Dateline>
-      </DateContainer>
-      <TitleContainer>
-        <Title>제목: </Title>
-        <Titlecontent>
-          <input type='text' onChange={onChange} value={title} />
-        </Titlecontent>
-        <Emoji getEmoji={getEmoji} />
-      </TitleContainer>
-      <Canvas>
-        <Drawing grim={grim} />
-      </Canvas>
-      <ButtonContainer>
-        <Modebutton style={{ width: '100px' }} onClick={bringGrim}>
-          그림가져오기
-        </Modebutton>
-        <Modebutton style={{ width: '80px' }} onClick={clickedGrim}>
-          {grim ? '그림그리기' : '스탑'}
-        </Modebutton>
-        <Savebutton
-          onClick={grimDiary}>
-          저장하기
-        </Savebutton>
-      </ButtonContainer>
-      <Content>
-        <Manuscript setContent={setContent} />
-      </Content>
+            <label htmlFor='snow'><Snow fill={weather===4 ? '#F5F5F5' : '#969696'} /></label>
+          </D.WeatherWrap>
+        </D.DateContainer>
+        <D.TitleContainer>
+          <D.Title>
+            제목:
+            <D.Titlecontent>
+              <input type='text' onChange={onChange} value={title} />
+            </D.Titlecontent>
+          </D.Title>
+          <Emoji getEmoji={getEmoji} />
+        </D.TitleContainer>
+        <D.Canvas>
+          <Drawing grim={grim} />
+          <DW.ButtonContainer >
+            <DW.Modebutton onClick={bringGrim}>
+              그림가져오기
+            </DW.Modebutton>
+            <DW.Modebutton onClick={clickedGrim}>
+              {grim ? '그림그리기' : '스탑'}
+            </DW.Modebutton>
+            <DW.Savebutton
+              onClick={grimDiary}>
+              저장하기
+            </DW.Savebutton>
+          </DW.ButtonContainer>
+        </D.Canvas>
+        <D.Content>
+          <Manuscript setContent={setContent} />
+        </D.Content>
+      </D.DiaryContainer>
     </D.DiviContainer>
   );
 }
@@ -222,64 +217,3 @@ export default DiaryContent;
 
 // TODO: Swal 사용 부분 query 호출 부분으로 넘기기
 // TODO: send를 user_id 혹은 date로 enabled 확인가능하도록 변경하기
-
-
-
-
-
-
-
-/*버튼 컨테이너(그림 편집)*/
-export const ButtonContainer = styled.div`
-  width: 500px;
-  height: 25px;
-  display: flex;
-  align-items: center;
-  margin-top: 2%;
-`;
-export const Modebutton = styled.button`
-  width: 75px;
-  height: 30px;
-  border-radius: 20px;
-  font-size: 15px;
-  text-align: center;
-  background-color: transparent;
-  margin-right: 1.5%;
-  border: 2px solid black;
-  transition: box-shadow 250ms ease-in-out, color 200ms ease-in-out;
-  font-family: KyoboHand;
-  padding-bottom: 0.5%;
-  padding-top: 3px;
-  &:hover {
-    box-shadow: 0 0 40px 40px #404040 inset;
-    color: white;
-    border: none;
-  }
-`;
-
-export const Savebutton = styled.button`
-  width: 110px;
-  height: 30px;
-  background-color: black;
-  color: white;
-  border-radius: 15px;
-  text-align: center;
-  border: none;
-  margin-left: auto;
-  font-size: 15px;
-  padding-bottom: 0.5%;
-  overflow: hidden;
-  transition: box-shadow, color 300ms ease-in-out;
-  font-family: KyoboHand;
-  padding-top: 3px;
-  &:hover {
-    color: rgb(54, 54, 54);
-    background-color: transparent;
-    border: 3px solid rgb(54, 54, 54);
-  }
-`;
-/*내용 container*/
-export const Content = styled.div`
-  width: 520px;
-  height: 280px;
-`;

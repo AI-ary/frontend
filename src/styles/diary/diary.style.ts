@@ -75,15 +75,16 @@ export const Title = styled.div`
 `;
 
 export const Titlecontent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: 10px;
   z-index: 120;
   > input {
-    margin-bottom: 0.5%;
+    width: 400px;
     font-size: 24px;
-    border: 0;
     outline: none;
     background: transparent;
-    padding-top: 4px;
     font-family: 'Poor Story';
     color: #373737;
     caret-color: transparent;

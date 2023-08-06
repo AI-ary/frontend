@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import DiaryContent from './components/DiaryContent';
 import GrimChoice from '../WriteDiary/components/GrimChoice';
-import BookShape2L from '../../components/bookshape/OpenBookLeft';
-import BookShape2R from '../../components/bookshape/OpenBookRight';
+import OpenBookLeft from '../../components/bookshape/OpenBookLeft';
+import OpenBookRight from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import Loading from '../../components/Loading';
 import * as O from '../../styles/bookshape/opendbook.style'
+import * as C from '../../styles/bookshape/closedbook.style';
 
 function WriteGrim(){
   const [loading, setLoading]=useState<boolean>(false);
@@ -13,18 +14,18 @@ function WriteGrim(){
     setLoading(load);
   }
   return(
-    <O.WriteContainer>
+    <C.Container>
       {loading?<Loading />:''}
-      <O.Book2Container> 
-        <BookShape2L>
+      <O.OpenBookContainer> 
+        <OpenBookLeft>
           <GrimChoice />
-        </BookShape2L>
-        <BookShape2R>
+        </OpenBookLeft>
+        <OpenBookRight>
           <DiaryContent getLoading={getLoading}/>
-        </BookShape2R>
+        </OpenBookRight>
         <Bookmark />
-      </O.Book2Container>
-    </O.WriteContainer>
+      </O.OpenBookContainer>
+    </C.Container>
   )
 }
 

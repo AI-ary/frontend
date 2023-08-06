@@ -31,7 +31,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
     return dayOfWeek;
   }
   
-  let fulldate=date.split('-');
   let todayMonth=new Date(date).getMonth();  //월 구하기
   let todayDate=new Date(date).getDate();  //일 구하기
   let todayDay = getDayOfWeek(date);
@@ -152,7 +151,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
         </D.Canvas>
         <D.Content><ResultManuscript content={contents}/></D.Content>
       </D.DiaryContainer>
-    
     </D.DiviContainer>
   )
 }
