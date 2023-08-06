@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import api from '../../../apis/baseAxios'
-import styled from 'styled-components';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import ResultManuscript from './ResultManuscript';
 import * as D from '../../../styles/diary/diary.style';
+import * as DL from '../../../styles/diary/diarylist.style';
 import { ReactComponent as Sunny } from '../../../../public/images/sunny.svg';
 import { ReactComponent as Cloud } from '../../../../public/images/cloud.svg';
 import { ReactComponent as Rainy } from '../../../../public/images/rainy.svg';
@@ -22,6 +23,8 @@ interface DiaryListProps{
 type Props = SweetAlertResult<any>;
 
 function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListProps){
+  const [shareMenu, setShareMenu] = useState<boolean>(false);
+  
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
     const dayOfWeek = week[new Date(date).getDay()];
@@ -104,7 +107,7 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
     })
     
   }
-  function Weather() {
+  const Weather = () => {
     return(
       <>
         <Sunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' />
@@ -113,6 +116,10 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
         <Snow fill={weather===4 ? '#FFFAFA' : '#969696'} />
       </>
     )
+  }
+
+  const toggleshareMenu = () => {
+    setShareMenu((shareMenu) => !shareMenu);
   }
 
   return(
@@ -133,12 +140,14 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
         </D.TitleContainer>
         <D.Canvas>
           <img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} />
+          <DL.ShareWrap className={shareMenu ? "show-menu" : "hide-menu"}>
+            <DL.SNSImg onClick={kakaoShare} src='images/kakao.png' alt='none' />
+            <DL.SNSImg onClick={twitterShare} src='images/twitter.png' alt='none' />
+            <DL.SNSImg onClick={urlShare} src='images/url.png' alt='none' />
+          </DL.ShareWrap>
           <D.ChoiceButtonContainer>
-            <D.ButtonItem><img src="images/share.svg" alt="공유" /></D.ButtonItem>
+            <D.ButtonItem onClick={toggleshareMenu}><img src="images/share.svg" alt="공유" /></D.ButtonItem>
             <D.ButtonItem onClick={()=>DeleteDiary(id)}><img src="images/update.svg" alt="" /></D.ButtonItem>
-            {/* <SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
-            <SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
-            <SNSImg onClick={urlShare} src='/images/url.png' alt='none' /> */}
           </D.ChoiceButtonContainer>
         </D.Canvas>
         <D.Content><ResultManuscript content={contents}/></D.Content>
@@ -149,11 +158,3 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
 }
 
 export default DiaryList;
-
-const SNSImg = styled.img`
-  height: 40px;
-  margin: 0px 10px 0px 10px;
-  &:hover {
-    cursor: pointer;
-  }
-  `

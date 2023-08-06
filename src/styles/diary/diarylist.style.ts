@@ -198,3 +198,29 @@ export const Emoji = styled.div`
   z-index: 100;
   cursor: pointer;
 `
+
+export const ShareWrap = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  &.show-menu {
+    visibility: visible;
+    opacity: 1;
+    
+  }
+  &.hide-menu {
+    visibility: hidden;
+    opacity: 0;
+  }
+`
+
+export const SNSImg = styled.img`
+  width: 30px;
+  margin-right: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+`
