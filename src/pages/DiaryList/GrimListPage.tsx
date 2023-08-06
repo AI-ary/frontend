@@ -42,7 +42,7 @@ function GrimList() {
   }
   return(
     <C.Container>
-      <O.OpenBookContainer > 
+      <O.BookContainer style={{marginBottom: '100px'}}> 
       {isLoading ? <Loading /> : ''}
         <OpenBookLeft>
           <Calender list={list} exist={exist} />
@@ -66,7 +66,7 @@ function GrimList() {
           </D.DiviContainer>)}
         </OpenBookRight>
         <Bookmark />
-      </O.OpenBookContainer>
+      </O.BookContainer>
     </C.Container>
   )
 }

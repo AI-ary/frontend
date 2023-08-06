@@ -16,7 +16,7 @@ function WriteGrim(){
   return(
     <C.Container>
       {loading?<Loading />:''}
-      <O.OpenBookContainer> 
+      <O.BookContainer> 
         <OpenBookLeft>
           <GrimChoice />
         </OpenBookLeft>
@@ -24,7 +24,7 @@ function WriteGrim(){
           <DiaryContent getLoading={getLoading}/>
         </OpenBookRight>
         <Bookmark />
-      </O.OpenBookContainer>
+      </O.BookContainer>
     </C.Container>
   )
 }

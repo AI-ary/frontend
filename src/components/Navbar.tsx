@@ -144,6 +144,7 @@ const ToggleTheme = styled.ul`
   justify-content: space-around;
   align-items: center;
   cursor: pointer;
+  z-index: 100;
   &.show-menu {
     visibility: visible;
     opacity: 1;

@@ -15,13 +15,14 @@ export const Container = styled.div`
 
 export const Left = styled.div`
   width : 55px;
-  height : 780px;
+  height : 100%;
   background : ${props => props.theme.lineColor};
   border-radius : 8px 0px 0px 8px;
 `
 
 export const Flip = styled.div`
   display : flex;
+  height : 100%;
 `
 
 export const BackBtn = styled.button<{path : string}>`
@@ -43,7 +44,7 @@ export const BackBtn = styled.button<{path : string}>`
 
 export const Mid = styled.div`
   width : 695px;
-  height : 780px;
+  height : 100%;
   background-color : ${props => props.theme.bgColor};
   display : flex;
   flex-direction : column;
@@ -54,7 +55,7 @@ export const Mid = styled.div`
 
 export const Right = styled.div`
   width : 10px;
-  height : 780px;
+  height : 100%;
   background : ${props => props.theme.lineColor};
   border-radius : 0px 8px 8px 0px;
 `

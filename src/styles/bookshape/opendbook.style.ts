@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const OpenBookContainer = styled.div`
+export const BookContainer = styled.div`
   height: 730px;
   display: flex;
   justify-content: center;
