@@ -60,7 +60,8 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
   const monthEnd=endOfMonth(monthStart);
   const startDate=startOfWeek(monthStart);
   const endDate=endOfWeek(monthEnd);
-  const [add, setAdd]=useState<boolean>(true);  //일기 추가 상태
+  const [clickDate, setClickDate]=useState<string>(format(selectedDate, 'yyyy-MM-dd'));  //일기 추가 상태
+  const [hoveredDate, setHoveredDate]=useState<string | null>(null);
   const {setChoicedDate}=useStore();  //페이지 이동 시 선택 날짜 초기화
   const rows:any=[];
   let days:any=[];
@@ -88,7 +89,16 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
                   :'valid'
         }`}
         key={day}
-        onClick={()=>onDateClick(cloneDay)}
+        onClick={()=>{
+          onDateClick(cloneDay);
+          setClickDate(format(cloneDay, 'yyyy-MM-dd'));
+        }}
+        onMouseEnter={() => {
+          setHoveredDate(format(cloneDay, 'yyyy-MM-dd'));
+        }}
+        onMouseLeave={() => {
+          setHoveredDate(null);
+        }}
         >
           <>
             {formattedDate}
@@ -99,15 +109,17 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
             </DL.IconWrap>
           </>
           {exist.includes(format(cloneDay, 'yyyy-MM-dd'))?'':
-          (<DL.IconWrap onMouseEnter={()=>setAdd(false)} onMouseLeave={()=>setAdd(true)} className={`hover-close ${ add ? 'hide':''}`}> 
+          (<DL.IconWrap> 
               <Link to='/write' state={{date:day}}>
-                <BsPlusCircleFill 
-                  size="30" 
-                  fill="#EB8888" 
-                  onClick={pageMove}
-                />
+                <div>
+                  <BsPlusCircleFill 
+                    size="30" 
+                    fill="#EB8888" 
+                    className={`${format(cloneDay, 'yyyy-MM-dd') === clickDate || format(cloneDay, 'yyyy-MM-dd') === hoveredDate ? 'hover-close' : 'hide'}`} />
+                </div>
               </Link>
-            </DL.IconWrap>)}
+          </DL.IconWrap>)
+          }
         </DL.DaysCol>
       );
       day=addDays(day, 1);

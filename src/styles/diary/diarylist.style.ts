@@ -179,13 +179,13 @@ export const DaysCol =styled.div`
 export const IconWrap = styled.div`
   margin-top: 6px;
   position: relative;
-  &.hover-close{
+  .hover-close{
+    cursor: pointer;
     transition: 0.2;
     z-index: 100;
-    cursor: pointer;
-    &.hide {
-      display: none;
-    }
+  }
+  .hide {
+    display: none;
   }
 `
 
