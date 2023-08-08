@@ -1,4 +1,4 @@
-import {useState, createContext, useContext} from 'react';
+import { useState, createContext, useContext } from 'react';
 import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 import GrimList from './pages/DiaryList/GrimListPage';
 import WriteGrim from './pages/WriteDiary/WriteGrimPage';
@@ -6,7 +6,6 @@ import Main from './pages/Main/NonMemberMainPage';
 import AfterLogin from './pages/Main/MemberMainPage';
 import SignIn from './pages/Auth/SignIn/SignInPage';
 import SignUp from './pages/Auth/SignUp/SignUpPage';
-import Manual from './pages/Manual/ManualPage';
 import DiarySearchList from './pages/Search/DiarySearchPage';
 import PrivatePages from './pages/Auth/components/PrivatePages';
 import PublicPages from './pages/Auth/components/PublicPages';
