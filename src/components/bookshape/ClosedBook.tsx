@@ -7,9 +7,9 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
   const path = window.location.pathname;
   const navigate = useNavigate();
   return(
-    <S.Container>
-      <S.Left />
-      <S.Flip>
+    <S.Container className='slide'>
+      <S.Left/>
+      <S.Flip className='flip'>
         <S.BackBtn path={path} onClick={()=>navigate(-1)}>
           <RiArrowLeftSLine size={70} />
         </S.BackBtn>
