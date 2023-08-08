@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const TitleWrap = styled.div`
   display : flex;
@@ -8,6 +8,11 @@ export const TitleWrap = styled.div`
 
 export const Title = styled.div`
   font-size : 80px;
+`
+
+export const IconWrap = styled.div`
+  background-color : ${props => props.theme.bgIcon};
+  border-radius : 100%;
 `
 
 export const Container = styled.div`
@@ -25,8 +30,9 @@ export const Input = styled.input<{isValid : boolean}>`
   padding : 18px 20px;
   font-size : 20px;
   outline: none;
+  color : #000000;
   ${(props) => css`
-    border : 3px solid ${props.isValid ? '#EB8888' : 'none'};
+    border : 3px solid ${props.isValid ? 'red' : 'none'};
   `}
 `
 

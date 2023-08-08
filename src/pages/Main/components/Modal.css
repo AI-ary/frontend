@@ -67,7 +67,6 @@ div>h2{
 }
 
 .flip {
-  position: fixed;
   transform-origin: left center;
   transition-duration: 0.5s;
   transition-timing-function: ease-in;
@@ -86,6 +85,6 @@ div>h2{
   }
 
   100% {
-    margin-left: 38.6em;
+    margin-left: 25em;
   }
 }

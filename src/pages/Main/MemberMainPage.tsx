@@ -50,7 +50,7 @@ function AfterLogin() {
   }
 
   function onClick(e : React.MouseEvent ) {
-    e.preventDefault();
+    // e.preventDefault();
     // api.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`
     // api.patch(`users/${sessionStorage.getItem('id')}/`, {
     //   cover_image_url: selected
@@ -65,7 +65,7 @@ function AfterLogin() {
           flip.classList.toggle('color');
           setTimeout(() => {
             navigate('/list');
-          }, 400);
+          }, 450);
         }
       }, 800);
     }
