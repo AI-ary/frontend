@@ -22,7 +22,7 @@ export const Left = styled.div`
 
 export const Flip = styled.div`
   display : flex;
-  height : 100%;
+  height : 780px;
 `
 
 export const BackBtn = styled.button<{path : string}>`
@@ -44,7 +44,7 @@ export const BackBtn = styled.button<{path : string}>`
 
 export const Mid = styled.div`
   width : 695px;
-  height : 100%;
+  height : 780px;
   background-color : ${props => props.theme.bgColor};
   display : flex;
   flex-direction : column;

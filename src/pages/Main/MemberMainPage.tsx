@@ -124,7 +124,7 @@ const Profile = styled.div`
   height: 260px;
   border-radius: 50%;
   background-color: white;
-  border: 8px solid ${props => props.theme.profileBg};
+  border: 8px solid ${props => props.theme.lineColor};
   overflow: hidden;
   background-image: url('/images/profileBg.svg');
   > img {
@@ -134,7 +134,7 @@ const Profile = styled.div`
   }
 `
 const SelectBtn = styled.label`
-  background-color: ${props => props.theme.profileBg};
+  background-color: ${props => props.theme.lineColor};
   position: relative;
   top: -80px;
   left: 90px;

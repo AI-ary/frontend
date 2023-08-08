@@ -26,7 +26,6 @@ export const Container = styled.div`
 export const Input = styled.input<{isValid : boolean}>`
   width : 575px;
   border-radius : 12px;
-  margin-bottom : 15px;
   padding : 18px 20px;
   font-size : 20px;
   outline: none;
