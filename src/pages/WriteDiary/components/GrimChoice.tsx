@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
-import styled from 'styled-components';
 import { useStore } from '../../../store/store';
+import * as D from '../../../styles/diary/diary.style';
+import * as DW from '../../../styles/diary/diarywrite.style';
 
 interface Grim{
   image_url:string;
@@ -49,89 +50,20 @@ function GrimChoice(){
   };
   
   return(
-    <ChoiceContainer>
-      <Choicetitle>
-        GD가 분석해본 그림이에요!
-      </Choicetitle>
-      <Choice>
+    <D.DiviContainer>
+      <DW.Choicetitle>
+        AIARY가 분석한 그림이에요!
+      </DW.Choicetitle>
+      {/* <DW.Choice>
         {
           img && img.map((data,index)=>
             (
-              <ChoiceGrim key={index} id="image" src={data}
+              <DW.ChoiceGrim key={index} id="image" src={data}
                 alt="grim" onClick={onChange} crossOrigin="anonymous"/>
             ))
         }
-      </Choice>
-    </ChoiceContainer>)
+      </DW.Choice> */}
+    </D.DiviContainer>)
 }
 
 export default GrimChoice;
-
-const ChoiceContainer = styled.div`
-    position: absolute;  
-    width: 600px;
-    height: 750px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 90;
-
-`
-
-const Choicetitle =styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-    height: 80px;
-    font-size: 40px;
-    font-family:KyoboHand;
-    font-weight: bolder;
-`
-
-const Choice = styled.div`
-    width: 500px;   
-    height: 520px;
-    background:white;
-    display:flex;
-    flex-wrap: wrap;
-    border-radius: 10px;
-    border: 2px dotted grey;
-    overflow: auto;
-`
-
-const ChoiceGrim = styled.img`
-    width: 95px;
-    height: 95px;
-    object-fit:cover;
-    margin: 2rem;
-`
-
-export const ChoiceButtonContainer = styled.div`
-    width: 500px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-`
-
-export const Choicebutton = styled.button`
-    width: 90px;
-    height: 35px;
-    background-color: transparent;
-    color: black;
-    border: 2px solid black;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 17px;
-    margin-left: 1.5%;
-    transition: box-shadow 250ms ease-in-out, color 200ms ease-in-out;
-    font-family:KyoboHand;
-    font-weight: bolder;
-    &:hover{
-        box-shadow: 0 0 40px 40px #404040 inset;
-        color: white;
-        border:none;
-    }
-`

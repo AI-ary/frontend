@@ -1,6 +1,6 @@
 import { WriteContainer, Book2Container } from '../WriteDiary/WriteGrimPage';
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import BookShape2L from '../../components/bookshape/OpenBookLeft';
+import BookShape2R from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import IntroduceL from './components/IntroduceL';
 import IntroduceR from './components/IntroduceR';

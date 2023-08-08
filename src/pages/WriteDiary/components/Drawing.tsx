@@ -1,9 +1,10 @@
 import {useState, useEffect, useRef, Fragment} from 'react';
-import {Stage, Layer, Line, Image, Transformer, Circle} from 'react-konva';
 import { useStore } from '../../../store/store';
+import {Stage, Layer, Line, Image, Transformer, Circle} from 'react-konva';
 import useImage from 'use-image';
 import {BsFillCircleFill, BsFillEraserFill } from 'react-icons/bs';
 import { FaUndoAlt } from 'react-icons/fa';
+import * as DW from '../../../styles/diary/diarywrite.style';
 
 interface RectangleProps{
   image: string;
@@ -201,7 +202,7 @@ function Drawing(props:DrawingProps){
       {props.grim?(
         <Stage
           ref={stageRef}
-          width={500}
+          width={541}
           height={290}
           onMouseDown={(e) => {      
             checkDeselect(e);
@@ -251,7 +252,7 @@ function Drawing(props:DrawingProps){
         </Stage>
       ):( <Stage
         ref={stageRef}
-        width={500}
+        width={541}
         height={290}
         onMouseDown={(e) => {      
           handleMouseDown(e);
@@ -307,7 +308,7 @@ function Drawing(props:DrawingProps){
         </Layer>
       </Stage>)}
       {!props.grim?(
-        <div style={{transform:'translate(68%,-100%)', display:'flex'}}>
+        <DW.DrawingBtnWrap>
           {listColors && listColors.map((map,index)=>{
             return(
               <BsFillCircleFill key={index} color={map} size="23" style={{marginRight:'8px'}} onClick={()=>{
@@ -320,7 +321,7 @@ function Drawing(props:DrawingProps){
             setTool('eraser');
           }} />
           <FaUndoAlt size="22" style={{marginRight:'10px'}} onClick={handleUndo}/>
-        </div>):('')}
+        </DW.DrawingBtnWrap>):('')}
     
     </div>
   )

@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
-import { WriteContainer, Book2Container } from '../WriteDiary/WriteGrimPage';
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import { useStore } from '../../store/store';
+import { format } from 'date-fns';
+import { getDiaryListData } from '@/apis/diaryList';
+import OpenBookLeft from '../../components/bookshape/OpenBookLeft';
+import OpenBookRight from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import Calender from './components/Calender';
 import DiaryList from './components/DiaryList';
-import { useStore } from '../../store/store';
-import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
-import { DiviContainer } from '../WriteDiary/components/DiaryContent';
-import { BsArrowRight  } from 'react-icons/bs';
-import { getDiaryListData } from '@/apis/diaryList';
 import Loading from '../../components/Loading';
+import * as O from '../../styles/bookshape/opendbook.style';
+import * as C from '../../styles/bookshape/closedbook.style';
+import * as D from '../../styles/diary/diary.style';
+import * as DL from '../../styles/diary/diarylist.style';
 
 interface ListContent{
   user_id:number|undefined;
@@ -41,31 +41,33 @@ function GrimList() {
     }
   }
   return(
-    <WriteContainer>
+    <C.Container>
+      <O.BookContainer style={{marginBottom: '100px'}}> 
       {isLoading ? <Loading /> : ''}
-      <Book2Container style={{paddingBottom:'80px'}}> 
-        <BookShape2L>
+        <OpenBookLeft>
           <Calender list={list} exist={exist} />
-        </BookShape2L>
-        <BookShape2R>
+        </OpenBookLeft>
+        <OpenBookRight>
           {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
-            // eslint-disable-next-line no-loop-func
             .map((data,index)=>{
               return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
-          {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(<DiviContainer style={{zIndex: '0'}}>
-            <div style={{fontSize:'2.5rem', fontFamily:'KyoboHand', textAlign:'center'}}>
-              <img src="images/write.PNG"  style={{width: '30%', margin:"0 auto"}} alt="list"/>
-              <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:'5px'}}><p style={{width:'17rem', margin:'0', color:'orange'}}>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</p>의</div>
-                하루를 기록해볼까요?
-              <Link to='/write' state={{date:choiceDate}} className="listLink">
-                    일기 쓰러 가기<BsArrowRight size="2rem" />
-              </Link>
-            </div>
-          </DiviContainer>)}
-        </BookShape2R>
+          {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
+          <D.DiviContainer style={{zIndex: '0'}}>
+            <DL.NonDiaryContainer>
+              <img src="images/write.svg" alt="list"/>
+              <div>
+                <span>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</span>
+                의<br />하루를 기록해볼까요?
+              </div>
+              <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}}>
+                일기 쓰러 가기
+              </DL.GotoDiaryWrite>
+            </DL.NonDiaryContainer>
+          </D.DiviContainer>)}
+        </OpenBookRight>
         <Bookmark />
-      </Book2Container>
-    </WriteContainer>
+      </O.BookContainer>
+    </C.Container>
   )
 }
 

@@ -1,7 +1,7 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { ThemeType, useThemeContext } from '../App'
+import { ThemeType, useThemeContext } from '../App';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
@@ -45,19 +45,19 @@ function Navbar() {
   }
 
   return(
-    <div>
+    <>
       <NavbarWrap>
         <Logo onClick={()=>navigate('main')}>
-          <img src="images/aiary.png" alt="logo" />
+          <img src="/images/aiary.png" alt="logo" />
         </Logo>
         <BtnContainer>
           <button>소개</button>
           <button>커뮤니티</button>
           <SearchContainer>
             {visible && <SearchInput visible={visible} type="text" value={search} placeholder='검색 창' onChange={onChange} onKeyDown={(e)=>handleEnter(e)} /> }
-            <img src="images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
+            <img src="/images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
           </SearchContainer>
-          <button onClick={toggleThemeMenu}><img src="images/person.svg" alt="person" /></button>
+          <button onClick={toggleThemeMenu}><img src="/images/person.svg" alt="person" /></button>
         </BtnContainer>
       </NavbarWrap>
       <ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
@@ -66,7 +66,7 @@ function Navbar() {
         <li onClick={()=>handleThemeChange('originTheme')}>origin</li>
       </ToggleTheme>
       <Outlet />
-    </div>
+    </>
   )
 }
 
@@ -74,7 +74,7 @@ function Navbar() {
 export default Navbar;
 
 const NavbarWrap = styled.div`
-  position: fixed;
+  position: sticky;
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -144,6 +144,7 @@ const ToggleTheme = styled.ul`
   justify-content: space-around;
   align-items: center;
   cursor: pointer;
+  z-index: 100;
   &.show-menu {
     visibility: visible;
     opacity: 1;

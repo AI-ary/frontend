@@ -1,13 +1,12 @@
 import {useState} from 'react';
-import './Calender.css';
-import { BsFillArrowLeftCircleFill,BsFillArrowRightCircleFill, BsPlusCircleFill } from 'react-icons/bs';
-import { format, addMonths, subMonths } from 'date-fns';
-import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from 'date-fns';
-import { isSameMonth, isSameDay, addDays} from 'date-fns';
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../store/store';
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, 
+  startOfWeek, endOfWeek, isSameMonth, isSameDay, addDays } from 'date-fns';
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
+import { BsPlusCircleFill } from "react-icons/bs";
+import * as DL from '../../../styles/diary/diarylist.style';
 
-//(date-fns 이용: 날짜 관련 함수 총 집합 라이브러리)
 //header 컴포넌트(월 이동)
 
 interface RenderHeaderProps{
@@ -18,36 +17,32 @@ interface RenderHeaderProps{
 
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }:RenderHeaderProps) => {
   return (
-    <div className="header row">
-      <div className="headercol col-start">
-        <span className="text">
-          <span className="text month">
-            {format(currentMonth, 'MMM')}
-          </span>
-          {format(currentMonth, 'yyyy')}
-        </span>
-      </div>
-      <div className="headercol col-end">
-        <BsFillArrowLeftCircleFill size="25" className="icons" onClick={prevMonth} />
-        <BsFillArrowRightCircleFill size="25" className="icons" onClick={nextMonth} />
-      </div>
-    </div>
+    <DL.HeaderContainer>
+      <DL.HeaderYear>
+        {format(currentMonth, 'yyyy')}
+      </DL.HeaderYear>
+      <DL.HeaderDate>
+        <MdOutlineArrowBackIosNew size="32" fill="#373737" className="icons" onClick={prevMonth} />
+        <p>{format(currentMonth, 'M')}월</p>
+        <MdOutlineArrowForwardIos size="32" fill="#373737" className="icons" onClick={nextMonth} />
+      </DL.HeaderDate>
+    </DL.HeaderContainer>
   );
 };
 
 //Days(요일) 캄포넌트
 const RenderDays = () =>{
   const days=[];
-  const date=['Sun', 'Mon', 'Thu', 'Wed', 'Thrs', 'Fri', 'Sat'];
+  const date=['SUN', 'MON', 'THU', 'WED', 'THU', 'FRI', 'SAT'];
 
   for(let i=0; i<7; i++){
     days.push(
-      <div className='dayscol' key={i}>
+      <p key={i}>
         {date[i]}
-      </div>
+      </p>
     )
   }
-  return <div className='days row'>{days}</div>
+  return <DL.WeekWrap>{days}</DL.WeekWrap>
 }
 
 interface RenderCellsProps {
@@ -65,7 +60,8 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
   const monthEnd=endOfMonth(monthStart);
   const startDate=startOfWeek(monthStart);
   const endDate=endOfWeek(monthEnd);
-  const [add, setAdd]=useState<boolean>(true);  //일기 추가 상태
+  const [clickDate, setClickDate]=useState<string>(format(selectedDate, 'yyyy-MM-dd'));  //일기 추가 상태
+  const [hoveredDate, setHoveredDate]=useState<string | null>(null);
   const {setChoicedDate}=useStore();  //페이지 이동 시 선택 날짜 초기화
   const rows:any=[];
   let days:any=[];
@@ -77,11 +73,11 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
   }
 
   while(day<=endDate){
-    for (let i=0; i<7; i++){
-      formattedDate=format(day, 'd');
+    for (let i=0; i<7; i++){  
+      formattedDate = format(day, 'd');
       const cloneDay:Date=day;
       days.push(
-        <div className={`bodycol cell ${
+        <DL.DaysCol className={`cell ${
           !isSameMonth(day, monthStart)
             ? 'not-valid'
             : isSameDay(day, selectedDate)
@@ -89,40 +85,53 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
               : isSameDay(day, today)
                 ? 'today'
                 : format(currentMonth, 'M') !== format(day, 'M')
-                  ? 'not-valid'
+                  ?'not-valid'
                   :'valid'
         }`}
         key={day}
-        onClick={()=>onDateClick(cloneDay)}
+        onClick={()=>{
+          onDateClick(cloneDay);
+          setClickDate(format(cloneDay, 'yyyy-MM-dd'));
+        }}
+        onMouseEnter={() => {
+          setHoveredDate(format(cloneDay, 'yyyy-MM-dd'));
+        }}
+        onMouseLeave={() => {
+          setHoveredDate(null);
+        }}
         >
-          <span>
+          <>
             {formattedDate}
-            {list.filter(x=>new Date(x.diary_date).toDateString()===cloneDay.toDateString())
-            // eslint-disable-next-line no-loop-func
-              .map((data,index)=>{
-                return <span key={index} className="listemoji">{data.emoji}
-                </span>})
-            }
-          </span>
-          {exist.includes(format(cloneDay, 'yyyy-MM-dd'))?'':(<div> <Link to='/write' state={{date:day}}>
-            <div onMouseEnter={()=>{setAdd(false)}}
-              onMouseLeave={()=>{setAdd(true)}}
-              onClick={pageMove} 
-            ><BsPlusCircleFill style={{color:'#c04922'}} className={`hover-close ${add?'hide':''}`} />
-            </div>
-          </Link></div>)}
-        </div>
+            <DL.IconWrap>
+              {list.filter(x=>new Date(x.diary_date).toDateString()===cloneDay.toDateString())
+                .map((data,index)=>{
+                  return <DL.Emoji key={index}>{data.emoji}</DL.Emoji>})}
+            </DL.IconWrap>
+          </>
+          {exist.includes(format(cloneDay, 'yyyy-MM-dd'))?'':
+          (<DL.IconWrap> 
+              <Link to='/write' state={{date:day}}>
+                <div>
+                  <BsPlusCircleFill 
+                    size="30" 
+                    fill="#EB8888" 
+                    className={`${format(cloneDay, 'yyyy-MM-dd') === clickDate || format(cloneDay, 'yyyy-MM-dd') === hoveredDate ? 'hover-close' : 'hide'}`} />
+                </div>
+              </Link>
+          </DL.IconWrap>)
+          }
+        </DL.DaysCol>
       );
       day=addDays(day, 1);
     }
     rows.push(
-      <div className='bodyrow' key={day}>
+      <DL.DaysRow key={day}>
         {days}
-      </div>
+      </DL.DaysRow>
     );
     days=[];
   }
-  return <div className='calenderbody'>{rows}</div>
+  return <DL.DaysWrap>{rows}</DL.DaysWrap>
 }
 
 interface CalenderProps{
@@ -146,14 +155,11 @@ function Calender({list, exist}:CalenderProps){
     setChoicedDate(day);
   }
   return(
-    <div className='listcontainer'>
-      <div className='listname'>일기 리스트</div>
-      <div className='calender'>
-        <RenderHeader currentMonth={currentMonth} prevMonth={prevMonth} nextMonth={nextMonth}></RenderHeader>
-        <RenderDays/>
-        <RenderCells currentMonth={currentMonth} today={today} list={list} exist={exist} selectedDate={selectedDate} onDateClick={onDateClick}></RenderCells>
-      </div>
-    </div>
+    <DL.CalenderContainer>
+      <RenderHeader currentMonth={currentMonth} prevMonth={prevMonth} nextMonth={nextMonth}></RenderHeader>
+      <RenderDays/>
+      <RenderCells currentMonth={currentMonth} today={today} list={list} exist={exist} selectedDate={selectedDate} onDateClick={onDateClick}></RenderCells>
+    </DL.CalenderContainer>
   )
 }
 

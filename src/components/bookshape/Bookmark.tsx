@@ -53,8 +53,7 @@ export default Bookmark;
 const BookMark = styled.div`
   display : flex;
   flex-direction : column;
-  height: 400px;
-  margin-top: 40px;
+  height: 95%;
 `;
 const StyledNavLink = styled(NavLink)`
   display: flex;
