@@ -31,7 +31,7 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
     return dayOfWeek;
   }
   
-  let todayMonth=new Date(date).getMonth();  //월 구하기
+  let todayMonth=new Date(date).getMonth() + 1;  //월 구하기
   let todayDate=new Date(date).getDate();  //일 구하기
   let todayDay = getDayOfWeek(date);
 
