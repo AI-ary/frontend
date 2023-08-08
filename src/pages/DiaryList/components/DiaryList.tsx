@@ -1,17 +1,14 @@
-import { Button, makeStyles } from '@material-ui/core';
-import ResultManuscript from './ResultManuscript';
-import { BsBrightnessHighFill, BsFillCloudFill ,BsFillCloudSnowFill, BsFillCloudRainFill } from 'react-icons/bs';
-import { Content, DateContainer, Dateline, Datetitle, DiviContainer, Weathercontainer, DateContent, TitleContainer, Title, Titlecontent, Canvas} from '../../WriteDiary/components/DiaryContent';
-import { ChoiceButtonContainer } from '../../WriteDiary/components/GrimChoice';
+import { useState } from 'react';
 import api from '../../../apis/baseAxios'
-import styled from 'styled-components';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import ResultManuscript from './ResultManuscript';
+import * as D from '../../../styles/diary/diary.style';
+import * as DL from '../../../styles/diary/diarylist.style';
+import { ReactComponent as Sunny } from '../../../../public/images/sunny.svg';
+import { ReactComponent as Cloud } from '../../../../public/images/cloud.svg';
+import { ReactComponent as Rainy } from '../../../../public/images/rainy.svg';
+import { ReactComponent as Snow } from '../../../../public/images/snow.svg';
 
-const useStyles = makeStyles(() => ({
-  customHoverFocus: {
-    '&:hover, &.Mui-focusVisible': { backgroundColor: 'black', color: 'white' },
-  },
-}));
 
 interface DiaryListProps{
   id: number;
@@ -26,10 +23,17 @@ interface DiaryListProps{
 type Props = SweetAlertResult<any>;
 
 function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListProps){
-  let fulldate=date.split('-');
-  let year=fulldate[0];  //연도 구하기
-  let todayMonth=fulldate[1];  //월 구하기
-  let todayDate=fulldate[2];  //일 구하기
+  const [shareMenu, setShareMenu] = useState<boolean>(false);
+  
+  const getDayOfWeek = (date:string) => {
+    const week=['일', '월', '화', '수', '목', '금', '토'];
+    const dayOfWeek = week[new Date(date).getDay()];
+    return dayOfWeek;
+  }
+  
+  let todayMonth=new Date(date).getMonth() + 1;  //월 구하기
+  let todayDate=new Date(date).getDate();  //일 구하기
+  let todayDay = getDayOfWeek(date);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -38,7 +42,6 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
     timer: 3000,
     timerProgressBar: true
   })
-  const classes = useStyles();
 
   const kakaoShare = () => {
     // window.Kakao.Share.sendDefault({
@@ -103,53 +106,53 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
     })
     
   }
-  function Weather() {
+  const Weather = () => {
     return(
       <>
-        <BsBrightnessHighFill size="27" color={weather===1 ? 'red' : 'grey'} />
-        <BsFillCloudFill size="27" color={weather===2 ? '#4E5D79' : 'grey'} />
-        <BsFillCloudRainFill size="26" color={weather===3 ? '#5A5A5A' : 'grey'} style={{paddingTop: '1.5px'}} />
-        <BsFillCloudSnowFill size="25" color={weather===4 ? '#FFFAFA' : 'grey'} style={{paddingTop: '2px'}}/>
+        <Sunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' />
+        <Cloud fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' />
+        <Rainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' />
+        <Snow fill={weather===4 ? '#FFFAFA' : '#969696'} />
       </>
     )
   }
 
+  const toggleshareMenu = () => {
+    setShareMenu((shareMenu) => !shareMenu);
+  }
+
   return(
-    <DiviContainer>
-      <DateContainer>
-        <Dateline>
-          <Datetitle>날짜</Datetitle>
-          <DateContent style={{width: '9rem', fontSize:'1.5rem'}}>{year}.{todayMonth}.{todayDate}</DateContent>
-          <Weathercontainer>
+    <D.DiviContainer>
+      <D.DiaryContainer>
+        <D.DateContainer>
+          <D.DateContent>{todayMonth}월 {todayDate}일 {todayDay}요일</D.DateContent>
+          <D.WeatherWrap>
             <Weather/>
-          </Weathercontainer>
-        </Dateline>
-      </DateContainer>
-      <TitleContainer>
-        <Title>제목:</Title>
-        <Titlecontent style={{fontSize: '1.5rem'}}>{title}</Titlecontent>
-        <div style={{width:'1em', fontSize:'1.8em',marginLeft: '460px'}}>{emoji}</div>
-      </TitleContainer>
-      <Canvas><img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} /></Canvas>
-      <div>
-        <ChoiceButtonContainer style={{height: '25px' ,marginTop:'2%', marginLeft:'2.2%'}}>
-          <Button onClick={()=>DeleteDiary(id)}>삭제</Button>
-          <SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
-          <SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
-          <SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
-        </ChoiceButtonContainer>
-      </div>
-      <Content><ResultManuscript content={contents}/></Content>
-    </DiviContainer>
+          </D.WeatherWrap>
+        </D.DateContainer>
+        <D.TitleContainer>
+          <D.Title>
+            제목: 
+            <D.Titlecontent>{title}</D.Titlecontent>
+          </D.Title>
+          <D.Emoji>{emoji}</D.Emoji>
+        </D.TitleContainer>
+        <D.Canvas>
+          <img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} />
+          <DL.ShareWrap className={shareMenu ? "show-menu" : "hide-menu"}>
+            <DL.SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
+            <DL.SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
+            <DL.SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
+          </DL.ShareWrap>
+          <D.ChoiceButtonContainer>
+            <D.ButtonItem onClick={toggleshareMenu}><img src="/images/share.svg" alt="공유" /></D.ButtonItem>
+            <D.ButtonItem onClick={()=>DeleteDiary(id)}><img src="/images/update.svg" alt="" /></D.ButtonItem>
+          </D.ChoiceButtonContainer>
+        </D.Canvas>
+        <D.Content><ResultManuscript content={contents}/></D.Content>
+      </D.DiaryContainer>
+    </D.DiviContainer>
   )
 }
 
 export default DiaryList;
-
-const SNSImg = styled.img`
-  height: 40px;
-  margin: 0px 10px 0px 10px;
-  &:hover {
-    cursor: pointer;
-  }
-  `

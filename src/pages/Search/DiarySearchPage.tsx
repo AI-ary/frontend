@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router';
-import { Book2Container, WriteContainer } from '../WriteDiary/WriteGrimPage'
-import BookShape2L from '../../components/bookshape/BookShapeL';
-import BookShape2R from '../../components/bookshape/BookShapeR';
+import { getSearchData } from '@/apis/searchDiary';
+import OpenBookLeft from '../../components/bookshape/OpenBookLeft';
+import OpenBookRight from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import DiaryList from '../DiaryList/components/DiaryList'
-import { getSearchData } from '@/apis/searchDiary';
+import * as C from '../../styles/bookshape/closedbook.style';
+import * as O from '../../styles/bookshape/opendbook.style';
 
 function DiarySearchList(){
   const [searchList, setSearchList] = useState<any>([]);
@@ -32,9 +33,9 @@ function DiarySearchList(){
   },[isSuccess, isLoading, data]);
 
   return(
-    <WriteContainer>
-      <Book2Container style={{paddingBottom:'80px'}}> 
-        <BookShape2L>
+    <C.Container>
+      <O.BookContainer style={{marginBottom: '100px'}}> 
+        <OpenBookLeft>
           <div style={{display:'flex', flexDirection:'column'}}>
             {searchList.map((data:any,key:number)=>{
               return(
@@ -70,15 +71,15 @@ function DiarySearchList(){
               )
             })}
           </div>
-        </BookShape2L>
-        <BookShape2R>
+        </OpenBookLeft>
+        <OpenBookRight>
           {detail===undefined || detail.id===-1?'':
             <DiaryList key={detail.id} id={detail.id} title={detail.title} weather={detail.weather} draw={detail.drawing_url} contents={detail.contents} date={detail.diary_date} emoji={detail.emoji} />
           }
-        </BookShape2R>
+        </OpenBookRight>
         <Bookmark />
-      </Book2Container>
-    </WriteContainer>
+      </O.BookContainer>
+    </C.Container>
   )
 }
 

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Bookmark from './Bookmark';
 import * as S from '../../styles/bookshape/closedbook.style'
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import Bookmark from './Bookmark';

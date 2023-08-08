@@ -1,8 +1,8 @@
 import {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './components/Modal.css';
-import api from '../../apis/baseAxios'
-import * as C from '../../styles/common.style'
+import api from '../../apis/baseAxios';
+import * as C from '../../styles/common.style';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import ClosedBook from '@/components/bookshape/ClosedBook';
