@@ -58,6 +58,7 @@ function AfterLogin() {
     let flip : Element | null= document.querySelector('.flip');
     let slide : Element | null = document.querySelector('.slide');
     if (slide) {
+      flip?.classList.add('flipStart')
       slide.classList.add('move');
       setTimeout(() => {
         if (flip) {

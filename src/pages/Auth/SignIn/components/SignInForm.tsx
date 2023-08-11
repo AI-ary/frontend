@@ -3,7 +3,6 @@ import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
 import { signIn } from '@/apis/auth';
 import { useNavigate } from 'react-router-dom';
-import { Warning } from '../../SignUp/components/SignUpForm';
 
 function SignInForm() {
   const [email, setEmail] = useState<string>('');
@@ -42,7 +41,9 @@ function SignInForm() {
     <S.Container>
       <S.InputWrap>
         <S.Input type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} isValid={email ? !emailValid() : emailValid()} />
-        <Warning content='이메일 형식으로 입력해 주세요.' valid={email ? !emailValid() : emailValid()} />
+        <S.WarningWrap>
+          <S.WarningContent valid={email ? !emailValid() : emailValid()}>이메일 형식으로 입력해 주세요.</S.WarningContent>
+        </S.WarningWrap>
         <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} />
       </S.InputWrap>
       <S.BtnWrap>

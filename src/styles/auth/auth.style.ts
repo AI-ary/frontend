@@ -46,3 +46,15 @@ export const BtnWrap = styled.div`
   display : flex;
   flex-direction : column;
 `
+
+export const WarningWrap = styled.div`
+  height : 20px;
+  display:flex;
+  align-items:center;
+`
+
+export const WarningContent = styled.span<{valid:boolean}>`
+  color : rgba(225, 34, 49, 1);
+  margin : 0px 4px;
+  visibility : ${props => props.valid ? 'visible' : 'hidden'};
+`

@@ -66,8 +66,8 @@ div>h2{
   transform: rotateY(-180deg);
 }
 
-.flip {
-  transform-origin: left center;
+.flipStart {
+transform-origin: left center;
   transition-duration: 0.5s;
   transition-timing-function: ease-in;
 }
