@@ -1,10 +1,5 @@
 import styled, { css } from "styled-components"
 
-interface LabelProps {
-  name: string;
-  path: string;
-}
-
 export const Container = styled.div`
   display : flex;
   width : 100vw;
@@ -58,4 +53,16 @@ export const Right = styled.div`
   height : 780px;
   background : ${props => props.theme.bgSideColor};
   border-radius : 0px 8px 8px 0px;
+`
+
+export const BehindWrap = styled.div`
+  display : flex;
+  position : absolute;
+  height : 780px;
+  margin-left : 134px;
+`
+
+export const FrontWrap = styled.div`
+  position : absolute;
+  display : flex;
 `

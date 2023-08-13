@@ -1,26 +1,52 @@
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../store/store';
 import Bookmark from './Bookmark';
+import OpenBookRight from '../../components/bookshape/OpenBookRight';
 import * as S from '../../styles/bookshape/closedbook.style'
 import * as B from '../../styles/bookshape/opendbook.style'
+import * as D from '../../styles/diary/diary.style';
+import * as DL from '../../styles/diary/diarylist.style';
 import { RiArrowLeftSLine } from 'react-icons/ri';
 
 const ClosedBook = ({ children }: React.PropsWithChildren) => {
   const path = window.location.pathname;
   const navigate = useNavigate();
+  const {choiceDate}=useStore();
+  const year = choiceDate.getFullYear()
+  const month = choiceDate.getMonth() + 1
+  const day = choiceDate.getDate()
   return(
     <S.Container className='slide'>
       <B.BookContainer style={path === '/main' ? { marginBottom: '100px' } : {}}>
-        <S.Left/>
-        <S.Flip className='flip'>
-          <S.BackBtn path={path} onClick={()=>navigate(-1)}>
-            <RiArrowLeftSLine size={70} />
-          </S.BackBtn>
-          <S.Mid>
-            {children}
-          </S.Mid>
-          <S.Right />
-          <Bookmark/>
-        </S.Flip>                
+        <S.BehindWrap>
+          <OpenBookRight>
+            <D.DiviContainer style={{zIndex: '0'}}>
+              <DL.NonDiaryContainer>
+                <img src="images/write.svg" alt="list"/>
+                <div>
+                  <span>{year}년 {month}월 {day}일</span>
+                의<br />하루를 기록해볼까요?
+                </div>
+                <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}}>
+                일기 쓰러 가기
+                </DL.GotoDiaryWrite>
+              </DL.NonDiaryContainer>
+            </D.DiviContainer>
+          </OpenBookRight>
+          <Bookmark />
+        </S.BehindWrap>
+        <S.FrontWrap>
+          <S.Left/>
+          <S.Flip className='flip'>
+            <S.BackBtn path={path} onClick={()=>navigate(-1)}>
+              <RiArrowLeftSLine size={70} />
+            </S.BackBtn>
+            <S.Mid>
+              {children}
+            </S.Mid>
+            <S.Right />
+          </S.Flip>    
+        </S.FrontWrap>
       </B.BookContainer>
 
     </S.Container>
