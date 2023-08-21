@@ -105,7 +105,7 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
             <DL.IconWrap>
               {list.filter(x=>new Date(x.diary_date).toDateString()===cloneDay.toDateString())
                 .map((data,index)=>{
-                  return <DL.Emoji key={index}>{data.emoji}</DL.Emoji>})}
+                  return <DL.ListEmoji key={index}>{data.emoji}</DL.ListEmoji>})}
             </DL.IconWrap>
           </>
           {exist.includes(format(cloneDay, 'yyyy-MM-dd'))?'':

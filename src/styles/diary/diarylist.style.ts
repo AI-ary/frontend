@@ -58,6 +58,7 @@ export const HeaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 15px 15px;
+  margin-bottom: 5px;
   box-sizing: border-box;
 `
 
@@ -97,9 +98,9 @@ export const WeekWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10 15px;
   box-sizing: border-box;
   > p {
+    margin-top: 5px;
     font-family: 'Poor Story';
     color: #373737;
     font-size: 24px;
@@ -161,7 +162,7 @@ export const DaysCol =styled.div`
   &.cell.valid:hover{
     cursor: pointer;
     transition: 0.2s ease-in-out;
-    box-shadow: 1.5px 1.5px  0px 0px #c4c4c4;
+    box-shadow: 1.5px 1.5px 0px 0px #c4c4c4;
     transform: scale(1.01);
     border: none;
     background: #c4c4c4;
@@ -189,7 +190,7 @@ export const IconWrap = styled.div`
   }
 `
 
-export const Emoji = styled.div`
+export const ListEmoji = styled.div`
   margin-top: 6px;
   display: flex;
   justify-content: center;

@@ -22,7 +22,7 @@ interface RectangleProps{
   onSelect: any;
   onChange?: any;
   onDelete?: any;
-   onClick?: any;
+  onClick?: any;
 }
 
 const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onSelect, onChange, onDelete}:RectangleProps) => {
@@ -198,7 +198,7 @@ function Drawing(props:DrawingProps){
 
   }
   return(
-    <div>
+    <>
       {props.grim?(
         <Stage
           ref={stageRef}
@@ -323,7 +323,7 @@ function Drawing(props:DrawingProps){
           <FaUndoAlt size="22" style={{marginRight:'10px'}} onClick={handleUndo}/>
         </DW.DrawingBtnWrap>):('')}
     
-    </div>
+    </>
   )
 }
 export default Drawing;

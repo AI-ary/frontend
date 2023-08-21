@@ -1,4 +1,11 @@
 import styled from "styled-components";
+import { ReactComponent as Sunny } from '../../../public/images/sunny.svg';
+import { ReactComponent as Cloud } from '../../../public/images/cloud.svg';
+import { ReactComponent as Rainy } from '../../../public/images/rainy.svg';
+import { ReactComponent as Snow } from '../../../public/images/snow.svg';
+import { ReactComponent as Share } from '../../../public/images/share.svg';
+import { ReactComponent as Update } from '../../../public/images/update.svg';
+
 
 export const DiviContainer = styled.div`
   width: 100%;
@@ -47,6 +54,30 @@ export const WeatherWrap = styled.div`
     margin-right: 13px;
   }
 `;
+
+export const StyledSunny = styled(Sunny)`
+  fill: ${props => props.fill}
+  width: 32px;
+  height: 32px;
+`
+
+export const StyledCloudy = styled(Cloud)`
+  fill: ${props => props.fill}
+  width: 32px;
+  height: 32px;
+`
+
+export const StyledRainy = styled(Rainy)`
+  fill: ${props => props.fill}
+  width: 32px;
+  height: 32px;
+`
+
+export const StyledSnow = styled(Snow)`
+  fill: ${props => props.fill}
+  width: 32px;
+  height: 32px;
+`
 
 export const WeatherRadioBtn = styled.input`
   display: none;
@@ -99,9 +130,14 @@ export const Emoji = styled.div`
 /*그림판 container*/
 export const Canvas = styled.div`
   width: 100%;
+  height: 290px;
   position: relative;
   background-color: #ffffff;
   border-bottom: 1.6px solid #434343;
+  > img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 /*내용 container*/
@@ -156,4 +192,14 @@ export const ChoiceButtonContainer = styled.div`
 
 export const ButtonItem = styled.button`
   margin-right: 10px;
+`
+
+export const StyledShare = styled(Share)`
+  width: 41px;
+  height: 41px;
+`
+
+export const StyledUpdate = styled(Update)`
+  width: 42px;
+  height: 41px;
 `
