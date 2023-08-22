@@ -160,7 +160,7 @@ export const GlobalStyle = createGlobalStyle`
       height: 250px;
     }
     ${TableTd}{
-      width: 50px;
+      width: 48.4px;
       height: 44.3px;
       font-size: 21px;
     }
