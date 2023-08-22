@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
+import { BsPlusCircleFill } from "react-icons/bs";
 import styled from "styled-components";
 
 /* 일기 목록(작성한 일기가 없는 경우) */
@@ -91,6 +93,17 @@ export const HeaderDate = styled.div`
     transform: scale(1.15);
   }
 `
+export const ArrowBackIcon = styled(MdOutlineArrowBackIosNew)`
+  fill: #373737;
+  cursor: pointer;
+  font-size: 32px;
+`;
+
+export const ArrowForwardIcon = styled(MdOutlineArrowForwardIos)`
+  fill: #373737;
+  cursor: pointer;
+  font-size: 32px;
+`;
 
 export const WeekWrap = styled.div`
   width: 90%;
@@ -189,7 +202,11 @@ export const IconWrap = styled.div`
     display: none;
   }
 `
-
+export const PlusCircle = styled(BsPlusCircleFill)`
+fill: #EB8888;
+  cursor: pointer;
+  font-size: 30px;
+`
 export const ListEmoji = styled.div`
   margin-top: 6px;
   display: flex;
