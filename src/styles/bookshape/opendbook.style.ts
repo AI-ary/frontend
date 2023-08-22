@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const BookContainer = styled.div`
-  height: 730px;
+  height: 780px;
   display: flex;
   justify-content: center;
   align-items: center;

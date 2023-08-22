@@ -47,11 +47,11 @@ export const GlobalStyle = createGlobalStyle`
       height: 624px;
     }
     ${OpenBookLeft} {
-      width: 600px;
+      width: 580px;
       border-width: 0  0 8px 8px;
     }
     ${OpenBookRight}{
-      width: 600px;
+      width: 580px;
       border-width: 0 8px 8px 0 ;
     }
     ${Line}{
