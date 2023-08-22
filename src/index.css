@@ -10,7 +10,7 @@
     }
 }
 
-@media screen and (max-width: 1400px), screen and (max-height: 700px) {
+/* @media screen and (max-width: 1400px), screen and (max-height: 700px) {
     #root {
         display: none;
     }
@@ -23,4 +23,4 @@
         font-size: 50px;
         font-weight: bold;
     }
-}
+} */

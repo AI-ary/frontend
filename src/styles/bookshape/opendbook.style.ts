@@ -22,7 +22,7 @@ export const OpenBookLeft = styled.div`
 `
 export const OpenBookRight = styled.div`
   position: relative;
-  width: 650px;
+  width: 695px;
   height: 100%; 
   display: flex;
   justify-content: center;
