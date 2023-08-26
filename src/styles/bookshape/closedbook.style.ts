@@ -1,10 +1,5 @@
 import styled, { css } from "styled-components"
 
-interface LabelProps {
-  name: string;
-  path: string;
-}
-
 export const Container = styled.div`
   display : flex;
   width : 100vw;
@@ -60,20 +55,14 @@ export const Right = styled.div`
   border-radius : 0px 8px 8px 0px;
 `
 
-export const LabelWrap = styled.div`
+export const BehindWrap = styled.div`
   display : flex;
-  flex-direction : column;
+  position : absolute;
+  height : 780px;
+  margin-left : 134px;
 `
 
-export const Label = styled.button<LabelProps>`
-  background-color : #FFD2DC;
-  width : 90px;
-  height : 60px;
-  border-radius : 0px 8px 8px 0px;
-  font-size : 18px;
-  ${(props) => css`
-    margin-top : ${props.name === '홈' ? '55px' : '20px'};
-    // 현재 위치가 어디냐에 따라 책갈피 색상 바뀌게 설정
-    background-color : ${(props.path === '/' || props.path === '/signin' || props.path === '/signup' || props.path === '/main') && props.name === '홈' || (props.path === '/write' || props.path === '/list') && props.name === '일기 쓰기'? props.theme.bookMarkActiveBg : props.theme.bookMarkBg };
-  `}
+export const FrontWrap = styled.div`
+  position : absolute;
+  display : flex;
 `
