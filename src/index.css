@@ -9,18 +9,3 @@
         color: rgba(0, 0, 0, 0);
     }
 }
-
-@media screen and (max-width: 1400px), screen and (max-height: 700px) {
-    #root {
-        display: none;
-    }
-    #help {
-        color: black;
-        display: flex;
-        height: 100vh;
-        justify-content: center;
-        align-items: center;
-        font-size: 50px;
-        font-weight: bold;
-    }
-}
