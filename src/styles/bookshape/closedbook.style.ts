@@ -73,6 +73,8 @@ export const StyledHiddenPalette = styled(HiddenPalette)`
   position: absolute;
   left: 40px;
   top: 40%;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   z-index: 99;
 `
@@ -80,6 +82,8 @@ export const StyledShowPalette = styled(ShowPalette)`
   position: absolute;
   left: 40px;
   top: 40%;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   z-index: 99;
 `
