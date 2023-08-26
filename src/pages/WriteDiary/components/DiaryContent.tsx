@@ -17,6 +17,11 @@ import { ReactComponent as Snow } from '../../../../public/images/snow.svg';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
+  startLoading: () => void
+  loadingState: {
+    current : boolean
+  }
+  isDisabled : boolean
 };
 
 interface RefObject {
@@ -108,7 +113,9 @@ function DiaryContent(props:DiaryContentProps) {
   const {isKeywordSuccess, data, isError} = getKeywordDrawingData({send, date ,user, comContent});
 
   const bringGrim = () => {
+    // api 호출 중간에 멈출 수 있는지 여부에 따라 가져오기 취소 버튼 넣을지 말지 생각하기
     props.getLoading(true);
+    props.startLoading()
     setComContent(content);
     setGetGrimList([]);
     const form = new FormData();
@@ -127,6 +134,7 @@ function DiaryContent(props:DiaryContentProps) {
       setGetGrimList(data);
       setSend(false);
       props.getLoading(false);
+      props.loadingState.current = false
     }
 
     if(isError && comContent === ''){
@@ -139,6 +147,7 @@ function DiaryContent(props:DiaryContentProps) {
         showConfirmButton: false,
         timer: 2000
       })
+      props.loadingState.current = false
     }
   },[isTextSuccess, isKeywordSuccess, isError]);
 
@@ -193,10 +202,10 @@ function DiaryContent(props:DiaryContentProps) {
         <D.Canvas>
           <Drawing grim={grim} />
           <DW.ButtonContainer >
-            <DW.Modebutton onClick={bringGrim}>
+            <DW.Modebutton onClick={bringGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
               그림가져오기
             </DW.Modebutton>
-            <DW.Modebutton onClick={clickedGrim}>
+            <DW.Modebutton onClick={clickedGrim} isDisabled={false}>
               {grim ? '그림그리기' : '스탑'}
             </DW.Modebutton>
             <DW.Savebutton

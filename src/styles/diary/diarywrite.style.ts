@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface Props {
+  isDisabled:boolean
+}
+
 export const GridContent =styled.textarea`
   position: absolute;
   width:85%;
@@ -27,14 +31,14 @@ export const ButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const Modebutton = styled.button`
+export const Modebutton = styled.button<Props>`
   width: 100px;
   border-radius: 20px;
   font-size: 15px;
   font-family: 'Poor Story';
   -webkit-text-stroke: 0.4px #373737;
   text-align: center;
-  color: #373737;
+  color: ${props => !props.isDisabled ? '#373737' : 'rgba(1,1,1,0.5)'};
   background-color: transparent;
   margin-right: 5px;
   border: 2px solid #373737;
