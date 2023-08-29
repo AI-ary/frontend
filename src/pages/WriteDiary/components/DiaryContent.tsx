@@ -113,7 +113,6 @@ function DiaryContent(props:DiaryContentProps) {
   const {isKeywordSuccess, data, isError} = getKeywordDrawingData({send, date ,user, comContent});
 
   const bringGrim = () => {
-    // api 호출 중간에 멈출 수 있는지 여부에 따라 가져오기 취소 버튼 넣을지 말지 생각하기
     props.getLoading(true);
     props.startLoading()
     setComContent(content);
