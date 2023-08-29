@@ -54,7 +54,7 @@ function GrimChoice(){
       <DW.Choicetitle>
         AIARY가 분석한 그림이에요!
       </DW.Choicetitle>
-      {/* <DW.Choice>
+      <DW.Choice>
         {
           img && img.map((data,index)=>
             (
@@ -62,7 +62,7 @@ function GrimChoice(){
                 alt="grim" onClick={onChange} crossOrigin="anonymous"/>
             ))
         }
-      </DW.Choice> */}
+      </DW.Choice>
     </D.DiviContainer>)
 }
 

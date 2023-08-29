@@ -50,12 +50,12 @@ function Bookmark() {
 
 export default Bookmark;
 
-const BookMark = styled.div`
+export const BookMark = styled.div`
   display : flex;
   flex-direction : column;
   height: 95%;
 `;
-const StyledNavLink = styled(NavLink)`
+export const StyledNavLink = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,11 +4,6 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 import ResultManuscript from './ResultManuscript';
 import * as D from '../../../styles/diary/diary.style';
 import * as DL from '../../../styles/diary/diarylist.style';
-import { ReactComponent as Sunny } from '../../../../public/images/sunny.svg';
-import { ReactComponent as Cloud } from '../../../../public/images/cloud.svg';
-import { ReactComponent as Rainy } from '../../../../public/images/rainy.svg';
-import { ReactComponent as Snow } from '../../../../public/images/snow.svg';
-
 
 interface DiaryListProps{
   id: number;
@@ -109,10 +104,10 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   const Weather = () => {
     return(
       <>
-        <Sunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' />
-        <Cloud fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' />
-        <Rainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' />
-        <Snow fill={weather===4 ? '#FFFAFA' : '#969696'} />
+        <D.StyledSunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' />
+        <D.StyledCloudy fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' />
+        <D.StyledRainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' />
+        <D.StyledSnow fill={weather===4 ? '#FFFAFA' : '#969696'} />
       </>
     )
   }
@@ -138,15 +133,15 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
           <D.Emoji>{emoji}</D.Emoji>
         </D.TitleContainer>
         <D.Canvas>
-          <img src={draw} alt="diarygrim" style={{ width: '500px', height: '290px' }} />
+          <img src={draw} alt="diarygrim" />
           <DL.ShareWrap className={shareMenu ? "show-menu" : "hide-menu"}>
             <DL.SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
             <DL.SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
             <DL.SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
           </DL.ShareWrap>
           <D.ChoiceButtonContainer>
-            <D.ButtonItem onClick={toggleshareMenu}><img src="/images/share.svg" alt="공유" /></D.ButtonItem>
-            <D.ButtonItem onClick={()=>DeleteDiary(id)}><img src="/images/update.svg" alt="" /></D.ButtonItem>
+            <D.ButtonItem onClick={toggleshareMenu}><D.StyledShare /></D.ButtonItem>
+            <D.ButtonItem onClick={()=>DeleteDiary(id)}><D.StyledUpdate /></D.ButtonItem>
           </D.ChoiceButtonContainer>
         </D.Canvas>
         <D.Content><ResultManuscript content={contents}/></D.Content>

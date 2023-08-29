@@ -22,7 +22,7 @@ interface RectangleProps{
   onSelect: any;
   onChange?: any;
   onDelete?: any;
-   onClick?: any;
+  onClick?: any;
 }
 
 const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onSelect, onChange, onDelete}:RectangleProps) => {
@@ -111,6 +111,8 @@ interface GrimImageProps{
 }
 
 function Drawing(props:DrawingProps){
+  const [viewportSize, setViewportSize]=useState({ width: window.innerWidth, height: window.innerHeight });
+  const [canvasSize, setCanvasSize]=useState({width:500, height:290});
   const {choiceImg, setUpdateCanvas}=useStore();
   const [grimimage, setGrimimage] = useState<GrimImageProps[]>([]);
   const [selectedId, selectShape] = useState<number | null>(null);
@@ -127,7 +129,24 @@ function Drawing(props:DrawingProps){
     }
   };
 
-  
+  const handleResize = () => {
+    setViewportSize({ width: window.innerWidth, height: window.innerHeight });
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    if(viewportSize.width>=1441 && viewportSize.height>=831){
+      setCanvasSize({width:500, height:290})
+    }else if(viewportSize.width>=1181 && viewportSize.height>=681){
+      setCanvasSize({width:483, height:250})
+    }else if(viewportSize.width>=1101 && viewportSize.height>=601){
+      setCanvasSize({width:416, height:230})
+    }
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     setGrimimage([...grimimage, ...choiceImg.map(item=>{
       return{
@@ -198,12 +217,12 @@ function Drawing(props:DrawingProps){
 
   }
   return(
-    <div>
+    <>
       {props.grim?(
         <Stage
           ref={stageRef}
-          width={541}
-          height={290}
+          width={canvasSize.width}
+          height={canvasSize.height}
           onMouseDown={(e) => {      
             checkDeselect(e);
           }}
@@ -252,8 +271,8 @@ function Drawing(props:DrawingProps){
         </Stage>
       ):( <Stage
         ref={stageRef}
-        width={541}
-        height={290}
+        width={canvasSize.width}
+        height={canvasSize.height}
         onMouseDown={(e) => {      
           handleMouseDown(e);
           checkDeselect(e);
@@ -323,7 +342,7 @@ function Drawing(props:DrawingProps){
           <FaUndoAlt size="22" style={{marginRight:'10px'}} onClick={handleUndo}/>
         </DW.DrawingBtnWrap>):('')}
     
-    </div>
+    </>
   )
 }
 export default Drawing;
