@@ -147,14 +147,23 @@ export const Content = styled.div`
 `;
 
 export const PaperContainer = styled.div`
-  --line-length: 10;
   box-sizing: content-box;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: calc(var(--line-length));
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  > label {
+    width: 100%;
+    height: 100%;
+  }
 `
 export const TableTr = styled.div`
+  --line-length: 20;
+  width: 100%;
+  height: calc(100% / 5);
+  background-color: blue;
   display: flex;
   &:last-child {
     border-bottom: none;
@@ -162,10 +171,12 @@ export const TableTr = styled.div`
 `
 
 export const TableTd =styled.div`
+  --line-length: 10;
   border-bottom: 1.6px solid #434343;
   border-right: 1.6px solid #434343;
-  width: 54.2px;
-  height: 52px;
+  height: 100%;
+  width: calc(100% / var(--line-length)); 
+  background-color: green;
   font-family: 'Poor Story';
   color: #373737;
   font-size: 24px;

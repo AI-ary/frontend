@@ -160,8 +160,6 @@ export const GlobalStyle = createGlobalStyle`
       height: 250px;
     }
     ${TableTd}{
-      width: 48.4px;
-      height: 44.3px;
       font-size: 21px;
     }
     ${StyledShare}{
@@ -299,8 +297,6 @@ export const GlobalStyle = createGlobalStyle`
       height: 230px;
     }
     ${TableTd}{
-      width: 41.8px;
-      height: 39.1px;
       font-size: 16px;
     }
     ${ButtonItem}{
