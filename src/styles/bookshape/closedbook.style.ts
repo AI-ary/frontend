@@ -69,36 +69,36 @@ export const FrontWrap = styled.div`
   display : flex;
 `
 
-export const StyledHiddenPalette = styled(HiddenPalette)`
+export const ThemeContainer = styled.div`
   position: absolute;
+  top: 0;
   left: 40px;
-  top: 40%;
-  width: 100px;
-  height: 100px;
+  width: 270px;
+  height: 100%;
+  display: flex;
+  padding: 0 10px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+export const StyledHiddenPalette = styled(HiddenPalette)`
   cursor: pointer;
   z-index: 99;
 `
 export const StyledShowPalette = styled(ShowPalette)`
-  position: absolute;
-  left: 40px;
-  top: 40%;
-  width: 100px;
-  height: 100px;
   cursor: pointer;
   z-index: 99;
 `
 
 export const ToggleTheme = styled.ul`
-  width: 200px;
-  height: 300px;
+  height: 280px;
   position: absolute;
-  top: 28%;
-  left: 60px;
+  left: 80px;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
   &.show-menu {
     visibility: visible;
@@ -109,10 +109,9 @@ export const ToggleTheme = styled.ul`
     visibility: hidden;
     opacity: 0;
   }
-
   > li {
-    width: 65px;
-    height: 65px;
+    width: 108px;
+    height: 108px;
     overflow: hidden;
     > img {
       width: 100%;
@@ -120,8 +119,7 @@ export const ToggleTheme = styled.ul`
       object-fit: cover;
     }
   }
-  > li:last-child{
-    position: absolute;
-    left: 100px;
+  > li:nth-child(2){
+    margin-left: 50px;
   }
 `

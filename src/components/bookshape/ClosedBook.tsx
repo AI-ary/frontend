@@ -12,7 +12,7 @@ import { ThemeType, useThemeContext } from '../../App';
 
 const ClosedBook = ({ children }: React.PropsWithChildren) => {
   const {changeThemeType} =useThemeContext()
-  const [themeMenu, setThemeMenu] = useState<boolean>(false);
+  const [themeMenu, setThemeMenu] = useState<boolean>(true);
   const path = window.location.pathname;
   const navigate = useNavigate();
   const {choiceDate}=useStore();
@@ -26,18 +26,20 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
 
   return(
     <S.Container className='slide'>
-      {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} />:<S.StyledShowPalette onClick={() => setThemeMenu(false)} />}
-      <S.ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
-        <li onClick={()=>handleThemeChange('blueTheme')}>
-          <img src="images/bluetheme.svg" alt="theme" />
-        </li>
-        <li onClick={()=>handleThemeChange('rainbowTheme')}>
-          <img src="images/rainbowtheme.svg" alt="theme" />
-        </li>
-        <li onClick={()=>handleThemeChange('originTheme')}>
-          <img src="images/originaltheme.svg" alt="theme" />
-        </li>
-      </S.ToggleTheme>
+      <S.ThemeContainer>
+        {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} />:<S.StyledShowPalette onClick={() => setThemeMenu(false)} />}
+        <S.ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
+          <li onClick={()=>handleThemeChange('blueTheme')}>
+            <img src="images/bluetheme.svg" alt="theme" />
+          </li>
+          <li onClick={()=>handleThemeChange('rainbowTheme')}>
+            <img src="images/rainbowtheme.svg" alt="theme" />
+          </li>
+          <li onClick={()=>handleThemeChange('originTheme')}>
+            <img src="images/originaltheme.svg" alt="theme" />
+          </li>
+        </S.ToggleTheme>
+      </S.ThemeContainer>
       <B.BookContainer style={path === '/main' ? { marginBottom: '100px' } : {}}>
         <S.BehindWrap>
           <OpenBookRight>

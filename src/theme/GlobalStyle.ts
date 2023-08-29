@@ -116,11 +116,6 @@ export const GlobalStyle = createGlobalStyle`
         margin : 0px 3px;
         font-size : 12px;
       }
-      ${ToggleTheme}{
-        top: 27.5%;
-        left: 50px;
-      }
-    
     }
 
     @media screen and (max-width: 1180px), screen and (max-height: 680px) {
@@ -204,11 +199,14 @@ export const GlobalStyle = createGlobalStyle`
         height: 90px;
       }
       ${ToggleTheme}{
-        top: 24%;
-        left: 50px;
+        height: 220px;
+        left: 70px;
         > li {
-          width: 60px;
-          height: 60px;
+          width: 80px;
+          height: 80px;
+        }
+        > li:nth-child(2){
+          margin-left: 40px;
         }
       }
     
