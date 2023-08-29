@@ -17,6 +17,11 @@ import { ReactComponent as Snow } from '../../../../public/images/snow.svg';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
+  startLoading: () => void
+  loadingState: {
+    current : boolean
+  }
+  isDisabled : boolean
 };
 
 interface RefObject {
@@ -109,6 +114,7 @@ function DiaryContent(props:DiaryContentProps) {
 
   const bringGrim = () => {
     props.getLoading(true);
+    props.startLoading()
     setComContent(content);
     setGetGrimList([]);
     const form = new FormData();
@@ -123,10 +129,19 @@ function DiaryContent(props:DiaryContentProps) {
       setSend(true);
     }
 
-    if(isKeywordSuccess){
-      setGetGrimList(data);
-      setSend(false);
-      props.getLoading(false);
+    if (isKeywordSuccess) {
+      const percent : HTMLElement | null = document.querySelector('#percent');
+      const percentBar : HTMLElement | null = document.querySelector('#percentBar');
+      if (percent !== null && percentBar !== null) {
+        percent.textContent = '100%';
+        percentBar.style.width = '100%';
+      }
+      setTimeout(() => {
+        setGetGrimList(data);
+        setSend(false);
+        props.getLoading(false);
+        props.loadingState.current = false
+      },300)
     }
 
     if(isError && comContent === ''){
@@ -139,6 +154,7 @@ function DiaryContent(props:DiaryContentProps) {
         showConfirmButton: false,
         timer: 2000
       })
+      props.loadingState.current = false
     }
   },[isTextSuccess, isKeywordSuccess, isError]);
 
@@ -193,10 +209,10 @@ function DiaryContent(props:DiaryContentProps) {
         <D.Canvas>
           <Drawing grim={grim} />
           <DW.ButtonContainer >
-            <DW.Modebutton onClick={bringGrim}>
+            <DW.Modebutton onClick={bringGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
               그림가져오기
             </DW.Modebutton>
-            <DW.Modebutton onClick={clickedGrim}>
+            <DW.Modebutton onClick={clickedGrim} isDisabled={false}>
               {grim ? '그림그리기' : '스탑'}
             </DW.Modebutton>
             <DW.Savebutton

@@ -1,10 +1,40 @@
 import styled from 'styled-components';
-function Loading(){
+import { useState, useRef } from 'react';
+
+interface Props {
+  isLoading : boolean
+  setIsLoading : React.Dispatch<React.SetStateAction<boolean>>
+  cancelLoading : any
+}
+
+function Loading({isLoading,setIsLoading,cancelLoading} : Props) {
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
   return (
-    <Background>
-      <LoadingText>LOADING</LoadingText>
-      <img src="images/loading.gif" alt="로딩중" width='6%' />
-    </Background>
+    <div
+      style={{
+        position: 'fixed',
+        backgroundColor: 'rgba(1, 1, 1, 0.5)',
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        left: '0px',
+        top: '0px',
+        flexDirection: 'column',
+        zIndex:100
+      }}
+    >
+      <h1 id='percent' style={{ fontSize: '100px', color: 'white' }}>
+            0%
+      </h1>
+      <div style={{ width: '50%', backgroundColor: 'white' }}>
+        <div id='percentBar' style={{ width: '0', height: '50px', backgroundColor: 'orange', transition: 'width 0.5s' }}></div>
+      </div>
+      <button onClick={cancelLoading} style={{ fontSize: '50px', color: 'white' }}>
+            가져오기 취소
+      </button>
+    </div>
   );
 };
 const Background = styled.div`

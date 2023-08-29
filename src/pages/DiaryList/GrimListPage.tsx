@@ -26,13 +26,13 @@ function GrimList() {
   const user = sessionStorage.getItem('id') || ''; //user id받아오기
 
   //일기 리스트 가져오기(전체)
-  const {isLoading, isSuccess, data} = getDiaryListData();
+  const {isSuccess, data} = getDiaryListData();
 
   useEffect(()=>{
     if(isSuccess){
       setAdd(data);
     }
-  },[isSuccess, isLoading, data]);
+  },[isSuccess, data]);
 
   for(let i=0;i<add.length;i++){
     if(add[i].user_id===parseInt(user)){
@@ -43,7 +43,6 @@ function GrimList() {
   return(
     <C.Container>
       <O.BookContainer style={{marginBottom: '100px'}}> 
-      {isLoading ? <Loading /> : ''}
         <OpenBookLeft>
           <Calender list={list} exist={exist} />
         </OpenBookLeft>
