@@ -130,11 +130,19 @@ function DiaryContent(props:DiaryContentProps) {
       setSend(true);
     }
 
-    if(isKeywordSuccess){
-      setGetGrimList(data);
-      setSend(false);
-      props.getLoading(false);
-      props.loadingState.current = false
+    if (isKeywordSuccess) {
+      const percent : HTMLElement | null = document.querySelector('#percent');
+      const percentBar : HTMLElement | null = document.querySelector('#percentBar');
+      if (percent !== null && percentBar !== null) {
+        percent.textContent = '100%';
+        percentBar.style.width = '100%';
+      }
+      setTimeout(() => {
+        setGetGrimList(data);
+        setSend(false);
+        props.getLoading(false);
+        props.loadingState.current = false
+      },300)
     }
 
     if(isError && comContent === ''){
