@@ -12,7 +12,7 @@ import { ThemeType, useThemeContext } from '../../App';
 
 const ClosedBook = ({ children }: React.PropsWithChildren) => {
   const {changeThemeType} =useThemeContext()
-  const [themeMenu, setThemeMenu] = useState<boolean>(true);
+  const [themeMenu, setThemeMenu] = useState<boolean>(false);
   const path = window.location.pathname;
   const navigate = useNavigate();
   const {choiceDate}=useStore();
