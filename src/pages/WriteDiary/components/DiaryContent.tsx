@@ -10,10 +10,6 @@ import Drawing from './Drawing';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 
-import { ReactComponent as Sunny } from '../../../../public/images/sunny.svg';
-import { ReactComponent as Cloud } from '../../../../public/images/cloud.svg';
-import { ReactComponent as Rainy } from '../../../../public/images/rainy.svg';
-import { ReactComponent as Snow } from '../../../../public/images/snow.svg';
 
 type DiaryContentProps = {
   getLoading: (load: boolean) => void;
@@ -188,13 +184,13 @@ function DiaryContent(props:DiaryContentProps) {
           <D.DateContent>{todayMonth}월 {todayDate}일 {todayDay}요일</D.DateContent>
           <D.WeatherWrap>
             <WeatherBtn mood='sunny' num={1} />
-            <label htmlFor='sunny'><Sunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' /></label>
+            <label htmlFor='sunny'><D.StyledSunny fill={weather=== 1 ? '#FF0000' : '#969696'} className='weather' /></label>
             <WeatherBtn mood={'cloudy'} num={2} />
-            <label htmlFor='cloudy'><Cloud fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' /></label>
+            <label htmlFor='cloudy'><D.StyledCloudy fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' /></label>
             <WeatherBtn mood={'rainy'} num={3} />
-            <label htmlFor='rainy'><Rainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' /></label>
+            <label htmlFor='rainy'><D.StyledRainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' /></label>
             <WeatherBtn mood={'snow'} num={4} />
-            <label htmlFor='snow'><Snow fill={weather===4 ? '#F5F5F5' : '#969696'} /></label>
+            <label htmlFor='snow'><D.StyledSnow fill={weather===4 ? '#F5F5F5' : '#969696'} /></label>
           </D.WeatherWrap>
         </D.DateContainer>
         <D.TitleContainer>

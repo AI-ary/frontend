@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { useStore } from '../../../store/store';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, 
   startOfWeek, endOfWeek, isSameMonth, isSameDay, addDays } from 'date-fns';
-import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
-import { BsPlusCircleFill } from "react-icons/bs";
 import * as DL from '../../../styles/diary/diarylist.style';
 
 //header 컴포넌트(월 이동)
@@ -22,9 +20,9 @@ const RenderHeader = ({ currentMonth, prevMonth, nextMonth }:RenderHeaderProps) 
         {format(currentMonth, 'yyyy')}
       </DL.HeaderYear>
       <DL.HeaderDate>
-        <MdOutlineArrowBackIosNew size="32" fill="#373737" className="icons" onClick={prevMonth} />
+        <DL.ArrowBackIcon onClick={prevMonth} />
         <p>{format(currentMonth, 'M')}월</p>
-        <MdOutlineArrowForwardIos size="32" fill="#373737" className="icons" onClick={nextMonth} />
+        <DL.ArrowForwardIcon onClick={nextMonth} />
       </DL.HeaderDate>
     </DL.HeaderContainer>
   );
@@ -105,16 +103,14 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
             <DL.IconWrap>
               {list.filter(x=>new Date(x.diary_date).toDateString()===cloneDay.toDateString())
                 .map((data,index)=>{
-                  return <DL.Emoji key={index}>{data.emoji}</DL.Emoji>})}
+                  return <DL.ListEmoji key={index}>{data.emoji}</DL.ListEmoji>})}
             </DL.IconWrap>
           </>
           {exist.includes(format(cloneDay, 'yyyy-MM-dd'))?'':
           (<DL.IconWrap> 
               <Link to='/write' state={{date:day}}>
                 <div>
-                  <BsPlusCircleFill 
-                    size="30" 
-                    fill="#EB8888" 
+                  <DL.PlusCircle
                     className={`${format(cloneDay, 'yyyy-MM-dd') === clickDate || format(cloneDay, 'yyyy-MM-dd') === hoveredDate ? 'hover-close' : 'hide'}`} />
                 </div>
               </Link>
