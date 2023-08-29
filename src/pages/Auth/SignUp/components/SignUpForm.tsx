@@ -4,14 +4,6 @@ import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
 import { signUp } from '@/apis/auth';
 
-
-export const Warning = ({content, valid} : {content : string, valid:boolean}) => {
-  return(
-    <div className='h-5 flex items-center'>
-      <span className={valid ? 'text-red-600 mx-1' : 'hidden'}>{content}</span>
-    </div>)
-}
-
 function SignUpForm() {
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
@@ -79,13 +71,21 @@ function SignUpForm() {
     <S.Container>
       <S.InputWrap>
         <S.Input type="text" placeholder="닉네임" value={nickname} onChange={nameInput} isValid={nicknameValid()} />
-        <Warning content={'특수문자 혹은 모음, 자음은 사용하실 수 없습니다.'} valid={nicknameValid()} />
-        <S.Input type="text" placeholder="이메일" value={email} onChange={(e)=>setEmail(e.target.value)} isValid={email ? !emailValid() : emailValid()} />
-        <Warning content={'이메일 형식으로 입력해 주세요.'} valid={email ? !emailValid() : emailValid()} />
+        <S.WarningWrap>
+          <S.WarningContent valid={nicknameValid()}>특수문자 혹은 모음, 자음은 사용하실 수 없습니다.</S.WarningContent>
+        </S.WarningWrap>
+        <S.Input type="text" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} isValid={email ? !emailValid() : emailValid()} />
+        <S.WarningWrap>
+          <S.WarningContent valid={email ? !emailValid() : emailValid()}>이메일 형식으로 입력해 주세요.</S.WarningContent>
+        </S.WarningWrap>
         <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={password ? !passwordValid() : passwordValid()} />
-        <Warning content={'숫자, 특수문자를 포함하여 8글자 이상 입력해 주세요.'} valid={password ? !passwordValid() : passwordValid()} />
+        <S.WarningWrap>
+          <S.WarningContent valid={password ? !passwordValid() : passwordValid()}>숫자, 특수문자를 포함하여 8글자 이상 입력해 주세요.</S.WarningContent>
+        </S.WarningWrap>
         <S.Input type="password" placeholder="비밀번호 확인" value={confirm} onChange={(e)=>setConfirm(e.target.value)} isValid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
-        <Warning content={'비밀번호를 다시 확인해 주세요.'} valid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
+        <S.WarningWrap>
+          <S.WarningContent valid={confirm ? (!confirm ? isSame() : !isSame()) : false}>비밀번호를 다시 확인해 주세요.</S.WarningContent>
+        </S.WarningWrap>
       </S.InputWrap>
       <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</C.CommonFilledBtn>
     </S.Container>

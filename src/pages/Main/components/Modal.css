@@ -66,8 +66,8 @@ div>h2{
   transform: rotateY(-180deg);
 }
 
-.flip {
-  transform-origin: left center;
+.flipStart {
+transform-origin: left center;
   transition-duration: 0.5s;
   transition-timing-function: ease-in;
 }
@@ -85,6 +85,6 @@ div>h2{
   }
 
   100% {
-    margin-left: 25em;
+    margin-left: 18.25em;
   }
 }
