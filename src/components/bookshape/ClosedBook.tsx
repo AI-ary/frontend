@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store/store';
 import Bookmark from './Bookmark';
@@ -7,16 +8,38 @@ import * as B from '../../styles/bookshape/opendbook.style'
 import * as D from '../../styles/diary/diary.style';
 import * as DL from '../../styles/diary/diarylist.style';
 import { RiArrowLeftSLine } from 'react-icons/ri';
+import { ThemeType, useThemeContext } from '../../App';
 
 const ClosedBook = ({ children }: React.PropsWithChildren) => {
+  const {changeThemeType} =useThemeContext()
+  const [themeMenu, setThemeMenu] = useState<boolean>(true);
   const path = window.location.pathname;
   const navigate = useNavigate();
   const {choiceDate}=useStore();
   const year = choiceDate.getFullYear()
   const month = choiceDate.getMonth() + 1
   const day = choiceDate.getDate()
+
+  const handleThemeChange = (themeType:ThemeType) => {
+    changeThemeType(themeType);
+  }
+
   return(
     <S.Container className='slide'>
+      <S.ThemeContainer>
+        {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} />:<S.StyledShowPalette onClick={() => setThemeMenu(false)} />}
+        <S.ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
+          <li onClick={()=>handleThemeChange('blueTheme')}>
+            <img src="images/bluetheme.svg" alt="theme" />
+          </li>
+          <li onClick={()=>handleThemeChange('rainbowTheme')}>
+            <img src="images/rainbowtheme.svg" alt="theme" />
+          </li>
+          <li onClick={()=>handleThemeChange('originTheme')}>
+            <img src="images/originaltheme.svg" alt="theme" />
+          </li>
+        </S.ToggleTheme>
+      </S.ThemeContainer>
       <B.BookContainer style={path === '/main' ? { marginBottom: '100px' } : {}}>
         <S.BehindWrap>
           <OpenBookRight>

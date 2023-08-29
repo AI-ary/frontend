@@ -1,5 +1,5 @@
 import { Input, Title, WarningContent, WarningWrap } from "@/styles/auth/auth.style";
-import { BackBtn, Flip, Left, Mid, Right } from "@/styles/bookshape/closedbook.style";
+import { BackBtn, Flip, Left, Mid, Right,StyledHiddenPalette, StyledShowPalette, ToggleTheme } from "@/styles/bookshape/closedbook.style";
 import { CommonEmptyBtn, CommonFilledBtn, CommonOutlinedBtn } from "@/styles/common.style";
 import { Aiary, ButtonWrap, Content, Logo } from "@/styles/main/main.style";
 import { createGlobalStyle, ThemeProps } from "styled-components";
@@ -116,7 +116,7 @@ export const GlobalStyle = createGlobalStyle`
         margin : 0px 3px;
         font-size : 12px;
       }
-       ${BookContainer}{
+      ${BookContainer}{
       height: 624px;
     }
     ${OpenBookLeft} {
@@ -322,6 +322,25 @@ export const GlobalStyle = createGlobalStyle`
       ${WarningContent} {
         margin : 0px 2px;
         font-size : 11px;
+      }
+      ${StyledHiddenPalette}{
+        width: 90px;
+        height: 90px;
+      }
+      ${StyledShowPalette}{
+        width: 90px;
+        height: 90px;
+      }
+      ${ToggleTheme}{
+        height: 220px;
+        left: 70px;
+        > li {
+          width: 80px;
+          height: 80px;
+        }
+        > li:nth-child(2){
+          margin-left: 40px;
+        }
       }
           ${BookContainer}{
       height: 560px;

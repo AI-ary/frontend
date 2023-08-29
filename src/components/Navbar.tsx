@@ -1,18 +1,15 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { ThemeType, useThemeContext } from '../App';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
 }
 
 function Navbar() {
-  const {changeThemeType} =useThemeContext()
   const navigate = useNavigate();
   const [visible, setVisible] = useState<boolean>(false);
   const [search, setSearch]=useState<string>('');
-  const [themeMenu, setThemeMenu] = useState<boolean>(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
     setSearch(e.target.value);
@@ -36,14 +33,6 @@ function Navbar() {
     }
   };
 
-  const toggleThemeMenu = () => {
-    setThemeMenu((themeMenu) => !themeMenu);
-  }
-
-  const handleThemeChange = (themeType:ThemeType) => {
-    changeThemeType(themeType);
-  }
-
   return(
     <>
       <NavbarWrap>
@@ -57,14 +46,9 @@ function Navbar() {
             {visible && <SearchInput visible={visible} type="text" value={search} placeholder='검색 창' onChange={onChange} onKeyDown={(e)=>handleEnter(e)} /> }
             <img src="/images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
           </SearchContainer>
-          <button onClick={toggleThemeMenu}><img src="/images/person.svg" alt="person" /></button>
+          <button><img src="/images/person.svg" alt="person" /></button>
         </BtnContainer>
       </NavbarWrap>
-      <ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
-        <li onClick={()=>handleThemeChange('blueTheme')}>blue</li>
-        <li onClick={()=>handleThemeChange('rainbowTheme')}>rainbow</li>
-        <li onClick={()=>handleThemeChange('originTheme')}>origin</li>
-      </ToggleTheme>
       <Outlet />
     </>
   )
@@ -129,33 +113,4 @@ const SearchInput = styled.input<SearchInputProps>`
     animation: ${fadeIn} 0.4s;
   `};
   margin-right: 10px;
-`
-
-const ToggleTheme = styled.ul`
-  background-color: ${props => props.theme.bgColor}; 
-  width: 200px;
-  height: 400px;
-  position: absolute;
-  top: 60px;
-  right: 30px;
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  cursor: pointer;
-  z-index: 100;
-  &.show-menu {
-    visibility: visible;
-    opacity: 1;
-    
-  }
-  &.hide-menu {
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  > li {
-    font-size: 30px;
-  }
 `
