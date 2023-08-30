@@ -46,25 +46,27 @@ function GrimList() {
         <OpenBookLeft>
           <Calender list={list} exist={exist} />
         </OpenBookLeft>
-        <OpenBookRight>
-          {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
-            .map((data,index)=>{
-              return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
-          {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
-          <D.DiviContainer style={{zIndex: '0'}}>
-            <DL.NonDiaryContainer>
-              <img src="images/write.svg" alt="list"/>
-              <div>
-                <span>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</span>
+        <div style={{display:'flex',flexDirection:'row',height:'100%'}} className='will-move'>
+          <OpenBookRight>
+            {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
+              .map((data,index)=>{
+                return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
+            {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
+              <D.DiviContainer style={{zIndex: '0'}}>
+                <DL.NonDiaryContainer>
+                  <img src="images/write.svg" alt="list"/>
+                  <div>
+                    <span>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</span>
                 의<br />하루를 기록해볼까요?
-              </div>
-              <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}}>
+                  </div>
+                  <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}}>
                 일기 쓰러 가기
-              </DL.GotoDiaryWrite>
-            </DL.NonDiaryContainer>
-          </D.DiviContainer>)}
-        </OpenBookRight>
-        <Bookmark />
+                  </DL.GotoDiaryWrite>
+                </DL.NonDiaryContainer>
+              </D.DiviContainer>)}
+          </OpenBookRight>
+          <Bookmark />
+        </div>
       </O.BookContainer>
     </C.Container>
   )
