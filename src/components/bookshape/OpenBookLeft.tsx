@@ -20,9 +20,9 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
   let year = now.getFullYear();
 
   const onClose = () => {
-    let willClose : any = document.querySelector('.will-close')
-    let willMove : any = document.querySelector('.will-move')
-    let behind : any = document.querySelector('.behind')
+    let willClose : HTMLElement | null = document.querySelector('.will-close')
+    let willMove : HTMLElement | null = document.querySelector('.will-move')
+    let behind : HTMLElement | null = document.querySelector('.behind')
     if (willClose && willMove) {
       willClose.classList.add('closeStart')
       willMove.classList.add('move-close')
@@ -31,11 +31,9 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
           willClose.classList.add('close');
         }
         setTimeout(() => {
-          willClose.style.zIndex = 6
-        }, 250)
-        setTimeout(() => {
-          if (behind) {
-            behind.style.zIndex = 100
+          if (behind && willClose) {
+            willClose.style.zIndex = '6'
+            behind.style.zIndex = '50'
             behind.style.marginLeft = '-10px'
           }
           setTimeout(() => {
@@ -73,7 +71,6 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
         </S.FrontWrap>
         {children}
         <O.Line position="right" deg="to right" />
-        <button style={{position:'absolute', zIndex:40}} onClick={onClose}>닫기</button>
       </O.OpenBookLeft>
     </div>
   )

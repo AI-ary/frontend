@@ -82,7 +82,6 @@ div>h2{
 /* 책 닫는 효과 */
 .close {
   transform: rotateY(180deg);
-  z-index: 4;
 }
 
 .closeStart {
@@ -118,7 +117,7 @@ div>h2{
   }
 
   100% {
-    margin-right: 30em;
+    margin-right: 35em;
   }
 }
 
