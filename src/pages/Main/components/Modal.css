@@ -88,3 +88,27 @@ transform-origin: left center;
     margin-left: 18.25em;
   }
 }
+
+@media screen and (max-width: 1440px), screen and (max-height: 830px) {
+  @keyframes slide {
+  0% {
+    margin-left: 0%;
+  }
+
+  100% {
+    margin-left: 17.5em;
+  }
+}
+}
+  
+@media screen and (max-width: 1180px), screen and (max-height: 680px) {
+  @keyframes slide {
+  0% {
+    margin-left: 0%;
+  }
+
+  100% {
+    margin-left: 15em;
+  }
+}
+}
