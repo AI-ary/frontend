@@ -4,7 +4,7 @@ import { ReactComponent as Cloud } from '../../../public/images/cloud.svg';
 import { ReactComponent as Rainy } from '../../../public/images/rainy.svg';
 import { ReactComponent as Snow } from '../../../public/images/snow.svg';
 import { ReactComponent as Share } from '../../../public/images/share.svg';
-import { ReactComponent as Update } from '../../../public/images/update.svg';
+import { ReactComponent as Delete } from '../../../public/images/delete.svg';
 
 
 export const DiviContainer = styled.div`
@@ -199,7 +199,7 @@ export const ChoiceButtonContainer = styled.div`
 `
 
 export const ButtonItem = styled.button`
-  margin-right: 10px;
+  margin-right: 13px;
 `
 
 export const StyledShare = styled(Share)`
@@ -207,7 +207,7 @@ export const StyledShare = styled(Share)`
   height: 41px;
 `
 
-export const StyledUpdate = styled(Update)`
+export const StyledDelete = styled(Delete)`
   width: 42px;
   height: 41px;
 `

@@ -6,7 +6,7 @@ import { createGlobalStyle, ThemeProps } from "styled-components";
 import reset from 'styled-reset';
 import { BookContainer, OpenBookLeft, OpenBookRight, Line } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
-import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledUpdate, ButtonItem  } from "@/styles/diary/diary.style";
+import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
 import { EmojiWrap, Modebutton,Savebutton  } from "@/styles/diary/diarywrite.style";
 import {StyledNavLink} from '@/components/bookshape/Bookmark';
 type DefaultTheme = {
@@ -239,7 +239,7 @@ export const GlobalStyle = createGlobalStyle`
       width: 37px;
       height: 37px;
     }
-    ${StyledUpdate}{
+    ${StyledDelete}{
       width: 37px;
       height: 37px;
     }
@@ -469,7 +469,7 @@ export const GlobalStyle = createGlobalStyle`
       width: 33px;
       height: 33px;
     }
-    ${StyledUpdate}{
+    ${StyledDelete}{
       width: 33px;
       height: 33px;
     }
