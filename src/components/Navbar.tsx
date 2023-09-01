@@ -132,8 +132,8 @@ const SearchInputWrap = styled.div`
 const SearchImgWrap = styled.div`
   position: absolute;
   right: 185px;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;

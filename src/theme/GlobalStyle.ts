@@ -8,6 +8,7 @@ import { BookContainer, OpenBookLeft, OpenBookRight, Line } from "@/styles/books
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
 import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
 import { EmojiWrap, Modebutton,Savebutton, Choicetitle } from "@/styles/diary/diarywrite.style";
+import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
 import {StyledNavLink} from '@/components/bookshape/Bookmark';
 type DefaultTheme = {
   bgImg?: string;
@@ -252,6 +253,36 @@ export const GlobalStyle = createGlobalStyle`
     ${Choicetitle}{
       font-size: 30px;
     }
+    ${SearchWrap}{
+      padding: 15px 0;
+      > hr {
+        margin: 0 15px;
+      }
+    }
+    ${SearchDate}{
+      > h2 {
+        font-size: 28px;
+      }
+      > div {
+        font-size: 15px;
+      }
+    }
+    ${SearchTitleWrap}{
+      margin-bottom: 3px;
+      > div {
+        font-size: 26px;
+        margin-right: 10px;
+      }
+      > p {
+        font-size: 22px;
+      }
+    }
+    ${SearchContentContainer}{
+      padding: 0 5px;
+    }
+    ${SearchContent}{
+      font-size: 15px;
+    }
   }
 
   @media screen and (max-width: 1180px), screen and (max-height: 680px) {
@@ -483,6 +514,36 @@ export const GlobalStyle = createGlobalStyle`
     }
     ${Choicetitle}{
       font-size: 28px;
+    }
+    ${SearchWrap}{
+      padding: 15px 5px;
+      > hr {
+        margin: 0 18px;
+      }
+    }
+    ${SearchDate}{
+      > h2 {
+        font-size: 28px;
+      }
+      > div {
+        font-size: 15px;
+      }
+    }
+    ${SearchTitleWrap}{
+      margin-bottom: 3px;
+      > div {
+        font-size: 26px;
+        margin-right: 10px;
+      }
+      > p {
+        font-size: 22px;
+      }
+    }
+    ${SearchContentContainer}{
+      padding: 0 5px;
+    }
+    ${SearchContent}{
+      font-size: 15px;
     }
   }
 
