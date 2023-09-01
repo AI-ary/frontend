@@ -200,6 +200,12 @@ export const ChoiceButtonContainer = styled.div`
 
 export const ButtonItem = styled.button`
   margin-right: 13px;
+  &:hover circle{
+    fill: #434343;
+  }
+  &:hover path {
+    fill: white;
+  }
 `
 
 export const StyledShare = styled(Share)`
