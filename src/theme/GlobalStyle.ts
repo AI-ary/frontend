@@ -6,8 +6,9 @@ import { createGlobalStyle, ThemeProps } from "styled-components";
 import reset from 'styled-reset';
 import { BookContainer, OpenBookLeft, OpenBookRight, Line } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
-import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledUpdate, ButtonItem  } from "@/styles/diary/diary.style";
-import { EmojiWrap, Modebutton,Savebutton  } from "@/styles/diary/diarywrite.style";
+import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
+import { EmojiWrap, Modebutton,Savebutton, Choicetitle } from "@/styles/diary/diarywrite.style";
+import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
 import {StyledNavLink} from '@/components/bookshape/Bookmark';
 type DefaultTheme = {
   bgImg?: string;
@@ -45,79 +46,79 @@ export const GlobalStyle = createGlobalStyle`
     color: black;
     text-decoration-line: none;
   }
-    @media screen and (max-width: 1440px), screen and (max-height: 830px) {
-      ${Left} {
-        width: 44px;
-        height : 624px;
-        border-radius : 6px 0px 0px 6px;
-      }
-      ${Flip} {
-        height: 624px;
-      }
-      ${Mid} {
-        width : 556px;
-        height : 624px;
-        padding : 51px 0px;
-      }
-      ${Right} {
-        width : 8px;
-        height : 624px;
-        border-radius : 0px 6px 6px 0px;
-      }
-      ${BackBtn} {
-        width : 44px;
-        height : 44px;
-        padding-right : 4px;
-        margin : 28px 0px 0px 28px;
-      }
-      ${Content} {
-        font-size : 25px;
-      }
-      ${Aiary} {
-        width : 272px;
-        height : 120px;
-      }
-      ${Logo} {
-        width : 352px;
-        height : 304px;
-      }
-      ${ButtonWrap} {
-        margin-bottom : 51px;
-      }
-      ${CommonFilledBtn} {
-        padding : 9px 28px;
-        font-size : 25px;
-        border-radius : 28px;
-      }
-      ${CommonOutlinedBtn} {
-        padding : 9px 28px;
-        font-size : 25px;
-        border-radius : 28px;
-      }
-      ${CommonEmptyBtn} {
-        padding : 9px 28px;
-        font-size : 25px;
-        border-radius : 28px;
-      }
-      ${Title} {
-        font-size : 64px;
-      }
-      ${Input} {
-        width : 460px;
-        border-radius : 9px;
-        padding : 14px 16px;
-        font-size : 16px;
-      }
-      ${WarningWrap} {
-        height:16px;
-        font-size : 12px;
-      }
-      ${WarningContent} {
-        margin : 0px 3px;
-        font-size : 12px;
-      }
-      ${BookContainer}{
+  @media screen and (max-width: 1440px), screen and (max-height: 830px) {
+    ${Left} {
+      width: 44px;
+      height : 624px;
+      border-radius : 6px 0px 0px 6px;
+    }
+    ${Flip} {
       height: 624px;
+    }
+    ${Mid} {
+      width : 556px;
+      height : 624px;
+      padding : 51px 0px;
+    }
+    ${Right} {
+      width : 8px;
+      height : 624px;
+      border-radius : 0px 6px 6px 0px;
+    }
+    ${BackBtn} {
+      width : 44px;
+      height : 44px;
+      padding-right : 4px;
+      margin : 28px 0px 0px 28px;
+    }
+    ${Content} {
+      font-size : 25px;
+    }
+    ${Aiary} {
+      width : 272px;
+      height : 120px;
+    }
+    ${Logo} {
+      width : 352px;
+      height : 304px;
+    }
+    ${ButtonWrap} {
+      margin-bottom : 51px;
+    }
+    ${CommonFilledBtn} {
+      padding : 9px 28px;
+      font-size : 25px;
+      border-radius : 28px;
+    }
+    ${CommonOutlinedBtn} {
+      padding : 9px 28px;
+      font-size : 25px;
+      border-radius : 28px;
+    }
+    ${CommonEmptyBtn} {
+      padding : 9px 28px;
+      font-size : 25px;
+      border-radius : 28px;
+    }
+    ${Title} {
+      font-size : 64px;
+    }
+    ${Input} {
+      width : 460px;
+      border-radius : 9px;
+      padding : 14px 16px;
+      font-size : 16px;
+    }
+    ${WarningWrap} {
+      height:16px;
+      font-size : 12px;
+    }
+    ${WarningContent} {
+      margin : 0px 3px;
+      font-size : 12px;
+    }
+    ${BookContainer}{
+    height: 624px;
     }
     ${OpenBookLeft} {
       width: 580px;
@@ -239,7 +240,7 @@ export const GlobalStyle = createGlobalStyle`
       width: 37px;
       height: 37px;
     }
-    ${StyledUpdate}{
+    ${StyledDelete}{
       width: 37px;
       height: 37px;
     }
@@ -249,100 +250,132 @@ export const GlobalStyle = createGlobalStyle`
       margin-bottom: 13px;
       font-size: 16px;
     }
+    ${Choicetitle}{
+      font-size: 30px;
     }
+    ${SearchWrap}{
+      padding: 15px 0;
+      > hr {
+        margin: 0 15px;
+      }
+    }
+    ${SearchDate}{
+      > h2 {
+        font-size: 28px;
+      }
+      > div {
+        font-size: 15px;
+      }
+    }
+    ${SearchTitleWrap}{
+      margin-bottom: 3px;
+      > div {
+        font-size: 26px;
+        margin-right: 10px;
+      }
+      > p {
+        font-size: 22px;
+      }
+    }
+    ${SearchContentContainer}{
+      padding: 0 5px;
+    }
+    ${SearchContent}{
+      font-size: 15px;
+    }
+  }
 
-    @media screen and (max-width: 1180px), screen and (max-height: 680px) {
-
-      ${Left} {
-        width:38px;
-        height : 546px;
-        border-radius : 5px 0px 0px 5px;
+  @media screen and (max-width: 1180px), screen and (max-height: 680px) {
+    ${Left} {
+      width:38px;
+      height : 546px;
+      border-radius : 5px 0px 0px 5px;
+    }
+    ${Flip} {
+      height: 546px;
+    }
+    ${Mid} {
+      width : 486px;
+      height : 546px;
+      padding : 44px 0px;
+    }
+    ${Right} {
+      width : 7px;
+      height : 546px;
+      border-radius : 0px 5px 5px 0px;
+    }
+    ${BackBtn} {
+      width : 38px;
+      height : 38px;
+      padding-right : 3px;
+      margin : 24px 0px 0px 24px;
+    }
+    ${Content} {
+      font-size : 22px;
+    }
+    ${Aiary} {
+      width : 238px;
+      height : 105px;
+    }
+    ${Logo} {
+      width : 308px;
+      height : 266px;
+    }
+    ${ButtonWrap} {
+      margin-bottom : 44px;
+    }
+    ${CommonFilledBtn} {
+      padding : 8px 25px;
+      font-size : 22px;
+      border-radius : 25px;
+    }
+    ${CommonOutlinedBtn} {
+      padding : 8px 25px;
+      font-size : 22px;
+      border-radius : 25px;
+    }
+    ${CommonEmptyBtn} {
+      padding : 9px 28px;
+      font-size : 25px;
+      border-radius : 28px;
+    }
+    ${Title} {
+      font-size : 56px;
+    }
+    ${Input} {
+      width : 402px;
+      border-radius : 8px;
+      padding : 12px 14px;
+      font-size : 14px;
+    }
+    ${WarningWrap} {
+      height:14px;
+      font-size : 11px;
+    }
+    ${WarningContent} {
+      margin : 0px 2px;
+      font-size : 11px;
+    }
+    ${StyledHiddenPalette}{
+      width: 90px;
+      height: 90px;
+    }
+    ${StyledShowPalette}{
+      width: 90px;
+      height: 90px;
+    }
+    ${ToggleTheme}{
+      height: 220px;
+      left: 70px;
+      > li {
+        width: 80px;
+        height: 80px;
       }
-      ${Flip} {
-        height: 546px;
+      > li:nth-child(2){
+        margin-left: 40px;
       }
-      ${Mid} {
-        width : 486px;
-        height : 546px;
-        padding : 44px 0px;
-      }
-      ${Right} {
-        width : 7px;
-        height : 546px;
-        border-radius : 0px 5px 5px 0px;
-      }
-      ${BackBtn} {
-        width : 38px;
-        height : 38px;
-        padding-right : 3px;
-        margin : 24px 0px 0px 24px;
-      }
-      ${Content} {
-        font-size : 22px;
-      }
-      ${Aiary} {
-        width : 238px;
-        height : 105px;
-      }
-      ${Logo} {
-        width : 308px;
-        height : 266px;
-      }
-      ${ButtonWrap} {
-        margin-bottom : 44px;
-      }
-      ${CommonFilledBtn} {
-        padding : 8px 25px;
-        font-size : 22px;
-        border-radius : 25px;
-      }
-      ${CommonOutlinedBtn} {
-        padding : 8px 25px;
-        font-size : 22px;
-        border-radius : 25px;
-      }
-      ${CommonEmptyBtn} {
-        padding : 9px 28px;
-        font-size : 25px;
-        border-radius : 28px;
-      }
-      ${Title} {
-        font-size : 56px;
-      }
-      ${Input} {
-        width : 402px;
-        border-radius : 8px;
-        padding : 12px 14px;
-        font-size : 14px;
-      }
-      ${WarningWrap} {
-        height:14px;
-        font-size : 11px;
-      }
-      ${WarningContent} {
-        margin : 0px 2px;
-        font-size : 11px;
-      }
-      ${StyledHiddenPalette}{
-        width: 90px;
-        height: 90px;
-      }
-      ${StyledShowPalette}{
-        width: 90px;
-        height: 90px;
-      }
-      ${ToggleTheme}{
-        height: 220px;
-        left: 70px;
-        > li {
-          width: 80px;
-          height: 80px;
-        }
-        > li:nth-child(2){
-          margin-left: 40px;
-        }
-      }
-          ${BookContainer}{
+    }
+    ${BookContainer}{
       height: 560px;
     }
     ${OpenBookLeft} {
@@ -469,7 +502,7 @@ export const GlobalStyle = createGlobalStyle`
       width: 33px;
       height: 33px;
     }
-    ${StyledUpdate}{
+    ${StyledDelete}{
       width: 33px;
       height: 33px;
     }
@@ -479,7 +512,40 @@ export const GlobalStyle = createGlobalStyle`
       margin-bottom: 12px;
       font-size: 14px;
     }
+    ${Choicetitle}{
+      font-size: 28px;
     }
+    ${SearchWrap}{
+      padding: 15px 5px;
+      > hr {
+        margin: 0 18px;
+      }
+    }
+    ${SearchDate}{
+      > h2 {
+        font-size: 28px;
+      }
+      > div {
+        font-size: 15px;
+      }
+    }
+    ${SearchTitleWrap}{
+      margin-bottom: 3px;
+      > div {
+        font-size: 26px;
+        margin-right: 10px;
+      }
+      > p {
+        font-size: 22px;
+      }
+    }
+    ${SearchContentContainer}{
+      padding: 0 5px;
+    }
+    ${SearchContent}{
+      font-size: 15px;
+    }
+  }
 
     @media screen and (max-width: 1100px), screen and (max-height: 600px) {
       #root {

@@ -1,13 +1,20 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
 }
 
+interface SearchContainerProps {
+  margin: boolean; // Add the margin prop
+}
+
 function Navbar() {
   const navigate = useNavigate();
+  const param = useParams();
+  const searchText = param.word;
   const [visible, setVisible] = useState<boolean>(false);
   const [search, setSearch]=useState<string>('');
 
@@ -20,7 +27,7 @@ function Navbar() {
       if(search.trim() === ''){
         alert('검색어를 입력해주세요!');
       }else{
-        window.location.href = '/search/'+search; 
+        navigate('/search/'+search);
       }
     } else{
       setVisible(!visible);
@@ -42,11 +49,19 @@ function Navbar() {
         <BtnContainer>
           <button>소개</button>
           <button>커뮤니티</button>
-          <SearchContainer>
-            {visible && <SearchInput visible={visible} type="text" value={search} placeholder='검색 창' onChange={onChange} onKeyDown={(e)=>handleEnter(e)} /> }
-            <img src="/images/search.svg" alt="search" style={{cursor:'pointer'}} onClick={handleSearch} />
+          <SearchContainer margin={visible}>
+            {visible && 
+              <SearchInputWrap>
+                <SearchInput visible={visible} type="text" value={search} placeholder={searchText?searchText:'검색어를 입력하세요'} onChange={onChange} onKeyDown={(e)=>handleEnter(e)} />
+              </SearchInputWrap>
+            }
+            <SearchImgWrap>
+              <img src="/images/search.svg" alt="search" onClick={handleSearch} />
+            </SearchImgWrap>
           </SearchContainer>
-          <button><img src="/images/person.svg" alt="person" /></button>
+          <UserWrap>
+            <img src="/images/person.svg" alt="person" />  
+          </UserWrap>
         </BtnContainer>
       </NavbarWrap>
       <Outlet />
@@ -80,37 +95,87 @@ const BtnContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  >button{
+  > button{
     font-family:'Poor Story';
-    margin-right: 35px;
+    margin-right: 50px;
     font-size: 20px;
-  }
-  >button:last-child{
-    margin-left: 30px;
+    color: #6A6A6A;
   }
 `
 // 검색창 보이는 여부에 따라 효과 적용 
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateX(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 `;
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.div<SearchContainerProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 32px;
+  margin-left: ${props=>props.margin?'0px':'30px'};;
+`
+
+const SearchInputWrap = styled.div`
   display: flex;
   align-items: center;
   jusitfy-content: center;
+  width: 230px;
+  height: 37px;
+  border-radius: 24px;
+  background-color: #FEFDFE;
 `
+
+const SearchImgWrap = styled.div`
+  position: absolute;
+  right: 185px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EB8888;
+  box-sizing: border-box;
+  margin-right: 15px;
+  cursor: pointer;
+`
+
 const SearchInput = styled.input<SearchInputProps>`
   ${({ visible }) =>
   visible &&
   css`
     animation: ${fadeIn} 0.4s;
   `};
-  margin-right: 10px;
+  width: 180px;
+  margin-left: 10px;
+  height: 100%;
+  padding: 10px 5px;
+  box-sizing: border-box;
+  font-family: 'Inter';
+  color: #B4B4B4;
+  font-size: 14px;
+  border: none;
+  background-color: transparent;
+  &:focus{
+    outline: none;
+  }
+`
+
+const UserWrap = styled.div`
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #78ADE1;
+  margin-top: 2px;
+  cursor: pointer;
 `
