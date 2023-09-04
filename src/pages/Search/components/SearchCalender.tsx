@@ -48,7 +48,6 @@ function SearchCalender({list, search, getDiaryDetail}:SearchCalenderProps){
           const day = String(diaryDate.getDate()).padStart(2, '0');
           const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
           const weekday = weekdays[diaryDate.getDay()]+'요일'; 
-          console.log(list)
           return(
             <DS.SearchWrap onClick={()=>getDiaryDetail(data)}>
               <DS.SearchDate>

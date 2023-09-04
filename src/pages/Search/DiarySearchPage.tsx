@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {useParams} from 'react-router';
+import { useParams } from 'react-router';
 import { getSearchData } from '@/apis/searchDiary';
 import OpenBookLeft from '../../components/bookshape/OpenBookLeft';
 import OpenBookRight from '../../components/bookshape/OpenBookRight';
@@ -10,7 +10,7 @@ import * as O from '../../styles/bookshape/opendbook.style';
 import * as DL from '../../styles/diary/diarylist.style';
 import SearchCalender from './components/SearchCalender';
 
-function DiarySearchList(){
+function DiarySearchList(){ 
   const [searchList, setSearchList] = useState<any>([]);
   const [detail, setDetail]=useState({
     id:-1,
