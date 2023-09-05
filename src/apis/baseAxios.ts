@@ -4,19 +4,19 @@ const baseAxios = axios.create({
   baseURL: 'http://localhost:80/api/',
 });
 
-// baseAxios.interceptors.request.use(
-//   (config) => {
-//     const accessToken = sessionStorage.getItem('token');
-//     if(accessToken != null){
-//       config.headers.access = `Bearer ${accessToken}`;
-//     }
-//     return config;
-//   },
-//   async (error) =>{
-//     console.log(error);
-//     return await Promise.reject(error);
-//   }
-// );
+baseAxios.interceptors.request.use(
+  (config) => {
+    const accessToken = sessionStorage.getItem('token');
+    if(accessToken != null){
+      config.headers.access = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  async (error) =>{
+    console.log(error);
+    return await Promise.reject(error);
+  }
+);
 
 // baseAxios.interceptors.response.use(
 //   (response) => response,
