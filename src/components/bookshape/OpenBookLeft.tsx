@@ -15,6 +15,16 @@ type OpenBookLeftProps = {
 
 function OpenBookLeft({ children }:OpenBookLeftProps) {
   const nickname = sessionStorage.getItem('nickname');
+  const width = window.innerWidth
+  
+  let marginLeft : string
+  if (width > 1440) {
+    marginLeft = '-55px'
+  } else if (width <= 1440 && width > 1180) {
+    marginLeft = '-10px'
+  } else {
+    marginLeft = '-6px'
+  }
   const navigate = useNavigate()
   let now = new Date();
   let year = now.getFullYear();
@@ -34,18 +44,18 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
           if (behind && willClose) {
             willClose.style.zIndex = '6'
             behind.style.zIndex = '50'
-            behind.style.marginLeft = '-10px'
+            behind.style.marginLeft = marginLeft
           }
           setTimeout(() => {
             navigate('/main')
           }, 250)
         },250)
-        
       }, 800);
     }
   }
   return ( 
     <div className='will-close' style={{height:'100%'}}>
+      <button style={{position:'absolute'}} onClick={onClose}>닫기</button>
       <O.OpenBookLeft>
         <S.FrontWrap style={{zIndex:-1, transform:'rotateY(180deg)', top:'0px',left:'0px'}} className='behind'>
           <S.Left/>

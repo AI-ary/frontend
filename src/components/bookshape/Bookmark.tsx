@@ -6,6 +6,16 @@ import { useStore } from '../../store/store';
 function Bookmark() {
   // const location = useLocation();
   const { setChoiceImg, setGetGrimList } = useStore();
+  const width = window.innerWidth
+  
+  let marginLeft : string
+  if (width > 1440) {
+    marginLeft = '-55px'
+  } else if (width <= 1440 && width > 1180) {
+    marginLeft = '-10px'
+  } else {
+    marginLeft = '-6px'
+  }
   // let loca = location.pathname;
 
   // useEffect(() => {
@@ -45,13 +55,12 @@ function Bookmark() {
     //       if (behind && willClose) {
     //         willClose.style.zIndex = '6'
     //         behind.style.zIndex = '50'
-    //         behind.style.marginLeft = '-10px'
+    //         behind.style.marginLeft = marginLeft
     //       }
     //       setTimeout(() => {
     //         navigate('/main')
     //       }, 250)
     //     },250)
-        
     //   }, 800);
     // }
   }

@@ -117,30 +117,49 @@ div>h2{
   }
 
   100% {
-    margin-right: 35em;
+    margin-right: 35.3em;
   }
 }
 
 @media screen and (max-width: 1440px), screen and (max-height: 830px) {
   @keyframes slide {
-  0% {
-    margin-left: 0%;
+    0% {
+      margin-left: 0%;
+    }
+
+    100% {
+      margin-left: 17.5em;
+    }
+  }
+  @keyframes closing {
+    0% {
+      margin-right: 0%;
+    }
+
+    100% {
+      margin-right: 34.5em;
+    }
   }
 
-  100% {
-    margin-left: 17.5em;
-  }
-}
 }
   
 @media screen and (max-width: 1180px), screen and (max-height: 680px) {
   @keyframes slide {
-  0% {
-    margin-left: 0%;
-  }
+    0% {
+      margin-left: 0%;
+    }
 
-  100% {
-    margin-left: 15em;
+    100% {
+      margin-left: 15em;
+    }
   }
-}
+  @keyframes closing {
+    0% {
+      margin-right: 0%;
+    }
+
+    100% {
+      margin-right: 29.65em;
+    }
+  }
 }
