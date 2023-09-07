@@ -381,6 +381,7 @@ export const GlobalStyle = createGlobalStyle`
       > li:nth-child(2){
         margin-left: 40px;
       }
+    }
     ${BookContainer}{
       height: 546px;
     }
