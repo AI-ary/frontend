@@ -27,11 +27,11 @@ export default function LogoutBtn() {
           '',
           'success'
         )
-        api.defaults.headers.common['Authorization'] = null;
+        // api.defaults.headers.common['Authorization'] = null;
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('refresh');
-        sessionStorage.removeItem('nickname');
-        sessionStorage.removeItem('id');
+        // sessionStorage.removeItem('nickname');
+        // sessionStorage.removeItem('id');
         navigate('/')
       }
     })
