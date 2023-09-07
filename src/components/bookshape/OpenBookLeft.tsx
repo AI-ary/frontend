@@ -64,14 +64,14 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
               <RiArrowLeftSLine size={70} />
             </S.BackBtn>
             <S.Mid>
-              <CoverYear>{year}</CoverYear>
-              <Nickname><p><span>{nickname}</span>'s</p><p>GRIM-DIARY</p></Nickname>
-              <Profile>
+              <O.CoverYear>{year}</O.CoverYear>
+              <O.Nickname><p><span>{nickname}</span>'s</p><p>GRIM-DIARY</p></O.Nickname>
+              <O.Profile>
                 <img alt='star' src='images/rainbow.png' />
-              </Profile>
-              <SelectBtn htmlFor="input-file">
+              </O.Profile>
+              <O.SelectBtn htmlFor="input-file">
                 <MdPhotoLibrary size="28" className='profile'/>
-              </SelectBtn>
+              </O.SelectBtn>
               <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} /> 
               <C.CommonFilledBtn isValid={false}>시작하기</C.CommonFilledBtn>
               <LogoutBtn/>
@@ -87,50 +87,3 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
 }
 
 export default OpenBookLeft;
-
-const CoverYear = styled.div`
-  font-size: 24px;
-  font-family:'Itim';
-  margin-bottom: 10px;
-`
-
-const Nickname = styled.h1`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  bottom: 22px;
-  font-size: 45px;
-  font-family:'Itim';
-  > p > span {
-    font-family:'Poor Story';
-  }
-`
-const Profile = styled.div`
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background-color: white;
-  border: 8px solid ${props => props.theme.lineColor};
-  overflow: hidden;
-  background-image: url('/images/profileBg.svg');
-  > img {
-    width: 100%;
-    height: 100%; 
-    object-fit: cover;
-  }
-`
-const SelectBtn = styled.label`
-  background-color: ${props => props.theme.lineColor};
-  position: relative;
-  top: -80px;
-  left: 90px;
-  border-radius: 50%;
-  padding: 18px;
-  cursor: pointer;
-  box-sizing: border-box;
-  .profile {
-    color: ${props => props.theme.profileColor};
-  }
-  `

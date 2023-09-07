@@ -7,12 +7,10 @@ type OpenBookRightProps = {
 
 function OpenBookRight({children}:OpenBookRightProps){
   return (   
-    <div style={{position:'relative', zIndex:5, height:'100%'}}>
-      <O.OpenBookRight>
-        <O.Line position="left" deg="to left" />
-        {children}
-      </O.OpenBookRight>
-    </div>
+    <O.OpenBookRight>
+      <O.Line position="left" deg="to left" />
+      {children}
+    </O.OpenBookRight>
   )
 }
 
