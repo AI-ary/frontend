@@ -60,6 +60,7 @@ export const Right = styled.div`
 export const BehindWrap = styled.div`
   display : flex;
   position : absolute;
+  z-index:-1;
   height : 780px;
   margin-left : 134px;
 `

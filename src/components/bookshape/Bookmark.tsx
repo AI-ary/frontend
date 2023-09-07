@@ -6,6 +6,16 @@ import { useStore } from '../../store/store';
 function Bookmark() {
   // const location = useLocation();
   const { setChoiceImg, setGetGrimList } = useStore();
+  const width = window.innerWidth
+  
+  let marginLeft : string
+  if (width > 1440) {
+    marginLeft = '-55px'
+  } else if (width <= 1440 && width > 1180) {
+    marginLeft = '-10px'
+  } else {
+    marginLeft = '-6px'
+  }
   // let loca = location.pathname;
 
   // useEffect(() => {
@@ -29,14 +39,36 @@ function Bookmark() {
   // }
 
   function onClick() {
-    setChoiceImg([]);
-    setGetGrimList([]);
+    // setChoiceImg([]);
+    // setGetGrimList([]);
+    // let willClose : HTMLElement | null = document.querySelector('.will-close')
+    // let willMove : HTMLElement | null = document.querySelector('.will-move')
+    // let behind : HTMLElement | null = document.querySelector('.behind')
+    // if (willClose && willMove) {
+    //   willClose.classList.add('closeStart')
+    //   willMove.classList.add('move-close')
+    //   setTimeout(() => {
+    //     if (willClose) {
+    //       willClose.classList.add('close');
+    //     }
+    //     setTimeout(() => {
+    //       if (behind && willClose) {
+    //         willClose.style.zIndex = '6'
+    //         behind.style.zIndex = '50'
+    //         behind.style.marginLeft = marginLeft
+    //       }
+    //       setTimeout(() => {
+    //         navigate('/main')
+    //       }, 250)
+    //     },250)
+    //   }, 800);
+    // }
   }
 
   return (
     <BookMark>
       <StyledNavLink to={IsLogin() ? '/main' : '/'} onClick={onClick}>
-        <div id='home'>
+        <div id='home' >
           홈
         </div>
       </StyledNavLink>

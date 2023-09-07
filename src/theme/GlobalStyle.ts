@@ -1,5 +1,5 @@
 import { Input, Title, WarningContent, WarningWrap } from "@/styles/auth/auth.style";
-import { BackBtn, Flip, Left, Mid, Right,StyledHiddenPalette, StyledShowPalette, ToggleTheme } from "@/styles/bookshape/closedbook.style";
+import { BackBtn, BehindWrap, Flip, Left, Mid, Right,StyledHiddenPalette, StyledShowPalette, ToggleTheme } from "@/styles/bookshape/closedbook.style";
 import { CommonEmptyBtn, CommonFilledBtn, CommonOutlinedBtn } from "@/styles/common.style";
 import { Aiary, ButtonWrap, Content, Logo } from "@/styles/main/main.style";
 import { createGlobalStyle, ThemeProps } from "styled-components";
@@ -47,6 +47,10 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration-line: none;
   }
   @media screen and (max-width: 1440px), screen and (max-height: 830px) {
+    ${BehindWrap} {
+      height : 624px;
+      margin-left : 90px;
+    }
     ${Left} {
       width: 44px;
       height : 624px;
@@ -118,7 +122,7 @@ export const GlobalStyle = createGlobalStyle`
       font-size : 12px;
     }
     ${BookContainer}{
-    height: 624px;
+      height: 624px;
     }
     ${OpenBookLeft} {
       width: 580px;
@@ -286,6 +290,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   @media screen and (max-width: 1180px), screen and (max-height: 680px) {
+    ${BehindWrap} {
+      height : 546px;
+    }
     ${Left} {
       width:38px;
       height : 546px;
@@ -311,7 +318,7 @@ export const GlobalStyle = createGlobalStyle`
       margin : 24px 0px 0px 24px;
     }
     ${Content} {
-      font-size : 22px;
+        font-size : 22px;
     }
     ${Aiary} {
       width : 238px;
@@ -374,9 +381,8 @@ export const GlobalStyle = createGlobalStyle`
       > li:nth-child(2){
         margin-left: 40px;
       }
-    }
     ${BookContainer}{
-      height: 560px;
+      height: 546px;
     }
     ${OpenBookLeft} {
       width: 500px;

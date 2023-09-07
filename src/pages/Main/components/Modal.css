@@ -61,13 +61,13 @@ div>h2{
   text-align: center;
 }
 
-/* 책 피는 효과 */
+/* 책 여는 효과 */
 .open {
   transform: rotateY(-180deg);
 }
 
 .flipStart {
-transform-origin: left center;
+  transform-origin: left;
   transition-duration: 0.5s;
   transition-timing-function: ease-in;
 }
@@ -79,6 +79,28 @@ transform-origin: left center;
   animation-fill-mode: forwards;
 }
 
+/* 책 닫는 효과 */
+.close {
+  transform: rotateY(180deg);
+}
+
+.closeStart {
+  transform-origin: right;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
+}
+
+.show {
+  z-index: 100;
+}
+
+.move-close {
+  animation-duration: 0.8s;
+  animation-name: closing;
+  animation-iteration-count: initial;
+  animation-fill-mode: forwards;
+}
+
 @keyframes slide {
   0% {
     margin-left: 0%;
@@ -86,5 +108,58 @@ transform-origin: left center;
 
   100% {
     margin-left: 18.25em;
+  }
+}
+
+@keyframes closing {
+  0% {
+    margin-right: 0%;
+  }
+
+  100% {
+    margin-right: 35.3em;
+  }
+}
+
+@media screen and (max-width: 1440px), screen and (max-height: 830px) {
+  @keyframes slide {
+    0% {
+      margin-left: 0%;
+    }
+
+    100% {
+      margin-left: 17.5em;
+    }
+  }
+  @keyframes closing {
+    0% {
+      margin-right: 0%;
+    }
+
+    100% {
+      margin-right: 34.5em;
+    }
+  }
+
+}
+  
+@media screen and (max-width: 1180px), screen and (max-height: 680px) {
+  @keyframes slide {
+    0% {
+      margin-left: 0%;
+    }
+
+    100% {
+      margin-left: 15em;
+    }
+  }
+  @keyframes closing {
+    0% {
+      margin-right: 0%;
+    }
+
+    100% {
+      margin-right: 29.65em;
+    }
   }
 }

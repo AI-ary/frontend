@@ -6,7 +6,7 @@ type OpenBookRightProps = {
 }
 
 function OpenBookRight({children}:OpenBookRightProps){
-  return(   
+  return (   
     <O.OpenBookRight>
       <O.Line position="left" deg="to left" />
       {children}

@@ -47,3 +47,49 @@ export const Line = styled.div<{ position: string, deg:string }>`
   backdrop-filter: blur(5px);
 `
 
+export const CoverYear = styled.div`
+  font-size: 24px;
+  font-family:'Itim';
+  margin-bottom: 10px;
+`
+
+export const Nickname = styled.h1`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  bottom: 22px;
+  font-size: 45px;
+  font-family:'Itim';
+  > p > span {
+    font-family:'Poor Story';
+  }
+`
+export const Profile = styled.div`
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background-color: white;
+  border: 8px solid ${props => props.theme.lineColor};
+  overflow: hidden;
+  background-image: url('/images/profileBg.svg');
+  > img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+  }
+`
+export const SelectBtn = styled.label`
+  background-color: ${props => props.theme.lineColor};
+  position: relative;
+  top: -80px;
+  left: 90px;
+  border-radius: 50%;
+  padding: 18px;
+  cursor: pointer;
+  box-sizing: border-box;
+  .profile {
+    color: ${props => props.theme.profileColor};
+  }
+  `

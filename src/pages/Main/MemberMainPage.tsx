@@ -57,13 +57,12 @@ function AfterLogin() {
     // }).then(function (res) {
     let flip : Element | null= document.querySelector('.flip');
     let slide : Element | null = document.querySelector('.slide');
-    if (slide) {
-      flip?.classList.add('flipStart')
+    if (slide && flip) {
+      flip.classList.add('flipStart')
       slide.classList.add('move');
       setTimeout(() => {
         if (flip) {
           flip.classList.add('open');
-          flip.classList.toggle('color');
           setTimeout(() => {
             navigate('/list');
           }, 450);
@@ -83,16 +82,6 @@ function AfterLogin() {
           <MdPhotoLibrary size="28" className='profile'/>
       </SelectBtn>
       <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
-      {/* <StartBtn>
-        <Button
-          className={classes.customHoverFocus} type='button' onClick={(e)=>onClick(e)} style={{
-            width: '100px',
-            height: '40px',
-            borderRadius: '25px',
-            fontSize: '25px',
-            fontWeight: 'bolder'
-          }}>시작</Button>
-      </StartBtn> */}
       <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>
       <LogoutBtn/>
     </ClosedBook>
