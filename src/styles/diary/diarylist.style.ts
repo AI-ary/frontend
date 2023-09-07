@@ -20,12 +20,12 @@ export const NonDiaryContainer = styled.div`
     line-height: 1.3;
     margin-bottom: 40px;
     > span{
-      color: #EB8888;
+      color: ${props => props.theme.noDiaryState};
     }
   }
 `
 export const GotoDiaryWrite = styled(Link)`
-  background-color: #EB8888;
+  background-color: ${props => props.theme.goToDiaryWrite};
   border-radius: 36px;
   padding: 15px 30px;
   box-sizing: border-box;
@@ -36,7 +36,7 @@ export const GotoDiaryWrite = styled(Link)`
   color: #FFFFFF;
   font-family: 'Poor Story';
   &:hover{
-    background-color: #FF839C;
+    background-color: ${props => props.theme.goToDiaryWriteHover};
   }
 `
 
@@ -185,8 +185,8 @@ export const DaysCol =styled.div`
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);   
     transform: scale(1.01);
     border: none;
-    background-color: #FFD2DC;
-    color: #e55218;
+    background-color: ${props => props.theme.selectedBg};
+    color: ${props => props.theme.selectedFont};
   }
 `
 
@@ -203,7 +203,7 @@ export const IconWrap = styled.div`
   }
 `
 export const PlusCircle = styled(BsPlusCircleFill)`
-fill: #EB8888;
+  fill: ${props => props.theme.selectedIcon};
   cursor: pointer;
   font-size: 30px;
 `

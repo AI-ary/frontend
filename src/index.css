@@ -9,3 +9,8 @@
         color: rgba(0, 0, 0, 0);
     }
 }
+
+.swal2-icon {
+    justify-self: center;
+    margin-top: 30px;
+}
