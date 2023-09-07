@@ -1,14 +1,15 @@
-#frontend
 FROM node:18.12.1-alpine
 
 USER root
 
 WORKDIR /frontend
-COPY . /frontend
+COPY package*.json yarn.lock /frontend/
 
-RUN yarn config set network-timeout 300000
-RUN yarn --ignore-platform
+RUN yarn install --ignore-platform
 
-COPY . ./
+ENV REACT_APP_HOST_IP_ADDRESS $API_URL
+ENV REACT_APP_BACKEND_URL $REACT_APP_BACKEND_URL
 
-RUN yarn run build
+COPY . .
+
+RUN yarn build

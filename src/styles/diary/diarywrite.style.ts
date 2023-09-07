@@ -92,47 +92,47 @@ export const Choicetitle =styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-size: 48px;
+  font-size: 36px;
   font-family: 'Poor Story';
   -webkit-text-stroke: 0.4px #373737;
   color: #373737;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 `
 
 export const Choice = styled.div`
-    width: 500px;   
-    height: 520px;
-    background:white;
-    display:flex;
-    flex-wrap: wrap;
-    border-radius: 10px;
-    border: 2px dotted grey;
-    overflow: auto;
+  width: 85%;   
+  height: 75%;
+  background-color: #FFFFFF;
+  display:flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  border: 1px solid #969696;
+  overflow: auto;
 `
 
 export const ChoiceGrim = styled.img`
-    width: 95px;
-    height: 95px;
-    object-fit:cover;
-    margin: 2rem;
+  width: 95px;
+  height: 95px;
+  object-fit:cover;
+  margin: 2rem;
 `
 
 export const Choicebutton = styled.button`
-    width: 90px;
-    height: 35px;
-    background-color: transparent;
-    color: black;
-    border: 2px solid black;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 17px;
-    margin-left: 1.5%;
-    transition: box-shadow 250ms ease-in-out, color 200ms ease-in-out;
-    font-family:KyoboHand;
-    font-weight: bolder;
-    &:hover{
-        box-shadow: 0 0 40px 40px #404040 inset;
-        color: white;
-        border:none;
-    }
+  width: 90px;
+  height: 35px;
+  background-color: transparent;
+  color: black;
+  border: 2px solid black;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 17px;
+  margin-left: 1.5%;
+  transition: box-shadow 250ms ease-in-out, color 200ms ease-in-out;
+  font-family:KyoboHand;
+  font-weight: bolder;
+  &:hover{
+      box-shadow: 0 0 40px 40px #404040 inset;
+      color: white;
+      border:none;
+  }
 `

@@ -141,7 +141,7 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
           </DL.ShareWrap>
           <D.ChoiceButtonContainer>
             <D.ButtonItem onClick={toggleshareMenu}><D.StyledShare /></D.ButtonItem>
-            <D.ButtonItem onClick={()=>DeleteDiary(id)}><D.StyledUpdate /></D.ButtonItem>
+            <D.ButtonItem onClick={()=>DeleteDiary(id)}><D.StyledDelete /></D.ButtonItem>
           </D.ChoiceButtonContainer>
         </D.Canvas>
         <D.Content><ResultManuscript content={contents}/></D.Content>
