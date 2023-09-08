@@ -6,18 +6,19 @@ import * as D from '../../../styles/diary/diary.style';
 import * as DL from '../../../styles/diary/diarylist.style';
 
 interface DiaryListProps{
-  id: number;
-  title: string;
-  weather: number;
-  draw: string;
-  contents: string;
-  date: string;
-  emoji: string;
+  data: {
+    title : string,
+    weather: string,
+    contents: string,
+    diary_date: string,
+    emoji: string,
+    drawing_url: string
+  };
 }
 
 type Props = SweetAlertResult<any>;
 
-function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListProps){
+function DiaryList({data}:DiaryListProps){
   const [shareMenu, setShareMenu] = useState<boolean>(false);
   
   const getDayOfWeek = (date:string) => {
@@ -26,9 +27,9 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
     return dayOfWeek;
   }
   
-  let todayMonth=new Date(date).getMonth() + 1;  //월 구하기
-  let todayDate=new Date(date).getDate();  //일 구하기
-  let todayDay = getDayOfWeek(date);
+  let todayMonth=new Date(data.diary_date).getMonth() + 1;  //월 구하기
+  let todayDate=new Date(data.diary_date).getDate();  //일 구하기
+  let todayDay = getDayOfWeek(data.diary_date);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -58,7 +59,7 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   const twitterShare = () => {
     const location = window.location.href;
     const url = encodeURIComponent(location);
-    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`);
+    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${data.title}`);
   }
 
   const urlShare = () => {
@@ -104,10 +105,10 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
   const Weather = () => {
     return(
       <>
-        <D.StyledSunny fill={weather===1 ? '#FF0000' : '#969696'} className='weather' />
-        <D.StyledCloudy fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' />
-        <D.StyledRainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' />
-        <D.StyledSnow fill={weather===4 ? '#FFFAFA' : '#969696'} />
+        <D.StyledSunny fill={data.weather ==='SUNNY' ? '#FF0000' : '#969696'} className='weather' />
+        <D.StyledCloudy fill={data.weather === 'CLOUD' ? '#4E5D79' : '#969696'} className='weather' />
+        <D.StyledRainy fill={data.weather === 'RAIN' ? '#5A5A5A' : '#969696'} className='weather' />
+        <D.StyledSnow fill={data.weather === 'SNOW' ? '#FFFAFA' : '#969696'} />
       </>
     )
   }
@@ -128,12 +129,12 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
         <D.TitleContainer>
           <D.Title>
             제목: 
-            <D.Titlecontent>{title}</D.Titlecontent>
+            <D.Titlecontent>{data.title}</D.Titlecontent>
           </D.Title>
-          <D.Emoji>{emoji}</D.Emoji>
+          <D.Emoji>{data.emoji}</D.Emoji>
         </D.TitleContainer>
         <D.Canvas>
-          <img src={draw} alt="diarygrim" />
+          <img src={data.drawing_url} alt="diarygrim" />
           <DL.ShareWrap className={shareMenu ? "show-menu" : "hide-menu"}>
             <DL.SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
             <DL.SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
@@ -141,10 +142,10 @@ function DiaryList({id, title, weather, draw, contents, date, emoji}:DiaryListPr
           </DL.ShareWrap>
           <D.ChoiceButtonContainer>
             <D.ButtonItem onClick={toggleshareMenu}><D.StyledShare /></D.ButtonItem>
-            <D.ButtonItem onClick={()=>DeleteDiary(id)}><D.StyledDelete /></D.ButtonItem>
+            {/* <D.ButtonItem onClick={()=>DeleteDiary(id)}><D.StyledDelete /></D.ButtonItem> */}
           </D.ChoiceButtonContainer>
         </D.Canvas>
-        <D.Content><ResultManuscript content={contents}/></D.Content>
+        <D.Content><ResultManuscript content={data.contents}/></D.Content>
       </D.DiaryContainer>
     </D.DiviContainer>
   )

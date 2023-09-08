@@ -8,7 +8,7 @@ baseAxios.interceptors.request.use(
   (config) => {
     const accessToken = sessionStorage.getItem('token');
     if(accessToken != null){
-      config.headers.access = `Bearer ${accessToken}`;
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
   },
