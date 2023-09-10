@@ -18,6 +18,11 @@ interface RefreshProps {
   refresh: string | null,
 }
 
+interface LogoutProps {
+  accessToken: string | null;
+  refreshToken: string | null;
+}
+
 const JWT_EXPIRY_TIME = 1800 * 1000 // 만료시간 30분 (밀리초로 표현)
 let temp : SignInProps;
 
@@ -31,8 +36,11 @@ const onRefreshing = (data : RefreshProps) => {
 }
 
 const onSignUp = (data: SignUpProps) => {
-  console.log(data)
   return baseAxios.post('users/join', data)
+}
+
+const onLogout = (data: LogoutProps) => {
+  return baseAxios.post('users/logout', data)
 }
 
 let count = 0;
@@ -52,8 +60,8 @@ export const signIn = () => {
         navigate('/main')
         count++;
       }
-      const access = res.data.access;
-      const refresh = res.data.refresh;
+      const access = res.data.data.accessToken;
+      const refresh = res.data.data.refreshToken;
       setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
       // baseAxios.defaults.headers.common['Authorization'] = `Bearer ${access}`
       sessionStorage.setItem('token', access);
@@ -122,4 +130,23 @@ export const signUp = () => {
     }
   })
   return { isSignUpError, isSignUpLoading, mutate}
+}
+
+export const logout = () => {
+  const navigate = useNavigate();
+  const { mutate } = useMutation(onLogout, {
+    onSuccess: () => {
+      Swal.fire(
+        '로그아웃 성공!',
+        '',
+        'success'
+      )
+      sessionStorage.clear();
+      navigate('/')
+    },
+    onError: (err:any) => {
+      console.log(err)
+    }
+  })
+  return { mutate }
 }
