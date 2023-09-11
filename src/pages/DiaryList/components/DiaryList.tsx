@@ -106,7 +106,7 @@ function DiaryList({data}:DiaryListProps){
     return(
       <>
         <D.StyledSunny fill={data.weather ==='SUNNY' ? '#FF0000' : '#969696'} className='weather' />
-        <D.StyledCloudy fill={data.weather === 'CLOUD' ? '#4E5D79' : '#969696'} className='weather' />
+        <D.StyledCloudy fill={data.weather === 'CLOUDY' ? '#4E5D79' : '#969696'} className='weather' />
         <D.StyledRainy fill={data.weather === 'RAIN' ? '#5A5A5A' : '#969696'} className='weather' />
         <D.StyledSnow fill={data.weather === 'SNOW' ? '#FFFAFA' : '#969696'} />
       </>

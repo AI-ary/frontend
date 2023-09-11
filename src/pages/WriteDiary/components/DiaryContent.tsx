@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useStore } from '../../../store/store';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { addDiaryData, addDiaryImage, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
+import { addDiaryData, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import Manuscript from './Manuscript';
@@ -30,7 +30,7 @@ function DiaryContent(props:DiaryContentProps) {
   const [grim, setGrim] = useState<boolean>(true); //그리기모드 버튼 클릭 여부
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
-  const [weather, setWeather] = useState<number>(); //날씨 선택
+  const [weather, setWeather] = useState<string>(); //날씨 선택
   const { updateCanvas, setChoiceImg, setGetGrimList } = useStore();
   const [emoji, setEmoji] = useState<string>('');
   const [comContent, setComContent] = useState<string>('');
@@ -67,42 +67,36 @@ function DiaryContent(props:DiaryContentProps) {
 
   //작성한 일기 보내기
   const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
-  const {isImgSuccess, addDiaryImgData} = addDiaryImage();
 
   const grimDiary = async () => {
     props.getLoading(true);
     let form = new FormData();
-    form.append('user_id', user);
-    form.append('title', title);
-    form.append('weather', String(weather));
-    form.append('emoji', emoji);
-    form.append('contents', content);
-    form.append('diary_date', date);
+    form.append('file', file);
+    const sendData = {
+      "title": title,
+      "weather": weather,
+      "emoji": emoji,
+      "contents": content,
+      "diary_date": date,
+    }
+    const jsonBlob = new Blob([JSON.stringify(sendData)], { type: 'application/json' });
+    form.append('createRequest', jsonBlob);
+    console.log(file);
+    console.log(sendData)
     addDiaryContent(form);
   }
 
-  const drawingUrl = async () => {
-    let form = new FormData();
-    form.append('user_id', user);
-    form.append('diary_date', date);
-    form.append('file', file);
-    addDiaryImgData(form);
-  };
-
   useEffect(()=> {
     if(isSaveSuccess){
-      drawingUrl();
-    }
-    if(isSaveError){
-      props.getLoading(false);
-    }
-    if(isImgSuccess) {
       props.getLoading(false);
       setChoiceImg([]);
       setGetGrimList([]);
       navigate('/list');
     }
-  },[isSaveSuccess, isSaveError, isImgSuccess]);
+    if(isSaveError){
+      props.getLoading(false);
+    }
+  },[isSaveSuccess, isSaveError]);
   
   //AI키워드 그림 가져오기 버튼
   const {isTextSuccess, addTextContent} = addTextData();
@@ -160,7 +154,7 @@ function DiaryContent(props:DiaryContentProps) {
   };
 
   //날씨 선택
-  const weatherChange = (weatherName:number) => {
+  const weatherChange = (weatherName:string) => {
     setWeather(weatherName);
   };
   //그리기 모드 버튼
@@ -170,11 +164,10 @@ function DiaryContent(props:DiaryContentProps) {
 
   interface WeatherBtnProps{
     mood: string;
-    num: number;
   }
 
-  function WeatherBtn({mood, num }:WeatherBtnProps) {
-    return <D.WeatherRadioBtn type='radio' id={mood} checked={weather === num} onChange={() => weatherChange(num)} />;
+  function WeatherBtn({mood}:WeatherBtnProps) {
+    return <D.WeatherRadioBtn type='radio' id={mood} checked={weather === mood} onChange={() => weatherChange(mood)} />;
   }
 
   return (
@@ -183,14 +176,14 @@ function DiaryContent(props:DiaryContentProps) {
         <D.DateContainer>
           <D.DateContent>{todayMonth}월 {todayDate}일 {todayDay}요일</D.DateContent>
           <D.WeatherWrap>
-            <WeatherBtn mood='sunny' num={1} />
-            <label htmlFor='sunny'><D.StyledSunny fill={weather=== 1 ? '#FF0000' : '#969696'} className='weather' /></label>
-            <WeatherBtn mood={'cloudy'} num={2} />
-            <label htmlFor='cloudy'><D.StyledCloudy fill={weather===2 ? '#4E5D79' : '#969696'} className='weather' /></label>
-            <WeatherBtn mood={'rainy'} num={3} />
-            <label htmlFor='rainy'><D.StyledRainy fill={weather===3 ? '#5A5A5A' : '#969696'} className='weather' /></label>
-            <WeatherBtn mood={'snow'} num={4} />
-            <label htmlFor='snow'><D.StyledSnow fill={weather===4 ? '#F5F5F5' : '#969696'} /></label>
+            <WeatherBtn mood='SUNNY'/>
+            <label htmlFor='SUNNY'><D.StyledSunny fill={weather === 'SUNNY' ? '#FF0000' : '#969696'} className='weather' /></label>
+            <WeatherBtn mood='CLOUDY' />
+            <label htmlFor='CLOUDY'><D.StyledCloudy fill={weather === 'CLOUDY' ? '#4E5D79' : '#969696'} className='weather' /></label>
+            <WeatherBtn mood='RAIN' />
+            <label htmlFor='RAIN'><D.StyledRainy fill={weather=== 'RAIN' ? '#5A5A5A' : '#969696'} className='weather' /></label>
+            <WeatherBtn mood='SNOW' />
+            <label htmlFor='SNOW'><D.StyledSnow fill={weather === 'SNOW' ? '#F5F5F5' : '#969696'} /></label>
           </D.WeatherWrap>
         </D.DateContainer>
         <D.TitleContainer>

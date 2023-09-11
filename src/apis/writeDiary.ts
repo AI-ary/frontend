@@ -21,12 +21,7 @@ const addText = async (formData: FormData) => {
 
 // 일기 저장 보내기
 const addDiary = async (formData: FormData) => {
-  await baseAxios.post('diaries/', formData, config);
-}
-
-// 일기 이미지 보내기
-const addDiaryImg = async (formData: FormData) => {
-  await baseAxios.post('images/upload', formData, config);
+  await baseAxios.post('diaries', formData, config);
 }
 
 // 키워드 그림 가져오기
@@ -115,20 +110,4 @@ export const addDiaryData = () => {
     mutate(formData);
   }
   return {isSaveLoading, isSaveSuccess, isSaveError, addDiaryContent};
-}
-
-export const addDiaryImage = () => {
-  const {mutate, isLoading: isImgLoading, isSuccess: isImgSuccess, isError} = useMutation(addDiaryImg, {
-    onError: () => {
-      console.log('일기 이미지 전송 실패');
-    },
-    onSuccess: () => {
-      console.log("일기 이미지 전송 성공");
-    },
-  });
-  const addDiaryImgData = async (formData: FormData) => {
-    mutate(formData);
-  }
-
-  return {isImgLoading, isImgSuccess, isError, addDiaryImgData};
 }
