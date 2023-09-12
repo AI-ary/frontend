@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useStore } from '../../../store/store';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { addDiaryData, addTextData, getKeywordDrawingData } from '@/apis/writeDiary';
+import { addDiaryData, addTextData, sendPollingData, getKeywordDrawingData } from '@/apis/writeDiary';
 import { format } from 'date-fns';
 import Swal from 'sweetalert2';
 import Manuscript from './Manuscript';
@@ -33,8 +33,6 @@ function DiaryContent(props:DiaryContentProps) {
   const [weather, setWeather] = useState<string>(); //날씨 선택
   const { updateCanvas, setChoiceImg, setGetGrimList } = useStore();
   const [emoji, setEmoji] = useState<string>('');
-  const [comContent, setComContent] = useState<string>('');
-  const [send, setSend] = useState<boolean>(false);
 
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
@@ -99,54 +97,85 @@ function DiaryContent(props:DiaryContentProps) {
   },[isSaveSuccess, isSaveError]);
   
   //AI키워드 그림 가져오기 버튼
-  const {isTextSuccess, addTextContent} = addTextData();
-  const {isKeywordSuccess, data, isError} = getKeywordDrawingData({send, date ,user, comContent});
+  const {isTextSuccess, isTextError, taskId, addTextContent} = addTextData();
+  const {isPollingSuccess, isPllingError, state, sendPollingState} = sendPollingData();
+  const {isGetImgSuccess, isGetImgError, keyword_img, getKeywordImg} = getKeywordDrawingData();
 
   const bringGrim = () => {
-    props.getLoading(true);
-    props.startLoading()
-    setComContent(content);
+    // props.getLoading(true);
+    // props.startLoading()
     setGetGrimList([]);
-    const form = new FormData();
-    form.append('user_id', user);
-    form.append('diary_date', date);
-    form.append('contents', content);
-    addTextContent(form);
+    addTextContent(content);
   }
 
   useEffect(()=>{
-    if(isTextSuccess){
-      setSend(true);
+    if(isTextSuccess && taskId){
+      // setSend(true);
+      sendPollingState(taskId);
+      // if (isKeywordSuccess) {
+      //   const percent : HTMLElement | null = document.querySelector('#percent');
+      //   const percentBar : HTMLElement | null = document.querySelector('#percentBar');
+      //   if (percent !== null && percentBar !== null) {
+      //     percent.textContent = '100%';
+      //     percentBar.style.width = '100%';
+      //   }
+      //   setTimeout(() => {
+      //     setGetGrimList(data);
+      //     setSend(false);
+      //     props.getLoading(false);
+      //     props.loadingState.current = false
+      //   },300)
+      // }
+  
+      // if(isError && comContent === ''){
+      //   props.getLoading(false);
+      //   setSend(false);
+      //   Swal.fire({
+      //     position: 'center',
+      //     icon: 'warning',
+      //     title: '키워드에 맞는 이미지가 없습니다.',
+      //     showConfirmButton: false,
+      //     timer: 2000
+      //   })
+      //   props.loadingState.current = false
+      // }
     }
-
-    if (isKeywordSuccess) {
-      const percent : HTMLElement | null = document.querySelector('#percent');
-      const percentBar : HTMLElement | null = document.querySelector('#percentBar');
-      if (percent !== null && percentBar !== null) {
-        percent.textContent = '100%';
-        percentBar.style.width = '100%';
-      }
-      setTimeout(() => {
-        setGetGrimList(data);
-        setSend(false);
-        props.getLoading(false);
-        props.loadingState.current = false
-      },300)
-    }
-
-    if(isError && comContent === ''){
+    if(isTextError) {
       props.getLoading(false);
-      setSend(false);
+      props.loadingState.current = false
       Swal.fire({
         position: 'center',
         icon: 'warning',
-        title: '키워드에 맞는 이미지가 없습니다.',
+        title: '텍스트 전송 실패.',
         showConfirmButton: false,
         timer: 2000
       })
-      props.loadingState.current = false
     }
-  },[isTextSuccess, isKeywordSuccess, isError]);
+  },[isTextSuccess, isTextError]);
+
+  useEffect(()=>{
+    if(isPollingSuccess) {
+      console.log(state);
+      const intervalId = setInterval(() => {
+        if (state === 'SUCCESS') {
+          clearInterval(intervalId);
+          getKeywordImg(taskId);
+        } else {
+          sendPollingState(taskId);
+        }
+      }, 2000);
+    }
+  },[state]);
+
+  useEffect(()=>{
+    if(isGetImgSuccess){
+      setGetGrimList(keyword_img);
+      console.log(keyword_img);
+    }
+    if(isGetImgError){
+
+    }
+  },[isGetImgSuccess, isPllingError, keyword_img])
 
   //제목 내용
   const onChange = (e:any) => {

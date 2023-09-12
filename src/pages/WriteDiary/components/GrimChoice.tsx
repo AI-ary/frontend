@@ -3,27 +3,21 @@ import { useStore } from '../../../store/store';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 
-interface Grim{
-  image_url:string;
-}
 // AI로부터 받아온 그림들 중 원하는 그림 선택
 function GrimChoice(){
-  const {setChoiceImg, getGrimList}=useStore();
-  const grim:any[] = Object.values(getGrimList);
-  const [grimlist, setGrimList]=useState<Grim[]>([]);
-  const img: string[] = [];
-  
+  const {setChoiceImg, getGrimList} = useStore();
+  const [keywordList, setKeywordList] = useState<any []>([]);
+  const [selectedKeyword, setSelectedKeyword] = useState<string>('');
+  const [grimList, setGrimList]=useState<any []>([]);
+
+  useEffect(() => {
+    setKeywordList(Object.keys(getGrimList));
+    setSelectedKeyword(Object.keys(getGrimList)[0]);
+  }, [getGrimList]);
+
   useEffect(()=>{
-    setGrimList(grim[1]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getGrimList])
-  
-  if(grimlist!==undefined){
-    grimlist && grimlist.map((grim: Grim,index:number)=>(
-      // img.push(grimlist[index].image_url)
-      img.push(grim.image_url)
-    ))
-  }
+    setGrimList(getGrimList[selectedKeyword]);
+  },[selectedKeyword]);
 
   const addImage = (srcImg:any) => {
     const newimage = new Image();
@@ -54,9 +48,10 @@ function GrimChoice(){
       <DW.Choicetitle>
         AIARY가 분석한 그림이에요!
       </DW.Choicetitle>
+      {keywordList && keywordList.map((x, index) => <div key={index} onClick={()=>setSelectedKeyword(x)}>{x}</div>)}
       <DW.Choice>
         {
-          img && img.map((data,index)=>
+          grimList && grimList.map((data,index)=>
             (
               <DW.ChoiceGrim key={index} id="image" src={data}
                 alt="grim" onClick={onChange} crossOrigin="anonymous"/>
