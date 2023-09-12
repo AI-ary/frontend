@@ -14,24 +14,24 @@ interface SignInProps {
   password:string
 }
 
-interface RefreshProps {
-  refresh: string | null,
+interface LogoutProps {
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
-const JWT_EXPIRY_TIME = 1800 * 1000 // 만료시간 30분 (밀리초로 표현)
 let temp : SignInProps;
 
 const onSignIn = (data : SignInProps) => {
   temp = data
-  return baseAxios.post('auth', data)
-}
-
-const onRefreshing = (data : RefreshProps) => {
-  return baseAxios.post('auth/refresh',data)
+  return baseAxios.post('users/login', data)
 }
 
 const onSignUp = (data: SignUpProps) => {
-  return baseAxios.post('join', data)
+  return baseAxios.post('users/join', data)
+}
+
+const onLogout = (data: LogoutProps) => {
+  return baseAxios.post('users/logout', data)
 }
 
 let count = 0;
@@ -51,38 +51,21 @@ export const signIn = () => {
         navigate('/main')
         count++;
       }
-      const access = res.data.token.access;
-      const refresh = res.data.token.refresh;
-      setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
-      baseAxios.defaults.headers.common['Authorization'] = `Bearer ${access}`
+      const access = res.data.data.accessToken;
+      const refresh = res.data.data.refreshToken;
       sessionStorage.setItem('token', access);
       sessionStorage.setItem('refresh', refresh);
-      sessionStorage.setItem('nickname', `${res.data.user.nickname}`)
-      sessionStorage.setItem('id', `${res.data.user.id}`)
     }, onError: (err) => {
       console.log(err)
       Swal.fire({
         position: 'center',
         icon: 'error',
         title: '아이디 혹은 비밀번호를 다시 확인해주세요.',
-        showConfirmButton: false,
-        timer: 2000
+        showConfirmButton: true,
+        // timer: 2000
       })
     }
   })
-  const onSilentRefresh = () => {
-    refreshing.mutate({refresh: sessionStorage.getItem('refresh')})
-  }
-  const refreshing = useMutation(onRefreshing,
-    {
-      onSuccess: () => {
-        mutate(temp)
-      },
-      onError: (err) => {
-        console.log(err)
-      }
-    }
-  )
     
   return {isSignInLoading, isSignInError, mutate}
 }
@@ -101,19 +84,19 @@ export const signUp = () => {
       navigate('/signin')
     },
     onError: (err:any) => {
-      if (err.response.data.email) {
+      if (err.response.data.errors[0].field === 'email') {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: `${err.response.data.email}`,
+          title: `${err.response.data.errorMessage}`,
           showConfirmButton: false,
           timer: 2000,
         });
-      } else if (err.response.data.nickname) {
+      } else if (err.response.data.errors[0].field === 'nickname') {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: `${err.response.data.nickname}`,
+          title: `${err.response.data.errorMessage}`,
           showConfirmButton: false,
           timer: 2000,
         });
@@ -121,4 +104,23 @@ export const signUp = () => {
     }
   })
   return { isSignUpError, isSignUpLoading, mutate}
+}
+
+export const logout = () => {
+  const navigate = useNavigate();
+  const { mutate } = useMutation(onLogout, {
+    onSuccess: () => {
+      Swal.fire(
+        '로그아웃 성공!',
+        '',
+        'success'
+      )
+      sessionStorage.clear();
+      navigate('/')
+    },
+    onError: (err:any) => {
+      console.log(err)
+    }
+  })
+  return { mutate }
 }

@@ -16,7 +16,7 @@ export const OpenBookLeft = styled.div`
   border-radius: 8px 0 0 8px;
   border-width: 0  0 10px 10px;
   border-style: solid;
-  border-color: #FFD2DC;
+  border-color: ${props => props.theme.bookMarkBg};
   background-color: #FDF9FB;
   margin-left: 70px;
 `
@@ -30,7 +30,7 @@ export const OpenBookRight = styled.div`
   border-radius: 0 8px 8px 0;
   border-width: 0 10px 10px 0 ;
   border-style: solid;
-  border-color: #FFD2DC;
+  border-color: ${props => props.theme.bookMarkBg};
   background-color: #FDF9FB;
 `
 

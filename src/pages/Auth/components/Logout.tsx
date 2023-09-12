@@ -1,14 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../../apis/baseAxios'
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import styled from 'styled-components';
 import { IoLogOutOutline } from "react-icons/io5";
+import { logout } from '@/apis/auth';
+
 
 type Props = SweetAlertResult<any>;
 
 export default function LogoutBtn() {
-  const navigate = useNavigate();
+  const { mutate } = logout()
   
   function onClick(e : React.MouseEvent) {
     Swal.fire({
@@ -22,17 +22,12 @@ export default function LogoutBtn() {
     }).then((result: Props) => {
       console.log(result)
       if (result.isConfirmed) {
-        Swal.fire(
-          '로그아웃 성공!',
-          '',
-          'success'
-        )
-        api.defaults.headers.common['Authorization'] = null;
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('refresh');
-        sessionStorage.removeItem('nickname');
-        sessionStorage.removeItem('id');
-        navigate('/')
+        const access = sessionStorage.getItem('token');
+        const refresh = sessionStorage.getItem('refresh');
+        mutate({
+          accessToken: access,
+          refreshToken: refresh
+        })
       }
     })
   }

@@ -34,17 +34,18 @@ function SignUpForm() {
   }
 
   function nicknameValid() {
-    var check = /[~!@#$%^&*()+|<>?:{}ㄱ-ㅎㅏ-ㅣ]/;
+    let check = /[~!@#$%^&*()+|<>?:{}ㄱ-ㅎㅏ-ㅣ]/;
     return check.test(nickname);
   }
 
   function emailValid() {
-    var check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return check.test(email);
   }
 
   function passwordValid() {
-    var check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    let check = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+
     return check.test(password);
   }
 
@@ -80,7 +81,7 @@ function SignUpForm() {
         </S.WarningWrap>
         <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={password ? !passwordValid() : passwordValid()} />
         <S.WarningWrap>
-          <S.WarningContent valid={password ? !passwordValid() : passwordValid()}>숫자, 특수문자를 포함하여 8글자 이상 입력해 주세요.</S.WarningContent>
+          <S.WarningContent valid={password ? !passwordValid() : passwordValid()}>대소문자와 숫자, 특수문자를 포함한 8자 이상 16자 이하의 비밀번호를 입력해야 합니다.</S.WarningContent>
         </S.WarningWrap>
         <S.Input type="password" placeholder="비밀번호 확인" value={confirm} onChange={(e)=>setConfirm(e.target.value)} isValid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
         <S.WarningWrap>

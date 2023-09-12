@@ -39,8 +39,8 @@ function Bookmark() {
   // }
 
   function onClick() {
-    // setChoiceImg([]);
-    // setGetGrimList([]);
+    setChoiceImg([]);
+    setGetGrimList([]);
     // let willClose : HTMLElement | null = document.querySelector('.will-close')
     // let willMove : HTMLElement | null = document.querySelector('.will-move')
     // let behind : HTMLElement | null = document.querySelector('.behind')
