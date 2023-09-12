@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../../../store/store';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, 
@@ -60,7 +60,7 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
   const endDate=endOfWeek(monthEnd);
   const [clickDate, setClickDate]=useState<string>(format(selectedDate, 'yyyy-MM-dd'));  //일기 추가 상태
   const [hoveredDate, setHoveredDate]=useState<string | null>(null);
-  const {setChoicedDate}=useStore();  //페이지 이동 시 선택 날짜 초기화
+  const { setChoicedDate } = useStore();  //페이지 이동 시 선택 날짜 초기화
   const rows:any=[];
   let days:any=[];
   let day:any=startDate;
@@ -69,11 +69,14 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
   const pageMove = () =>{
     setChoicedDate(new Date());
   }
-
+  useEffect(()=>{
+    setClickDate(format(selectedDate, 'yyyy-MM-dd'));
+  },[selectedDate]);
+  
   while(day<=endDate){
     for (let i=0; i<7; i++){  
       formattedDate = format(day, 'd');
-      const cloneDay:Date=day;
+      const cloneDay:Date = day;
       days.push(
         <DL.DaysCol className={`cell ${
           !isSameMonth(day, monthStart)
@@ -133,21 +136,36 @@ const RenderCells = ({currentMonth, today, list, exist, selectedDate, onDateClic
 interface CalenderProps{
   list: any[];
   exist: any[];
+  getdiaryMonth: (date:string) => void;
 }
 
-function Calender({list, exist}:CalenderProps){
+function Calender({list, exist, getdiaryMonth}:CalenderProps){
   const [currentMonth, setCurrentMonth]=useState<Date>(new Date());
   const {choiceDate, setChoicedDate}=useStore();
   const [selectedDate, setSelectedDate]=useState<Date>(choiceDate);
+
+  useEffect(()=>{
+    setSelectedDate(choiceDate);
+  },[choiceDate]);
+
   const prevMonth = () =>{
-    setCurrentMonth(subMonths(currentMonth, 1));
+    const date = subMonths(currentMonth, 1);
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
+    setCurrentMonth(date);
+    setChoicedDate(new Date(date.getFullYear(), date.getMonth(), 1));
+    getdiaryMonth(year+'-'+month.toString().padStart(2, "0"));
   };
   const today=new Date();
   const nextMonth = () =>{
-    setCurrentMonth(addMonths(currentMonth,1));
+    const date = addMonths(currentMonth,1);
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
+    setCurrentMonth(date);
+    setChoicedDate(new Date(date.getFullYear(), date.getMonth(), 1));
+    getdiaryMonth(year+'-'+month.toString().padStart(2, "0"));
   }
   const onDateClick = (day:any) =>{
-    setSelectedDate(day);
     setChoicedDate(day);
   }
   return(

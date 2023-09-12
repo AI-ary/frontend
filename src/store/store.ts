@@ -3,7 +3,7 @@ import {create} from 'zustand';
 interface StoreState{
   currentCanvas: string;
   updateCanvas:string;
-  getGrimList: string[];
+  getGrimList: any[string];
   choiceImg:{ id: any; img: string; x: number; y: number; width: any; height: any;  }[];
   choiceDate: Date;
 }
@@ -11,7 +11,7 @@ interface StoreState{
 interface StoreActions{
   setCurrentCanvas:(updateCanvas:string)=>void;
   setUpdateCanvas:(canvas:string)=>void;
-  setGetGrimList:(data:string[])=>void;
+  setGetGrimList:(data:any[string])=>void;
   setChoiceImg:(img: { id: any; img: string; x: number; y: number; width: any; height: any; }[])=>void;
   setChoicedDate:(date:Date)=>void;
 }
@@ -25,7 +25,7 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   choiceDate:new Date(), //날짜 선택
   setCurrentCanvas: (updateCanvas:string)=>set({currentCanvas:updateCanvas}),
   setUpdateCanvas:(canvas:string)=>set({updateCanvas:canvas}),
-  setGetGrimList:(data:string[])=>set({getGrimList:data}),
+  setGetGrimList:(data:any[string])=>set({getGrimList:data}),
   setChoiceImg:(img: { id: any; img: string; x: number; y: number; width: any; height: any; }[])=>{
     set((state:StoreState&StoreActions)=>({...state,choiceImg:img}));
   },

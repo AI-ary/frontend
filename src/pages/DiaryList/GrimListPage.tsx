@@ -7,7 +7,6 @@ import OpenBookRight from '../../components/bookshape/OpenBookRight';
 import Bookmark from '../../components/bookshape/Bookmark';
 import Calender from './components/Calender';
 import DiaryList from './components/DiaryList';
-import Loading from '../../components/Loading';
 import * as O from '../../styles/bookshape/opendbook.style';
 import * as C from '../../styles/bookshape/closedbook.style';
 import * as D from '../../styles/diary/diary.style';
@@ -19,48 +18,53 @@ interface ListContent{
 }
 
 function GrimList() {
-  const [add, setAdd]=useState<ListContent[]>([]);
-  const {choiceDate}=useStore();
-  const exist:any[]=[];
-  const list:any[]=[];
-  const user = sessionStorage.getItem('id') || ''; //user id받아오기
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth()+1;
+  const [diaryDate, setDiaryDate]=useState<string>(year+'-'+month.toString().padStart(2, "0"));
+  const { choiceDate } = useStore();
+  const [diaryList, setDiaryList] = useState<any[]>([]);
+  const [existDate, setExistDate] = useState<any[]>([]);
 
-  //일기 리스트 가져오기(전체)
-  const {isSuccess, data} = getDiaryListData();
+  const getDiaryListDate = (date:string) => {
+    setDiaryDate(date);
+  }
+
+  const {isSuccess, data} = getDiaryListData(diaryDate);
 
   useEffect(()=>{
     if(isSuccess){
-      setAdd(data);
+      setDiaryList(data.monthly_diary_info);
     }
   },[isSuccess, data]);
 
-  for(let i=0;i<add.length;i++){
-    if(add[i].user_id===parseInt(user)){
-      exist.push(add[i].diary_date);
-      list.push(add[i]);
+  useEffect(()=>{
+    if (diaryList.length > 0) {
+      setExistDate([...existDate, ...diaryList.map(data => data.diary_date)]);
     }
-  }
+  },[diaryList]);
+
   return(
     <C.Container>
       <O.BookContainer style={{marginBottom: '100px'}}> 
         <OpenBookLeft>
-          <Calender list={list} exist={exist} />
+          <Calender list={diaryList} exist={existDate} getdiaryMonth={getDiaryListDate}/>
         </OpenBookLeft>
         <div style={{display:'flex',flexDirection:'row',height:'100%'}} className='will-move'>
           <OpenBookRight>
-            {list.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
+            {diaryList.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
               .map((data,index)=>{
-                return <DiaryList key={index} id={data.id} title={data.title} weather={data.weather} draw={data.drawing_url} contents={data.contents} date={data.diary_date} emoji={data.emoji} />})}
-            {exist.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
+                return <DiaryList key={index} data={data} />})}
+            {existDate.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
               <D.DiviContainer style={{zIndex: '0'}}>
                 <DL.NonDiaryContainer>
                   <img src="images/write.svg" alt="list"/>
                   <div>
                     <span>{choiceDate.getFullYear()}년 {format(choiceDate, 'M')}월 {choiceDate.getDate()}일</span>
-                의<br />하루를 기록해볼까요?
+                    의<br />하루를 기록해볼까요?
                   </div>
                   <DL.GotoDiaryWrite to='/write' state={{date:choiceDate}}>
-                일기 쓰러 가기
+                    일기 쓰러 가기
                   </DL.GotoDiaryWrite>
                 </DL.NonDiaryContainer>
               </D.DiviContainer>)}

@@ -40,6 +40,7 @@ export const signIn = () => {
   const navigate = useNavigate();
   const { mutate, isLoading:isSignInLoading, isError: isSignInError } = useMutation(onSignIn, {
     onSuccess: (res: any) => {
+      console.log(res.data)
       if (count === 0) {  
         Swal.fire({
           position: 'center',
@@ -106,6 +107,16 @@ export const signUp = () => {
   return { isSignUpError, isSignUpLoading, mutate}
 }
 
+
+export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
+  const response = await baseAxios.post("users/reissue", {
+    "accessToken": accessToken,
+    "refreshToken": refreshToken
+  });
+  console.log(response.data);
+  return response.data;
+};
+
 export const logout = () => {
   const navigate = useNavigate();
   const { mutate } = useMutation(onLogout, {
@@ -124,3 +135,4 @@ export const logout = () => {
   })
   return { mutate }
 }
+

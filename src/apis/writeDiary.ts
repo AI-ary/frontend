@@ -1,42 +1,42 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useState, useEffect } from 'react';
 import baseAxios from './baseAxios';
+import aiAxios from './aiAxios';
 import Swal from 'sweetalert2';
-
-interface KeywordDataType{
-  send: boolean;
-  date: string;
-  user: string;
-  comContent: string;
-}
 
 // form 데이터 형식
 const config = {
   headers: { 'Content-Type': 'multipart/form-data'},
 };
-
-// 일기 내용 보내기
-const addText = async (formData: FormData) => {
-  await baseAxios.post('text/', formData, config);
+const configJSON = {
+  headers: { 'Content-Type': 'application/json'},
 };
 
-// 일기 저장 보내기
-const addDiary = async (formData: FormData) => {
-  await baseAxios.post('diaries/', formData, config);
-}
+// 일기 내용 보내기
+const addText = async (content: string) => {
+  const response = await aiAxios.post('konlpy/', { story: content }, configJSON);
+  return response.data.task_id;
+};
 
-// 일기 이미지 보내기
-const addDiaryImg = async (formData: FormData) => {
-  await baseAxios.post('images/upload', formData, config);
-}
+// 일기 폴링
+const sendPolling = async (taskId: string) => {
+  const response = await aiAxios.post('konlpy/status', { task_id: taskId }, configJSON);
+  return response.data.status;
+};
 
 // 키워드 그림 가져오기
-const getKeywordDrawing = async ({date, user}:KeywordDataType) => {
-  const response = await baseAxios.get(`results?diary_date=${date}&&user_id=${user}`);
+const getKeywordDrawing = async (taskId: string) => {
+  const response = await aiAxios.post('konlpy/result', {task_id: taskId}, configJSON);
   return response.data;
 }
 
+// 일기 저장 보내기
+const addDiary = async (formData: FormData) => {
+  await baseAxios.post('diaries', formData, config);
+}
+
 export const addTextData = () =>{
-  const {mutate, isLoading: isTextLoading, isSuccess: isTextSuccess, isError} = useMutation(addText, {
+  const {mutate, data: taskId, isLoading: isTextLoading, isSuccess: isTextSuccess, isError: isTextError} = useMutation(addText, {
     onError: () => {
       console.log("텍스트 전송 실패");
     },
@@ -45,37 +45,60 @@ export const addTextData = () =>{
     },
   });
 
-  const addTextContent = async (formData: FormData) => {
-    mutate(formData);
+  const addTextContent = async (story: string) => {
+    mutate(story);
   }
-  return {isTextLoading, isTextSuccess, isError, addTextContent};
+  
+  return {isTextLoading, isTextSuccess, isTextError, taskId, addTextContent};
 }
 
-export const getKeywordDrawingData = ({send, date, user, comContent}:KeywordDataType) => {
-  const {isLoading: isKeywordLoading, isSuccess: isKeywordSuccess, isError, data} = useQuery(
-    ["keywordDrawingList", comContent],
-    async () => await getKeywordDrawing({send, date, user, comContent}),
-    {
-      retry: 0,
-      enabled: !!send,
-      onSuccess: (data) => {
-        if(data.result.length===0){
-          Swal.fire({
-            position: 'center',
-            icon: 'warning',
-            title: '키워드에 맞는 이미지가 없습니다.',
-            showConfirmButton: false,
-            timer: 2000
-          });
-        }
-      },
-      onError: () =>{
-      }
+export const sendPollingData = () => {
+  const {mutate, data: state, isSuccess: isPollingSuccess, isError: isPllingError} = useMutation(sendPolling, {
+    onError: (e) => {
+      console.log("상태 조회 실패");
+      console.log(e)
+    },
+    onSuccess: (res) => {
+      console.log("상태 확인");
+    },
+  });
+  const sendPollingState = async (taskId: string) => {
+    mutate(taskId);
+  }
+
+  return {isPollingSuccess, isPllingError, state, sendPollingState};
+}
+
+export const getKeywordDrawingData = () => {
+  const {mutate, data: keyword_img, isSuccess: isGetImgSuccess, isError: isGetImgError} = useMutation(getKeywordDrawing,{
+    onError: (e) => {
+      console.log('이미지 가져오기 실패');
+      console.log(e);
+    },
+    onSuccess: (res) => {
+      console.log("이미지 가져오기 성공");
+      console.log(res);
     }
-  );
-  return {isKeywordLoading, isKeywordSuccess, isError, data};
+  });
+  const getKeywordImg = async (taskId: string) => {
+    mutate(taskId);
+  }
+  return { isGetImgSuccess, isGetImgError, keyword_img, getKeywordImg};
 }
 
+// onSuccess: (data) => {
+//   if(data.result.length===0){
+//     Swal.fire({
+//       position: 'center',
+//       icon: 'warning',
+//       title: '키워드에 맞는 이미지가 없습니다.',
+//       showConfirmButton: false,
+//       timer: 2000
+//     });
+//   }
+// },
+// onError: () =>{
+// }
 export const addDiaryData = () => {
   const queryClient = useQueryClient();
   const {mutate, isLoading: isSaveLoading, isSuccess: isSaveSuccess, isError: isSaveError} = useMutation(addDiary, {
@@ -115,20 +138,4 @@ export const addDiaryData = () => {
     mutate(formData);
   }
   return {isSaveLoading, isSaveSuccess, isSaveError, addDiaryContent};
-}
-
-export const addDiaryImage = () => {
-  const {mutate, isLoading: isImgLoading, isSuccess: isImgSuccess, isError} = useMutation(addDiaryImg, {
-    onError: () => {
-      console.log('일기 이미지 전송 실패');
-    },
-    onSuccess: () => {
-      console.log("일기 이미지 전송 성공");
-    },
-  });
-  const addDiaryImgData = async (formData: FormData) => {
-    mutate(formData);
-  }
-
-  return {isImgLoading, isImgSuccess, isError, addDiaryImgData};
 }
