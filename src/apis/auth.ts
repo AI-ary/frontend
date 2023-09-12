@@ -41,6 +41,7 @@ export const signIn = () => {
   const navigate = useNavigate();
   const { mutate, isLoading:isSignInLoading, isError: isSignInError } = useMutation(onSignIn, {
     onSuccess: (res: any) => {
+      console.log(res.data)
       if (count === 0) {  
         Swal.fire({
           position: 'center',
@@ -52,8 +53,8 @@ export const signIn = () => {
         navigate('/main')
         count++;
       }
-      const access = res.data.access;
-      const refresh = res.data.refresh;
+      const access = res.data.data.accessToken;
+      const refresh = res.data.data.refreshToken;
       setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
       // baseAxios.defaults.headers.common['Authorization'] = `Bearer ${access}`
       sessionStorage.setItem('token', access);
@@ -123,3 +124,12 @@ export const signUp = () => {
   })
   return { isSignUpError, isSignUpLoading, mutate}
 }
+
+export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
+  const response = await baseAxios.post("users/reissue", {
+    "accessToken": accessToken,
+    "refreshToken": refreshToken
+  });
+  console.log(response.data);
+  return response.data;
+};

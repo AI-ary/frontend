@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { updateAccessToken } from './auth';
 
 const baseAxios = axios.create({
   baseURL: 'http://localhost:80/api/',
@@ -18,41 +19,32 @@ baseAxios.interceptors.request.use(
   }
 );
 
-// baseAxios.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-//     console.log(error);
-
-//     if(error.response?.status === 401){
-//       const refreshToken = sessionStorage.getItem("refresh");
-//       if(refreshToken != null){
-//         const refreshedAccessToken = await updateAccessToken(refreshToken);
-
-//         if(refreshedAccessToken !== null && refreshedAccessToken!==undefined){
-//           originalRequest.headers.access = `Bearer ${
-//             refreshedAccessToken as string
-//           }`;
-
-//           localStorage.setItem("accessToken", refreshedAccessToken);
-//           return await baseAxios(originalRequest);
-//         }
-//       }
-//     }
-//     sessionStorage.clear();
-//     alert("로그인 정보 만료");
-//     window.location.href="/";
-
-//     return await Promise.reject(error);
-//   }
-// );
-
-// export const updateAccessToken = async (refreshToken: string) => {
-//   const response = await baseAxios.post("users/login/refresh/", {
-//     refresh: refreshToken,
-//   });
-//   return response.data.access;
-// };
-
+baseAxios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if(error.response?.status === 401){
+      const refreshToken = sessionStorage.getItem("refresh");
+      const accessToken = sessionStorage.getItem("token");
+      if(refreshToken != null && accessToken != null){
+        const data = await updateAccessToken(accessToken, refreshToken);
+        const refreshedAccessToken = data.data.accessToken;
+        const newrefreshedAccessToken = data.data.refreshToken;
+        if(refreshedAccessToken !== null && refreshedAccessToken!==undefined){
+          originalRequest.headers['Authorization'] = `Bearer ${
+            refreshedAccessToken
+          }`;
+          sessionStorage.setItem("token", refreshedAccessToken);
+          sessionStorage.setItem("refresh", newrefreshedAccessToken);
+          return await baseAxios(originalRequest.url);
+        }
+      }
+      sessionStorage.clear();
+      alert("로그인 정보 만료");
+      window.location.href="/";
+    }
+    return await Promise.reject(error);
+  }
+);
 
 export default baseAxios;
