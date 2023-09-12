@@ -9,7 +9,6 @@ import ClosedBook from '@/components/bookshape/ClosedBook';
 import LogoutBtn from '../../pages/Auth/components/Logout';
 import { MdPhotoLibrary } from "react-icons/md";
 
-
 function AfterLogin() {
   const [selected, setSelected] = useState<string>('images/rainbow.png');
   const navigate = useNavigate();
@@ -35,8 +34,6 @@ function AfterLogin() {
     })
   }, [])
 
-
-
   const addFile = ()=>{
     const imgFile = imgRef.current;
     if (imgFile?.files) {
@@ -50,11 +47,10 @@ function AfterLogin() {
   }
 
   function onClick(e : React.MouseEvent ) {
-    // e.preventDefault();
-    // api.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`
     // api.patch(`users/${sessionStorage.getItem('id')}/`, {
     //   cover_image_url: selected
     // }).then(function (res) {
+    // Toast.fire({icon:'success',title:'시작하기'})
     let flip : Element | null= document.querySelector('.flip');
     let slide : Element | null = document.querySelector('.slide');
     if (slide && flip) {
