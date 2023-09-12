@@ -14,11 +14,11 @@ interface SignInProps {
   password:string
 }
 
-interface RefreshProps {
-  refresh: string | null,
+interface LogoutProps {
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
-const JWT_EXPIRY_TIME = 1800 * 1000 // 만료시간 30분 (밀리초로 표현)
 let temp : SignInProps;
 
 const onSignIn = (data : SignInProps) => {
@@ -26,13 +26,12 @@ const onSignIn = (data : SignInProps) => {
   return baseAxios.post('users/login', data)
 }
 
-const onRefreshing = (data : RefreshProps) => {
-  return baseAxios.post('users/reissue',data)
+const onSignUp = (data: SignUpProps) => {
+  return baseAxios.post('users/join', data)
 }
 
-const onSignUp = (data: SignUpProps) => {
-  console.log(data)
-  return baseAxios.post('users/join', data)
+const onLogout = (data: LogoutProps) => {
+  return baseAxios.post('users/logout', data)
 }
 
 let count = 0;
@@ -55,12 +54,8 @@ export const signIn = () => {
       }
       const access = res.data.data.accessToken;
       const refresh = res.data.data.refreshToken;
-      setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
-      // baseAxios.defaults.headers.common['Authorization'] = `Bearer ${access}`
       sessionStorage.setItem('token', access);
       sessionStorage.setItem('refresh', refresh);
-      // sessionStorage.setItem('nickname', `${res.data.user.nickname}`)
-      // sessionStorage.setItem('id', `${res.data.user.id}`)
     }, onError: (err) => {
       console.log(err)
       Swal.fire({
@@ -72,19 +67,6 @@ export const signIn = () => {
       })
     }
   })
-  const onSilentRefresh = () => {
-    refreshing.mutate({refresh: sessionStorage.getItem('refresh')})
-  }
-  const refreshing = useMutation(onRefreshing,
-    {
-      onSuccess: () => {
-        mutate(temp)
-      },
-      onError: (err) => {
-        console.log(err)
-      }
-    }
-  )
     
   return {isSignInLoading, isSignInError, mutate}
 }
@@ -125,6 +107,7 @@ export const signUp = () => {
   return { isSignUpError, isSignUpLoading, mutate}
 }
 
+
 export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
   const response = await baseAxios.post("users/reissue", {
     "accessToken": accessToken,
@@ -133,3 +116,23 @@ export const updateAccessToken = async (accessToken: string, refreshToken: strin
   console.log(response.data);
   return response.data;
 };
+
+export const logout = () => {
+  const navigate = useNavigate();
+  const { mutate } = useMutation(onLogout, {
+    onSuccess: () => {
+      Swal.fire(
+        '로그아웃 성공!',
+        '',
+        'success'
+      )
+      sessionStorage.clear();
+      navigate('/')
+    },
+    onError: (err:any) => {
+      console.log(err)
+    }
+  })
+  return { mutate }
+}
+
