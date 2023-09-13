@@ -4,7 +4,7 @@ import { CommonEmptyBtn, CommonFilledBtn, CommonOutlinedBtn } from "@/styles/com
 import { Aiary, ButtonWrap, Content, Logo } from "@/styles/main/main.style";
 import { createGlobalStyle, ThemeProps } from "styled-components";
 import reset from 'styled-reset';
-import { BookContainer, OpenBookLeft, OpenBookRight, Line } from "@/styles/bookshape/opendbook.style";
+import { BookContainer, OpenBookLeft, OpenBookRight, Line, Profile } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
 import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
 import { EmojiWrap, Modebutton,Savebutton, Choicetitle } from "@/styles/diary/diarywrite.style";
@@ -287,6 +287,10 @@ export const GlobalStyle = createGlobalStyle`
     ${SearchContent}{
       font-size: 15px;
     }
+    ${Profile} {
+      width: 208px;
+      height : 208px;
+    }
   }
 
   @media screen and (max-width: 1180px), screen and (max-height: 680px) {
@@ -552,9 +556,12 @@ export const GlobalStyle = createGlobalStyle`
     ${SearchContent}{
       font-size: 15px;
     }
+    ${Profile} {
+      width: 182px;
+      height : 182px;
   }
 
-    @media screen and (max-width: 1100px), screen and (max-height: 600px) {
+    @media screen and (max-width: 1050px), screen and (max-height: 550px) {
       #root {
           display: none;
       }
