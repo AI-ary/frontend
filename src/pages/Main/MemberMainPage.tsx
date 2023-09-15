@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './components/Modal.css';
 import api from '../../apis/baseAxios';
 import * as C from '../../styles/common.style';
-import styled from 'styled-components';
-import Swal from 'sweetalert2';
 import ClosedBook from '@/components/bookshape/ClosedBook';
 import LogoutBtn from '../../pages/Auth/components/Logout';
 import { MdPhotoLibrary } from "react-icons/md";
@@ -15,14 +13,6 @@ function AfterLogin() {
   const navigate = useNavigate();
   const nickname = sessionStorage.getItem('nickname');
   const imgRef = useRef<HTMLInputElement | null>(null);
-
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true
-  })
   
   let now = new Date();
   let year = now.getFullYear();
@@ -51,7 +41,6 @@ function AfterLogin() {
     // api.patch(`users/${sessionStorage.getItem('id')}/`, {
     //   cover_image_url: selected
     // }).then(function (res) {
-    // Toast.fire({icon:'success',title:'시작하기'})
     let flip : Element | null= document.querySelector('.flip');
     let slide : Element | null = document.querySelector('.slide');
     if (slide && flip) {

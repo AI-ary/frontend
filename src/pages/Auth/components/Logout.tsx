@@ -25,8 +25,8 @@ export default function LogoutBtn() {
         const access = sessionStorage.getItem('token');
         const refresh = sessionStorage.getItem('refresh');
         mutate({
-          accessToken: access,
-          refreshToken: refresh
+          access_token: access,
+          refresh_token: refresh
         })
       }
     })

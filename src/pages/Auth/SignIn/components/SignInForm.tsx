@@ -1,4 +1,4 @@
-import { useState }  from 'react';
+import { useRef, useState }  from 'react';
 import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
 import { signIn } from '@/apis/auth';
@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 function SignInForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const navigate = useNavigate()
   let isSigning = '로그인'
+  const navigate = useNavigate()
 
   function emailValid() {
     var check = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
