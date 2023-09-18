@@ -56,25 +56,25 @@ export const WeatherWrap = styled.div`
 `;
 
 export const StyledSunny = styled(Sunny)`
-  fill: ${props => props.fill}
+  fill: ${props => props.fill};
   width: 32px;
   height: 32px;
 `
 
 export const StyledCloudy = styled(Cloud)`
-  fill: ${props => props.fill}
+  fill: ${props => props.fill};
   width: 32px;
   height: 32px;
 `
 
 export const StyledRainy = styled(Rainy)`
-  fill: ${props => props.fill}
+  fill: ${props => props.fill};
   width: 32px;
   height: 32px;
 `
 
 export const StyledSnow = styled(Snow)`
-  fill: ${props => props.fill}
+  fill: ${props => props.fill};
   width: 32px;
   height: 32px;
 `

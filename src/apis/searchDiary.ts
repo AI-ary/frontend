@@ -2,25 +2,25 @@ import { useQuery } from 'react-query';
 import baseAxios from './baseAxios';
 
 interface SearchDataType{
-  search: string | undefined,
-  user: string
+  date: string,
+  keyword: string | undefined
 }
 
-const getSearchList =async ({search, user}:SearchDataType) => {
-  const response = await baseAxios.get(`diaries?search=${search}&&user_id=${user}`);
-  return response.data;
+const getSearchList =async ({date, keyword}:SearchDataType) => {
+  const response = await baseAxios.get(`diaries/search?diary_date=${date}&keyword=${keyword}`);
+  return response.data.data.diary_infos;
 }
 
-export const getSearchData = ({search, user}:SearchDataType) => {
+export const getSearchData = ({date, keyword}:SearchDataType) => {
   const {isLoading, isSuccess, isError, data} = useQuery(
-    ["searchList", search],
-    async () => await getSearchList({search, user}),
+    ["searchList", keyword, date],
+    async () => await getSearchList({date, keyword}),
     {
       retry: 0,
+      enabled: date !== '',
       onSuccess: (data)=>{
         if(data.length === 0){
-          window.location.href = '/list'; 
-          alert('찾으시는 내용은 없습니다.');
+          alert('해당 달에 찾으시는 내용은 없습니다.');
         }
       },
       onError: () => {}
