@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import api from '../../../apis/baseAxios'
+import { useEffect, useState } from 'react';
+import { deleteDiaryData } from '@/apis/diaryList';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import ResultManuscript from './ResultManuscript';
 import * as D from '../../../styles/diary/diary.style';
@@ -8,6 +8,7 @@ import * as DL from '../../../styles/diary/diarylist.style';
 interface DiaryListProps{
   data: {
     title : string,
+    diary_id: number,
     weather: string,
     contents: string,
     diary_date: string,
@@ -72,6 +73,8 @@ function DiaryList({data}:DiaryListProps){
     })
   }
 
+  const { isDeleteLoading, result, isDeleteSuccess, isError, deleteDiaryList } = deleteDiaryData();
+
   const DeleteDiary = (id:number) => {
     Swal.fire({
       title: '정말 삭제하시겠습니까?',
@@ -82,26 +85,30 @@ function DiaryList({data}:DiaryListProps){
       confirmButtonText: '네',
       cancelButtonText: '아니오'
     }).then((result: Props) => {
-      console.log(result)
+      console.log(result);
       if (result.isConfirmed) {
-        Swal.fire({
-          title: '삭제 성공!',
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK',
-        }).then((result: Props) => {
-          if (result.isConfirmed) {
-            api.delete(`diaries/${id}/`).then((res) => {
-              window.location.reload();
-            }).catch((err) => {
-              console.log(err)
-            })
-          }
-        })
+        deleteDiaryList(data.diary_id);
       }
     })
-    
   }
+
+  useEffect(() => {
+    if(isDeleteSuccess && result.code==="D002"){
+      Swal.fire({
+        title: '삭제 성공!',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+      }).then((result: Props) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+      })
+    }else if(isError){
+      alert('삭제 실패하였습니다.')
+    }
+  }, [isDeleteSuccess, isError]);
+
   const Weather = () => {
     return(
       <>
@@ -142,7 +149,7 @@ function DiaryList({data}:DiaryListProps){
           </DL.ShareWrap>
           <D.ChoiceButtonContainer>
             <D.ButtonItem onClick={toggleshareMenu}><D.StyledShare /></D.ButtonItem>
-            {/* <D.ButtonItem onClick={()=>DeleteDiary(id)}><D.StyledDelete /></D.ButtonItem> */}
+            <D.ButtonItem onClick={()=>DeleteDiary(data.diary_id)}><D.StyledDelete /></D.ButtonItem>
           </D.ChoiceButtonContainer>
         </D.Canvas>
         <D.Content><ResultManuscript content={data.contents}/></D.Content>

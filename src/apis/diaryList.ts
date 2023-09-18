@@ -1,5 +1,6 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import baseAxios from './baseAxios';
+import { useCallback } from 'react';
 
 // 일기 목록 받아오기
 const getDiaryList = async (diaryDate:string) => {
@@ -19,4 +20,27 @@ export const getDiaryListData = (diaryDate: string) => {
     }
   );
   return {isLoading, isSuccess, error, data};
+}
+
+// 일기 삭제
+const deleteDiary = async (diary_id: number) => {
+  const response = await baseAxios.delete(`diaries/${diary_id}`);
+  return response.data;
+};
+
+export const deleteDiaryData = () => {
+  const {mutate, isLoading: isDeleteLoading, data: result, isSuccess: isDeleteSuccess, isError} = useMutation(deleteDiary,{
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (data) => {
+      console.log(data);
+    }
+  });
+  const deleteDiaryList = useCallback(
+    (diary_id: number) => {
+      mutate(diary_id);
+    }, [mutate]
+  );
+  return {isDeleteLoading, result, isDeleteSuccess, isError, deleteDiaryList};
 }
