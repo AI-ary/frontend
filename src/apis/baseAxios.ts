@@ -28,15 +28,15 @@ baseAxios.interceptors.response.use(
       const accessToken = sessionStorage.getItem("token");
       if(refreshToken != null && accessToken != null){
         const data = await updateAccessToken(accessToken, refreshToken);
-        const refreshedAccessToken = data.data.accessToken;
-        const newrefreshedAccessToken = data.data.refreshToken;
+        const refreshedAccessToken = data.data.access_token;
+        const newrefreshedAccessToken = data.data.refresh_token;
         if(refreshedAccessToken !== null && refreshedAccessToken!==undefined){
           originalRequest.headers['Authorization'] = `Bearer ${
             refreshedAccessToken
           }`;
           sessionStorage.setItem("token", refreshedAccessToken);
           sessionStorage.setItem("refresh", newrefreshedAccessToken);
-          return await baseAxios(originalRequest.url);
+          return await baseAxios(originalRequest);
         }
       }
       sessionStorage.clear();

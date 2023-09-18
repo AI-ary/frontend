@@ -52,8 +52,9 @@ export const signIn = () => {
         navigate('/main')
         count++;
       }
-      const access = res.data.data.accessToken;
-      const refresh = res.data.data.refreshToken;
+      console.log(res.data)
+      const access = res.data.data.access_token;
+      const refresh = res.data.data.refresh_token;
       sessionStorage.setItem('token', access);
       sessionStorage.setItem('refresh', refresh);
     }, onError: (err) => {
@@ -110,8 +111,8 @@ export const signUp = () => {
 
 export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
   const response = await baseAxios.post("users/reissue", {
-    "accessToken": accessToken,
-    "refreshToken": refreshToken
+    "access_token": accessToken,
+    "refresh_token": refreshToken
   });
   console.log(response.data);
   return response.data;

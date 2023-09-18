@@ -115,6 +115,7 @@ export const ChoiceGrim = styled.img`
   height: 95px;
   object-fit:cover;
   margin: 2rem;
+  cursor: pointer;
 `
 
 export const Choicebutton = styled.button`

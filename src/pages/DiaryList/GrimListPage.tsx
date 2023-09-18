@@ -34,7 +34,7 @@ function GrimList() {
 
   useEffect(()=>{
     if(isSuccess){
-      setDiaryList(data.monthly_diary_info);
+      setDiaryList(data.monthly_diary_res);
     }
   },[isSuccess, data]);
 
@@ -42,6 +42,7 @@ function GrimList() {
     if (diaryList.length > 0) {
       setExistDate([...existDate, ...diaryList.map(data => data.diary_date)]);
     }
+    console.log(diaryList);
   },[diaryList]);
 
   return(
@@ -52,7 +53,7 @@ function GrimList() {
         </OpenBookLeft>
         <div style={{display:'flex',flexDirection:'row',height:'100%'}} className='will-move'>
           <OpenBookRight>
-            {diaryList.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
+            {diaryList?.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
               .map((data,index)=>{
                 return <DiaryList key={index} data={data} />})}
             {existDate.includes(format(choiceDate, 'yyyy-MM-dd'))?'':(
