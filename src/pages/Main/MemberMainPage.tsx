@@ -3,25 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import './components/Modal.css';
 import api from '../../apis/baseAxios';
 import * as C from '../../styles/common.style';
-import styled from 'styled-components';
-import Swal from 'sweetalert2';
 import ClosedBook from '@/components/bookshape/ClosedBook';
 import LogoutBtn from '../../pages/Auth/components/Logout';
 import { MdPhotoLibrary } from "react-icons/md";
+import * as O from '../../styles/bookshape/opendbook.style'
 
 function AfterLogin() {
   const [selected, setSelected] = useState<string>('images/rainbow.png');
   const navigate = useNavigate();
   const nickname = sessionStorage.getItem('nickname');
   const imgRef = useRef<HTMLInputElement | null>(null);
-
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true
-  })
   
   let now = new Date();
   let year = now.getFullYear();
@@ -50,7 +41,6 @@ function AfterLogin() {
     // api.patch(`users/${sessionStorage.getItem('id')}/`, {
     //   cover_image_url: selected
     // }).then(function (res) {
-    // Toast.fire({icon:'success',title:'시작하기'})
     let flip : Element | null= document.querySelector('.flip');
     let slide : Element | null = document.querySelector('.slide');
     if (slide && flip) {
@@ -69,14 +59,14 @@ function AfterLogin() {
 
   return (
     <ClosedBook>
-      <CoverYear>{year}</CoverYear>
-      <Nickname><p><span>{nickname}</span>'s</p><p>GRIM-DIARY</p></Nickname>
-      <Profile>
+      <O.CoverYear>{year}</O.CoverYear>
+      <O.Nickname><p><span>{nickname}</span>'s</p><p>GRIM-DIARY</p></O.Nickname>
+      <O.Profile>
         <img alt='star' src={!!selected ? `${selected}` : 'images/rainbow.png'} />
-      </Profile>
-      <SelectBtn htmlFor="input-file">
-          <MdPhotoLibrary size="28" className='profile'/>
-      </SelectBtn>
+      </O.Profile>
+      <O.SelectBtn htmlFor="input-file">
+          <MdPhotoLibrary className='profile'/>
+      </O.SelectBtn>
       <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
       <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>
       <LogoutBtn/>
@@ -85,50 +75,3 @@ function AfterLogin() {
 }
 
 export default AfterLogin;
-
-const CoverYear = styled.div`
-  font-size: 24px;
-  font-family:'Itim';
-  margin-bottom: 10px;
-`
-
-const Nickname = styled.h1`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  bottom: 22px;
-  font-size: 45px;
-  font-family:'Itim';
-  > p > span {
-    font-family:'Poor Story';
-  }
-`
-const Profile = styled.div`
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background-color: white;
-  border: 8px solid ${props => props.theme.lineColor};
-  overflow: hidden;
-  background-image: url('/images/profileBg.svg');
-  > img {
-    width: 100%;
-    height: 100%; 
-    object-fit: cover;
-  }
-`
-const SelectBtn = styled.label`
-  background-color: ${props => props.theme.lineColor};
-  position: relative;
-  top: -80px;
-  left: 90px;
-  border-radius: 50%;
-  padding: 18px;
-  cursor: pointer;
-  box-sizing: border-box;
-  .profile {
-    color: ${props => props.theme.profileColor};
-  }
-  `

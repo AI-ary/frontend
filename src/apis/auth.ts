@@ -15,8 +15,8 @@ interface SignInProps {
 }
 
 interface LogoutProps {
-  accessToken: string | null;
-  refreshToken: string | null;
+  access_token: string | null;
+  refresh_token: string | null;
 }
 
 let temp : SignInProps;
@@ -40,7 +40,6 @@ export const signIn = () => {
   const navigate = useNavigate();
   const { mutate, isLoading:isSignInLoading, isError: isSignInError } = useMutation(onSignIn, {
     onSuccess: (res: any) => {
-      console.log(res.data)
       if (count === 0) {  
         Swal.fire({
           position: 'center',
@@ -52,7 +51,6 @@ export const signIn = () => {
         navigate('/main')
         count++;
       }
-      console.log(res.data)
       const access = res.data.data.access_token;
       const refresh = res.data.data.refresh_token;
       sessionStorage.setItem('token', access);
@@ -86,19 +84,19 @@ export const signUp = () => {
       navigate('/signin')
     },
     onError: (err:any) => {
-      if (err.response.data.errors[0].field === 'email') {
+      if (err.response.data.businessCode === 'U004') {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: `${err.response.data.errorMessage}`,
+          title: '이미 존재하는 이메일 입니다.',
           showConfirmButton: false,
           timer: 2000,
         });
-      } else if (err.response.data.errors[0].field === 'nickname') {
+      } else if (err.response.data.businessCode === 'U005') {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: `${err.response.data.errorMessage}`,
+          title: '이미 존재하는 닉네임 입니다.',
           showConfirmButton: false,
           timer: 2000,
         });
@@ -109,7 +107,7 @@ export const signUp = () => {
 }
 
 
-export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
+export const updateAccessToken = async (access_token: string, refresh_token: string) => {
   const response = await baseAxios.post("users/reissue", {
     "access_token": accessToken,
     "refresh_token": refreshToken

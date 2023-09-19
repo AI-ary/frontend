@@ -6,7 +6,7 @@ export const TitleWrap = styled.div`
   align-items : center;
 `
 
-export const Title = styled.div`
+export const PageTitle = styled.div`
   font-size : 80px;
 `
 
