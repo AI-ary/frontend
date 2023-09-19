@@ -84,19 +84,19 @@ export const signUp = () => {
       navigate('/signin')
     },
     onError: (err:any) => {
-      if (err.response.data.errors[0].field === 'email') {
+      if (err.response.data.businessCode === 'U004') {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: `${err.response.data.errorMessage}`,
+          title: '이미 존재하는 이메일 입니다.',
           showConfirmButton: false,
           timer: 2000,
         });
-      } else if (err.response.data.errors[0].field === 'nickname') {
+      } else if (err.response.data.businessCode === 'U005') {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: `${err.response.data.errorMessage}`,
+          title: '이미 존재하는 닉네임 입니다.',
           showConfirmButton: false,
           timer: 2000,
         });
