@@ -109,8 +109,8 @@ export const signUp = () => {
 
 export const updateAccessToken = async (access_token: string, refresh_token: string) => {
   const response = await baseAxios.post("users/reissue", {
-    "access_token": access_token,
-    "refresh_token": refresh_token
+    "access_token": accessToken,
+    "refresh_token": refreshToken
   });
   console.log(response.data);
   return response.data;

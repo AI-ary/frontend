@@ -7,28 +7,35 @@ import Bookmark from '../../components/bookshape/Bookmark';
 import DiaryList from '../DiaryList/components/DiaryList'
 import * as C from '../../styles/bookshape/closedbook.style';
 import * as O from '../../styles/bookshape/opendbook.style';
-import * as DL from '../../styles/diary/diarylist.style';
 import SearchCalender from './components/SearchCalender';
 
 function DiarySearchList(){ 
   const [searchList, setSearchList] = useState<any>([]);
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth()+1;
+  const [date, setDate]=useState<string>(year+'-'+month.toString().padStart(2, "0"));
   const [detail, setDetail]=useState({
-    id:-1,
+    diary_id:-1,
     title:'',
-    weather:-1,
+    weather:'',
     drawing_url:'',
     contents:'',
     diary_date:'',
     emoji:''
   });
-  const user = sessionStorage.getItem('id') || ''; //user id받아오기
   const param = useParams();
-  const search = param.word;
+  const keyword = param.word;
 
-  const {isLoading, isSuccess, data} = getSearchData({search, user});
+  const getSearchDiaryListDate = (date:string) => {
+    setDate(date);
+  }
+
+  const {isLoading, isSuccess, data} = getSearchData({date, keyword});
 
   useEffect(()=>{
     if(isSuccess){
+      console.log(data);
       setSearchList(data);
       setDetail(data[0]);
     }
@@ -42,11 +49,11 @@ function DiarySearchList(){
     <C.Container>
       <O.BookContainer style={{marginBottom: '100px'}}> 
         <OpenBookLeft>
-          <SearchCalender list={searchList} search={search} getDiaryDetail={showDiaryDetail}/>
+          <SearchCalender list={searchList} search={keyword} getDiaryDetail={showDiaryDetail} getdiaryMonth={getSearchDiaryListDate}/>
         </OpenBookLeft>
         <OpenBookRight>
-          {detail===undefined || detail.id===-1?'':
-            <DiaryList key={detail.id} id={detail.id} title={detail.title} weather={detail.weather} draw={detail.drawing_url} contents={detail.contents} date={detail.diary_date} emoji={detail.emoji} />
+          {detail===undefined || detail.diary_id===-1?'':
+            <DiaryList key={detail.diary_id} data={detail} />
           }
         </OpenBookRight>
         <Bookmark />
