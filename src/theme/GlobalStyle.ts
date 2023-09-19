@@ -1,10 +1,10 @@
-import { Input, Title, WarningContent, WarningWrap } from "@/styles/auth/auth.style";
+import { Input, PageTitle, WarningContent, WarningWrap } from "@/styles/auth/auth.style";
 import { BackBtn, BehindWrap, Flip, Left, Mid, Right,StyledHiddenPalette, StyledShowPalette, ToggleTheme } from "@/styles/bookshape/closedbook.style";
 import { CommonEmptyBtn, CommonFilledBtn, CommonOutlinedBtn } from "@/styles/common.style";
 import { Aiary, ButtonWrap, Content, Logo } from "@/styles/main/main.style";
 import { createGlobalStyle, ThemeProps } from "styled-components";
 import reset from 'styled-reset';
-import { BookContainer, OpenBookLeft, OpenBookRight, Line } from "@/styles/bookshape/opendbook.style";
+import { BookContainer, OpenBookLeft, OpenBookRight, Line, Profile, SelectBtn } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
 import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
 import { EmojiWrap, Modebutton,Savebutton, Choicetitle } from "@/styles/diary/diarywrite.style";
@@ -104,7 +104,7 @@ export const GlobalStyle = createGlobalStyle`
       font-size : 25px;
       border-radius : 28px;
     }
-    ${Title} {
+    ${PageTitle} {
       font-size : 64px;
     }
     ${Input} {
@@ -287,274 +287,265 @@ export const GlobalStyle = createGlobalStyle`
     ${SearchContent}{
       font-size: 15px;
     }
+    ${Profile} {
+      width: 208px;
+      height : 208px;
+    }
+    ${SelectBtn} {
+      top: -64px;
+      left: 72px;
+      padding: 14px;
+      .profile {
+        font-size : 22px;
+      }
+    }
   }
 
   @media screen and (max-width: 1180px), screen and (max-height: 680px) {
     ${BehindWrap} {
-      height : 546px;
+      height : 468px;
+      width:476px;
     }
     ${Left} {
-      width:38px;
-      height : 546px;
-      border-radius : 5px 0px 0px 5px;
+      width:33px;
+      height : 468px;
+      border-radius : 4px 0px 0px 4px;
     }
     ${Flip} {
-      height: 546px;
+      height: 468px;
     }
     ${Mid} {
-      width : 486px;
-      height : 546px;
-      padding : 44px 0px;
+      width : 417px;
+      height : 468px;
+      padding : 38px 0px;
     }
     ${Right} {
-      width : 7px;
-      height : 546px;
-      border-radius : 0px 5px 5px 0px;
+      width : 6px;
+      height : 468px;
+      border-radius : 0px 4px 4px 0px;
     }
     ${BackBtn} {
-      width : 38px;
-      height : 38px;
+      width : 33px;
+      height : 33px;
       padding-right : 3px;
-      margin : 24px 0px 0px 24px;
+      margin : 21px 0px 0px 21px;
     }
     ${Content} {
-        font-size : 22px;
+        font-size : 19px;
     }
     ${Aiary} {
-      width : 238px;
-      height : 105px;
+      width : 204px;
+      height : 90px;
     }
     ${Logo} {
-      width : 308px;
-      height : 266px;
+      width : 264px;
+      height : 228px;
     }
     ${ButtonWrap} {
-      margin-bottom : 44px;
+      margin-bottom : 38px;
     }
-    ${CommonFilledBtn} {
-      padding : 8px 25px;
-      font-size : 22px;
-      border-radius : 25px;
+    ${CommonFilledBtn}, ${CommonOutlinedBtn}, ${CommonEmptyBtn} {
+      padding : 7px 21px;
+      font-size : 19px;
+      border-radius : 21px;
     }
-    ${CommonOutlinedBtn} {
-      padding : 8px 25px;
-      font-size : 22px;
-      border-radius : 25px;
-    }
-    ${CommonEmptyBtn} {
-      padding : 9px 28px;
-      font-size : 25px;
-      border-radius : 28px;
-    }
-    ${Title} {
-      font-size : 56px;
+    ${PageTitle} {
+      font-size : 48px;
     }
     ${Input} {
-      width : 402px;
-      border-radius : 8px;
-      padding : 12px 14px;
-      font-size : 14px;
+      width : 345px;
+      border-radius : 7px;
+      padding : 10px 12px;
+      font-size : 12px;
     }
     ${WarningWrap} {
-      height:14px;
-      font-size : 11px;
+      height:12px;
     }
     ${WarningContent} {
       margin : 0px 2px;
       font-size : 11px;
     }
-    ${StyledHiddenPalette}{
-      width: 90px;
-      height: 90px;
-    }
-    ${StyledShowPalette}{
-      width: 90px;
-      height: 90px;
+    ${StyledHiddenPalette}, ${StyledShowPalette} {
+      width: 77px;
+      height: 77px;
     }
     ${ToggleTheme}{
-      height: 220px;
-      left: 70px;
+      height: 188px;
+      left: 60px;
       > li {
-        width: 80px;
-        height: 80px;
+        width: 68px;
+        height: 68px;
       }
       > li:nth-child(2){
-        margin-left: 40px;
+        margin-left: 34px;
       }
     }
     ${BookContainer}{
-      height: 546px;
+      height: 468px;
     }
     ${OpenBookLeft} {
-      width: 500px;
-      border-width: 0  0 6px 6px;
+      width: 428px;
+      border-width: 0  0 5px 5px;
     }
     ${OpenBookRight}{
-      width: 500px;
-      border-width: 0 6px 6px 0 ;
+      width: 428px;
+      border-width: 0 5px 5px 0 ;
     }
     ${Line}{
-      width: 6px;
+      width: 5px;
     }
-    ${ArrowBackIcon}{
-      font-size: 24px;
-    }
-    ${ArrowForwardIcon}{
-      font-size: 24px;
+    ${ArrowBackIcon}, ${ArrowForwardIcon} {
+      font-size: 20px;
     }
     ${HeaderYear}{
-      font-size: 16px;
+      font-size: 13px;
     }
     ${HeaderDate}{
       > p {
-        font-size: 36px;
+        font-size: 30px;
       }
     }
     ${WeekWrap}{
       > p { 
-        font-size: 16px;
+        font-size: 13px;
       }
     }
     ${DaysCol}{
-      font-size: 16px;
+      font-size: 13px;
     }
     ${IconWrap}{
-      margin-top: 2px;
+      margin-top: 1px;
     }
     ${PlusCircle}{
-      font-size: 25px;
+      font-size: 21px;
     }
     ${ListEmoji}{
-      font-size: 25px;
-      margin-top: 2px;
+      font-size: 21px;
+      margin-top: 1px;
     }
     ${NonDiaryContainer}{
       > img {
-        margin-bottom: 20px;
+        margin-bottom: 17px;
       }
       > div {
-        font-size: 36px;
-        margin-bottom: 20px;
+        font-size: 30px;
+        margin-bottom: 17px;
       }
     }
     ${GotoDiaryWrite}{
-      font-size: 20px;
-      padding: 13px 25px;
+      font-size: 17px;
+      padding: 11px 21px;
     }
     ${DateContainer}{
-      padding: 5px 12px;
+      padding: 4px 10px;
     }
     ${DateContent}{
-      font-size: 16px;
+      font-size: 13px;
     }
     ${WeatherWrap}{
       .weather{
-        margin-right: 10px;
+        margin-right: 8px;
       }
     }
-    ${StyledSunny}{
-      width: 22px;
-      height: 22px;
-    }
-    ${StyledCloudy}{
-      width: 22px;
-      height: 22px;
-    }
-    ${StyledRainy}{
-      width: 22px;
-      height: 22px;
-    }
-    ${StyledSnow}{
-      width: 22px;
-      height: 22px;
+    ${StyledSunny}, ${StyledCloudy}, ${StyledRainy}, ${StyledSnow}{
+      width: 18px;
+      height: 18px;
     }
     ${TitleContainer}{
-      padding: 5px 12px;
+      padding: 4px 10px;
     }
     ${Title}{
-      font-size: 16px;
+      font-size: 13px;
     }
     ${Titlecontent}{
       > input {
-        width: 300px;
-        font-size: 16px;
+        width: 128px;
+        font-size: 13px;
       }
     }
     ${Emoji}{
-      font-size: 24px;
+      font-size: 20px;
     }
     ${EmojiWrap}{
-      top: 95px;
+      top: 81px;
     }
     ${Modebutton}{
-      padding: 5px 3px;
-      width: 73px;
-      font-size: 11px;
+      padding: 4px 2px;
+      width: 62px;
+      font-size: 9px;
     }
     ${Savebutton}{
-      width: 90px;
-      padding: 6px 3px;
-      font-size: 12px;
+      width: 77px;
+      padding: 5px 2px;
+      font-size: 10px;
     }
     ${Canvas}{
-      height: 230px;
+      height: 197px;
     }
     ${TableTd}{
-      font-size: 16px;
+      font-size: 13px;
     }
     ${ButtonItem}{
-      margin-right: 7px;
+      margin-right: 6px;
     }
-    ${StyledShare}{
-      width: 33px;
-      height: 33px;
-    }
-    ${StyledDelete}{
-      width: 33px;
-      height: 33px;
+    ${StyledShare}, ${StyledDelete}{
+      width: 28px;
+      height: 28px;
     }
     ${StyledNavLink}{
-      width : 65px;
-      height : 48px;
-      margin-bottom: 12px;
-      font-size: 14px;
+      width : 55px;
+      height : 41px;
+      margin-bottom: 10px;
+      font-size: 12px;
     }
     ${Choicetitle}{
-      font-size: 28px;
+      font-size: 24px;
     }
     ${SearchWrap}{
-      padding: 15px 5px;
+      padding: 12px 4px;
       > hr {
-        margin: 0 18px;
+        margin: 0 15px;
       }
     }
     ${SearchDate}{
       > h2 {
-        font-size: 28px;
+        font-size: 24px;
       }
       > div {
-        font-size: 15px;
+        font-size: 12px;
       }
     }
     ${SearchTitleWrap}{
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       > div {
-        font-size: 26px;
-        margin-right: 10px;
+        font-size: 22px;
+        margin-right: 8px;
       }
       > p {
-        font-size: 22px;
+        font-size: 18px;
       }
     }
     ${SearchContentContainer}{
-      padding: 0 5px;
+      padding: 0 4px;
     }
     ${SearchContent}{
-      font-size: 15px;
+      font-size: 12px;
+    }
+    ${Profile} {
+      width: 156px;
+      height : 156px;
+    }
+    ${SelectBtn} {
+      top: -54px;
+      left: 61px;
+      padding: 12px;
+      .profile {
+        font-size : 16px;
+      }
     }
   }
 
-    @media screen and (max-width: 1100px), screen and (max-height: 600px) {
+    @media screen and (max-width: 1050px), screen and (max-height: 550px) {
       #root {
           display: none;
       }
