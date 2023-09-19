@@ -91,5 +91,6 @@ export const SelectBtn = styled.label`
   box-sizing: border-box;
   .profile {
     color: ${props => props.theme.profileColor};
+    font-size : 28px;
   }
   `

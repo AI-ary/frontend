@@ -65,7 +65,7 @@ function AfterLogin() {
         <img alt='star' src={!!selected ? `${selected}` : 'images/rainbow.png'} />
       </O.Profile>
       <O.SelectBtn htmlFor="input-file">
-          <MdPhotoLibrary size="28" className='profile'/>
+          <MdPhotoLibrary className='profile'/>
       </O.SelectBtn>
       <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
       <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>

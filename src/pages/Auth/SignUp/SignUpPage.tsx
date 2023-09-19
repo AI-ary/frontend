@@ -10,7 +10,7 @@ function SignUp() {
         <S.IconWrap>
           <BsFillPersonFill size={70} className='icon'/>
         </S.IconWrap>
-        <S.Title>회원가입</S.Title>
+        <S.PageTitle>회원가입</S.PageTitle>
       </S.TitleWrap>
       <SignUpForm/>
     </ClosedBook>

@@ -35,7 +35,7 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
                 <img alt='star' src='images/rainbow.png' />
               </O.Profile>
               <O.SelectBtn htmlFor="input-file">
-                <MdPhotoLibrary size="28" className='profile'/>
+                <MdPhotoLibrary className='profile'/>
               </O.SelectBtn>
               <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} /> 
               <C.CommonFilledBtn isValid={false}>시작하기</C.CommonFilledBtn>

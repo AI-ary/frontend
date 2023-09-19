@@ -10,7 +10,7 @@ function SignIn() {
         <S.IconWrap>
           <MdLockOutline size={70}/>
         </S.IconWrap>
-        <S.Title>로그인</S.Title>
+        <S.PageTitle>로그인</S.PageTitle>
       </S.TitleWrap>
       <SignInForm/>
     </ClosedBook>
