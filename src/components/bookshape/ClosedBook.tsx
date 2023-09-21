@@ -23,7 +23,6 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
   const handleThemeChange = (themeType:ThemeType) => {
     changeThemeType(themeType);
   }
-
   return(
     <S.Container className='slide'>
       <S.ThemeContainer>

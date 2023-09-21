@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import * as S from '../../styles/main/main.style';
 import * as C from '../../styles/common.style';
 import ClosedBook from '@/components/bookshape/ClosedBook';
-import { useRef, useState } from 'react';
+import { useStore } from '@/store/store';
+import Modal from '@/components/Modal';
 
 export const Control = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ export const Titles = styled.div`
 
 function Main() {
   const navigate = useNavigate();
+  const {success} = useStore()
   return (
     <ClosedBook>
       <S.Content>어른들의 동심을 찾아라!</S.Content>
@@ -34,6 +36,7 @@ function Main() {
         </C.CommonFilledBtn>
         <C.CommonOutlinedBtn onClick={() => navigate('/signup')}>회원가입</C.CommonOutlinedBtn>
       </S.ButtonWrap>
+      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그아웃 성공!" content="" />}
     </ClosedBook>
   );
 }

@@ -5,15 +5,19 @@ import api from '../../apis/baseAxios';
 import * as C from '../../styles/common.style';
 import ClosedBook from '@/components/bookshape/ClosedBook';
 import LogoutBtn from '../../pages/Auth/components/Logout';
-import { MdPhotoLibrary } from "react-icons/md";
+import { MdPhotoLibrary } from 'react-icons/md';
 import * as O from '../../styles/bookshape/opendbook.style'
+import { useStore } from '@/store/store';
+import Modal from '@/components/Modal';
+import { logout } from '@/apis/auth';
 
 function AfterLogin() {
   const [selected, setSelected] = useState<string>('images/rainbow.png');
   const navigate = useNavigate();
   const nickname = sessionStorage.getItem('nickname');
   const imgRef = useRef<HTMLInputElement | null>(null);
-  
+  const { success, confirm, setConfirm } = useStore()
+  const { mutate } = logout()
   let now = new Date();
   let year = now.getFullYear();
 
@@ -37,7 +41,7 @@ function AfterLogin() {
     }
   }
 
-  function onClick(e : React.MouseEvent ) {
+  function onClick() {
     // api.patch(`users/${sessionStorage.getItem('id')}/`, {
     //   cover_image_url: selected
     // }).then(function (res) {
@@ -57,6 +61,16 @@ function AfterLogin() {
     }
   }
 
+  const onLogout = () => {
+    setConfirm(false)
+    const access = sessionStorage.getItem('token');
+    const refresh = sessionStorage.getItem('refresh');
+    mutate({
+      access_token: access,
+      refresh_token: refresh
+    })
+  }
+
   return (
     <ClosedBook>
       <O.CoverYear>{year}</O.CoverYear>
@@ -65,11 +79,13 @@ function AfterLogin() {
         <img alt='star' src={!!selected ? `${selected}` : 'images/rainbow.png'} />
       </O.Profile>
       <O.SelectBtn htmlFor="input-file">
-          <MdPhotoLibrary className='profile'/>
+        <MdPhotoLibrary className='profile'/>
       </O.SelectBtn>
       <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
-      <C.CommonFilledBtn onClick={(e)=>onClick(e)} isValid={false}>시작하기</C.CommonFilledBtn>
-      <LogoutBtn/>
+      <C.CommonFilledBtn onClick={onClick} isValid={false}>시작하기</C.CommonFilledBtn>
+      <LogoutBtn />
+      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그인 성공!" content="" />}
+      {confirm && <Modal onClick={onLogout} icon='warning' version='two_btn' title="로그아웃하시겠습니까?" content="" />}
     </ClosedBook>
   );
 }

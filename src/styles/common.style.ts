@@ -4,6 +4,7 @@ export const CommonFilledBtn = styled.button<{ isValid: boolean }>`
   padding : 12px 36px;
   font-size : 32px;
   border-radius : 36px;
+  outline : none;
   color : ${props=>props.theme.btnFontColor};
 //   transition : background-color 1s;  // hover on&off 시 색상 천천히 변하는 효과, 넣을지 말지 얘기해보기
   ${(props) => css`
