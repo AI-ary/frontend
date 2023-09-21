@@ -39,11 +39,11 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   choiceImg:[], //캔버스에 이미지 추가
   choiceDalleImg: '',
   choiceDate: new Date(), //날짜 선택
-  confirm: false,
-  duplicateNickname: false,
-  duplicateEmail: false,
-  success: false,
-  nicknameError:false,
+  confirm: false,  // 확인 알림창
+  duplicateNickname: false, // 중복 닉네임 알림창
+  duplicateEmail: false,  // 중복 이메일 알림창
+  success: false, // api 요청 성공 시 알림창
+  nicknameError:false,  // 닉네임 10글자 이상 시 뜨는 알림창
   setCurrentCanvas: (updateCanvas:string)=>set({currentCanvas:updateCanvas}),
   setUpdateCanvas:(canvas:string)=>set({updateCanvas:canvas}),
   setGetGrimList:(data:any[string])=>set({getGrimList:data}),
