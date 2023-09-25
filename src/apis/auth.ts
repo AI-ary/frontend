@@ -56,7 +56,6 @@ export const signIn = () => {
       sessionStorage.setItem('token', access);
       sessionStorage.setItem('refresh', refresh);
     }, onError: (err) => {
-      console.log(err)
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -109,8 +108,8 @@ export const signUp = () => {
 
 export const updateAccessToken = async (access_token: string, refresh_token: string) => {
   const response = await baseAxios.post("users/reissue", {
-    "access_token": accessToken,
-    "refresh_token": refreshToken
+    "access_token": access_token,
+    "refresh_token": refresh_token
   });
   console.log(response.data);
   return response.data;

@@ -5,8 +5,6 @@ import useImage from 'use-image';
 import {BsFillCircleFill, BsFillEraserFill } from 'react-icons/bs';
 import { FaUndoAlt } from 'react-icons/fa';
 import * as DW from '../../../styles/diary/diarywrite.style';
-import Konva from 'konva';
-import { ko } from 'date-fns/locale';
 
 interface RectangleProps{
   image: string;
@@ -139,11 +137,11 @@ function Drawing(props:DrawingProps){
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     if(viewportSize.width>=1441 && viewportSize.height>=831){
-      setCanvasSize({width:500, height:290})
+      setCanvasSize({width:579, height:290})
     }else if(viewportSize.width>=1181 && viewportSize.height>=681){
       setCanvasSize({width:483, height:250})
     }else if(viewportSize.width>=1101 && viewportSize.height>=601){
-      setCanvasSize({width:416, height:230})
+      setCanvasSize({width:356, height:197})
     }
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -171,10 +169,11 @@ function Drawing(props:DrawingProps){
   useEffect(() => {
     if(choiceDalleImg){
       const img = new window.Image();
-      img.src = choiceDalleImg;
       img.onload = () => {
         setDalleImg(img);
       }
+      img.src = choiceDalleImg;
+      setDalleImg(img);  
     }
   },[choiceDalleImg, canvasSize]);
 
@@ -231,8 +230,8 @@ function Drawing(props:DrawingProps){
     const newImage = [...grimimage];
     newImage.splice(node.index,1);
     setGrimimage(newImage);
-
   }
+
   return(
     <>
       {choiceDalleImg ? 
