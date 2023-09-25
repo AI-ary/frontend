@@ -15,8 +15,11 @@ interface Props {
 
 export default function Modal(props: Props) {
   const [modalIcon, setModalIcon] = useState<any>()
-  const { setNicknameError, setSuccess, setConfirm, setDuplicateEmail, setDuplicateNickname} = useStore()
+  const { setNicknameError, setSuccess, setConfirm, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle} = useStore()
   const setFalse = () => {
+    setConfirmWeather(false)
+    setConfirmTitle(false)
+    setConfirmContents(false)
     setNicknameError(false)
     setSuccess(false)
     setConfirm(false)
@@ -50,8 +53,8 @@ export default function Modal(props: Props) {
       <S.Container onClick={(e)=>e.stopPropagation()}>
         <S.ContentWrap>
           <S.IconWrap icon={props.icon} className='modal_icon'>{props.icon === 'warning' ? <PiWarningCircleLight size={50}/> : <PiCheckCircleLight size={50}/>}</S.IconWrap>
-          <>{props.title}</>
-          <>{props.content}</>
+          <S.Title>{props.title}</S.Title>
+          <S.Content>{props.content}</S.Content>
           <S.ButtonWrap>{props.version === 'one_btn' ? <OneButton/> : <TwoButton/>}</S.ButtonWrap>
         </S.ContentWrap>
       </S.Container>

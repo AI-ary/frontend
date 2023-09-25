@@ -27,10 +27,10 @@
         transform: rotate(0deg);
     }
     33% {
-        transform: rotate(10deg);
+        transform: rotate(20deg);
     }
     66% {
-        transform: rotate(-10deg);
+        transform: rotate(-20deg);
     }
     100% {
         transform: rotate(0deg);

@@ -10,11 +10,13 @@ import * as O from '../../styles/bookshape/opendbook.style'
 import { useStore } from '@/store/store';
 import Modal from '@/components/Modal';
 import { logout } from '@/apis/auth';
+import { useThemeContext } from '@/App';
 
 function AfterLogin() {
+  const {changeThemeType} =useThemeContext()
   const [selected, setSelected] = useState<string>('images/rainbow.png');
+  const [nickname, setNickname] = useState<string | null>(null)
   const navigate = useNavigate();
-  const nickname = sessionStorage.getItem('nickname');
   const imgRef = useRef<HTMLInputElement | null>(null);
   const { success, confirm, setConfirm } = useStore()
   const { mutate } = logout()
@@ -22,11 +24,38 @@ function AfterLogin() {
   let year = now.getFullYear();
 
   useEffect(() => {
-    api.get(`/users/${sessionStorage.getItem('id')}`).then(function (res) {
-      setSelected(res.data.cover_image_url)
-    }).catch(function (err) {
-      console.log(err)
-    })
+    // api.get(`/users/${sessionStorage.getItem('id')}`).then(function (res) {
+    //   setSelected(res.data.cover_image_url)
+    // }).catch(function (err) {
+    //   console.log(err)
+    // })
+    const checkTheme = (theme : string | null) => {
+      switch (theme) {
+      case 'BLUE': {
+        changeThemeType('blueTheme')
+        break;
+      }
+      case 'RAINBOW': {
+        changeThemeType('rainbowTheme')
+        break;
+      }
+      case 'ORIGINAL': {
+        changeThemeType('originTheme')
+        break;
+      }
+      }
+    }
+    if (sessionStorage.getItem('nickname')) {
+      setNickname(sessionStorage.getItem('nickname'))
+    } else {
+      api.get('users/profile').then((data) => {
+        const { theme: userTheme, nickname: userNickname } = data.data.data
+        sessionStorage.setItem('nickname', userNickname)
+        sessionStorage.setItem('theme', userTheme)
+        setNickname(userNickname)
+        checkTheme(userTheme)
+      }).catch((err) => console.log(err))
+    }
   }, [])
 
   const addFile = ()=>{

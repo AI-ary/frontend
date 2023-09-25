@@ -36,6 +36,14 @@ export const IconWrap = styled.div<{icon : string}>`
   color:${props => props.icon === 'warning' ? 'red' : 'green'};
 `
 
+export const Title = styled.div`
+  color : rgb(0, 0, 0);
+`
+
+export const Content = styled.div`
+  color : rgb(0, 0, 0);
+`
+
 export const TwoButtonWrap = styled.div`
   display : flex;
   justify-content : space-between;

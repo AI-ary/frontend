@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import baseAxios from './baseAxios';
 import Swal from 'sweetalert2';
+import { useStore } from '@/store/store';
 
 // form 데이터 형식
 const config = {
@@ -13,32 +14,15 @@ const addDiary = async (formData: FormData) => {
 
 export const addDiaryData = () => {
   const queryClient = useQueryClient();
+  const {setConfirmWeather, setConfirmContents, setConfirmTitle} = useStore()
   const {mutate, isLoading: isSaveLoading, isSuccess: isSaveSuccess, isError: isSaveError} = useMutation(addDiary, {
     onError: (error:any) => {
-      if(error.response.data.title){
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '제목을 입력해 주세요.',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } else if(error.response.data.contents){
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '내용을 입력해 주세요.',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-      } else if(error.response.data.weather){
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '날씨를 선택해 주세요.',
-          showConfirmButton: false,
-          timer: 2000,
-        });
+      if(error.response.data.errors[0].field === 'title'){
+        setConfirmTitle(true)
+      } else if(error.response.data.errors[0].field === 'contents'){
+        setConfirmContents(true)
+      } else if(error.response.data.errors[0].field === 'weather'){
+        setConfirmWeather(true)
       }
     },
     onSuccess: () => {

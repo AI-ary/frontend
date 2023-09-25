@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 import GrimList from './pages/DiaryList/GrimListPage';
 import WriteGrim from './pages/WriteDiary/WriteGrimPage';
@@ -24,8 +24,8 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-    themeType: 'originTheme',
-    changeThemeType: (type: ThemeType) => {},
+  themeType: 'originTheme',
+  changeThemeType: (type: ThemeType) => {},
 });
 
 export const useThemeContext = () => {
@@ -60,6 +60,26 @@ function App() {
   const changeThemeType = (type:ThemeType) =>{
     setTheme(type);
   }
+  useEffect(() => {
+    if (sessionStorage.getItem('theme')) {
+      const currentTheme = sessionStorage.getItem('theme')
+      switch (currentTheme) {
+      case 'BLUE': {
+        changeThemeType('blueTheme')
+        break;
+      }
+      case 'RAINBOW': {
+        changeThemeType('rainbowTheme')
+        break;
+      }
+      case 'ORIGINAL': {
+        changeThemeType('originTheme')
+        break;
+      }
+      }
+    }
+  },[])
+
   
   return (
     <ThemeContext.Provider value={{ themeType, changeThemeType }}>
