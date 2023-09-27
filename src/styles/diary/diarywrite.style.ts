@@ -1,7 +1,13 @@
 import styled from 'styled-components';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-interface Props {
+interface BtnProps {
   isDisabled:boolean
+}
+interface KeywordProps {
+  isSelected: boolean;
 }
 
 export const GridContent =styled.textarea`
@@ -31,7 +37,7 @@ export const ButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const Modebutton = styled.button<Props>`
+export const Modebutton = styled.button<BtnProps>`
   width: 100px;
   border-radius: 20px;
   font-size: 15px;
@@ -99,14 +105,92 @@ export const Choicetitle =styled.div`
   margin-bottom: 25px;
 `
 
-export const Choice = styled.div`
+export const ChoiceWrap = styled.div`
   width: 85%;   
-  height: 75%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  jusitfy-content: space-between;
+  align-items: center;
+`
+
+export const ChoiceKeyword = styled.div`
+  width: 100%;
+  height: 44px;
+`
+
+export const StyledSlider = styled(Slider)`
+  height: 100%;
+  min-height: 1px;
+  .slick-list{
+    height: 100%;
+    width: 80%;
+  }
+  .slick-track{
+    height: 100%;
+  }
+  .slick-slide {
+    height: 100%;
+    > div{
+      height: 100%;
+    }
+  }
+`
+
+export const Arrow = styled.p`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #EB8888;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+  cursor: pointer;
+  &.left { 
+    right: 50px;
+  }
+  &.right {
+    right: 15px;
+  }
+  &.disabled {
+    background-color: #FFD2DC;
+    cursor: default;
+  }
+`
+
+export const Keyword = styled.div<KeywordProps>`
+  height: 100%;
+  background-color: #EB8888;
+  border-radius: 12px 12px 0 0;
+  border: none;
+  box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.4); 
+  cursor: pointer;
+  font-size: 20px;
+  font-family: 'Poor Story';
+  -webkit-text-stroke: 0.2px #FFFFFF;
+  color: #FFFFFF;
+  text-align: center;
+  ${({ isSelected }) =>
+  isSelected &&`
+  background-color: #FFFFFF;
+  -webkit-text-stroke: 0.2px #EB8888;
+  color: #EB8888; 
+  `}
+`
+
+export const Choice = styled.div`
+  width: 100%;   
+  height: 92%;
   background-color: #FFFFFF;
   display:flex;
   flex-wrap: wrap;
-  border-radius: 10px;
-  border: 1px solid #969696;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.4);
+  border: none;
   overflow: auto;
 `
 
