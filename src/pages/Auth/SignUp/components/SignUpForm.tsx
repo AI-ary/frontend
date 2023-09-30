@@ -12,7 +12,8 @@ function SignUpForm() {
   const [password, setPassword] = useState < string > ('');
   const [confirm, setConfirm] = useState<string>('');
   const { isSignUpError, isSignUpLoading, mutate } = signUp()
-  const { duplicateNickname, duplicateEmail,nicknameError, setNicknameError } = useStore();
+  const { duplicateNickname, duplicateEmail } = useStore();
+  const [nicknameError, setNicknameError] = useState<boolean>(false)
   let isMaking = '계정 생성'
 
   if (isSignUpLoading) {
@@ -87,7 +88,7 @@ function SignUpForm() {
       </S.InputWrap>
       <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</C.CommonFilledBtn>
       {nicknameError &&
-        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="10글자 이하로 작성해 주세요." content="" />}
+        <Modal onClick={()=>setNicknameError(false)} icon='warning' version='one_btn' title="10글자 이하로 작성해 주세요." content="" />}
       {duplicateNickname &&
         <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 닉네임 입니다." content="" />}
       {duplicateEmail &&

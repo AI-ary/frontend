@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query';
 import baseAxios from './baseAxios';
-import Swal from 'sweetalert2';
 import { useStore } from '@/store/store';
 
 // form 데이터 형식

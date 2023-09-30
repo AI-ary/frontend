@@ -4,10 +4,10 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useStore } from '@/store/store';
 
 export default function LogoutBtn() {
-  const {setConfirm} = useStore()
+  const {setConfirmLogout} = useStore()
   
   function onClick() {
-    setConfirm(true)
+    setConfirmLogout(true)
   }
   return (
     <LogOutBtn type='button' onClick={onClick}>

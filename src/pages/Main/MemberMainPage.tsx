@@ -18,7 +18,7 @@ function AfterLogin() {
   const [nickname, setNickname] = useState<string | null>(null)
   const navigate = useNavigate();
   const imgRef = useRef<HTMLInputElement | null>(null);
-  const { success, confirm, setConfirm } = useStore()
+  const { success, confirmLogout, setConfirmLogout } = useStore()
   const { mutate } = logout()
   let now = new Date();
   let year = now.getFullYear();
@@ -91,7 +91,7 @@ function AfterLogin() {
   }
 
   const onLogout = () => {
-    setConfirm(false)
+    setConfirmLogout(false)
     const access = sessionStorage.getItem('token');
     const refresh = sessionStorage.getItem('refresh');
     mutate({
@@ -114,7 +114,7 @@ function AfterLogin() {
       <C.CommonFilledBtn onClick={onClick} isValid={false}>시작하기</C.CommonFilledBtn>
       <LogoutBtn />
       {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그인 성공!" content="" />}
-      {confirm && <Modal onClick={onLogout} icon='warning' version='two_btn' title="로그아웃하시겠습니까?" content="" />}
+      {confirmLogout && <Modal onClick={onLogout} icon='warning' version='two_btn' title="로그아웃하시겠습니까?" content="" />}
     </ClosedBook>
   );
 }

@@ -35,7 +35,7 @@ function DiaryContent(props:DiaryContentProps) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, confirmWeather, confirmTitle, confirmContents, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
+  const { updateCanvas, confirmWeather, confirmTitle, confirmContents,limitWordLength, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
   const [emoji, setEmoji] = useState<string>('');
 
   const getDayOfWeek = (date:string) => {
@@ -384,6 +384,7 @@ function DiaryContent(props:DiaryContentProps) {
       {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="날씨를 선택해 주세요." content="" />}
       {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="제목을 입력해 주세요." content="" />}
       {confirmContents && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="내용을 입력해 주세요." content="" />}
+      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="50글자 이하로 작성해 주세요." content="" />}
     </D.DiviContainer>
   );
 }

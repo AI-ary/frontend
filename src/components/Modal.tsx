@@ -15,14 +15,15 @@ interface Props {
 
 export default function Modal(props: Props) {
   const [modalIcon, setModalIcon] = useState<any>()
-  const { setNicknameError, setSuccess, setConfirm, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle} = useStore()
+  const { setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete } = useStore()
   const setFalse = () => {
+    setConfirmDelete(false)
+    setLimitWordLength(false)
     setConfirmWeather(false)
     setConfirmTitle(false)
     setConfirmContents(false)
-    setNicknameError(false)
     setSuccess(false)
-    setConfirm(false)
+    setConfirmLogout(false)
     setDuplicateEmail(false)
     setDuplicateNickname(false)
   }
@@ -30,6 +31,7 @@ export default function Modal(props: Props) {
   const OneButton = () => {
     return (<CommonFilledBtn autoFocus isValid={false} onClick={() => {
       setFalse()
+      props.onClick()
       if (modalIcon) {
         modalIcon.classList.remove('modal_shake')
       }
