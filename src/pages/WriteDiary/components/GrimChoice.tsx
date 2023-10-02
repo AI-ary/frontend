@@ -23,12 +23,11 @@ const PrevArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
 }
 
 // AI로부터 받아온 그림들 중 원하는 그림 선택
-function GrimChoice(){
-  const {setChoiceImg, setChoiceDalleImg, getGrimList, getDalleList} = useStore();
+function GrimChoice() {
+  const {setChoiceImg, getGrimList } = useStore();
   const [keywordList, setKeywordList] = useState<any []>([]);
   const [selectedKeyword, setSelectedKeyword] = useState<string>('');
   const [grimList, setGrimList]=useState<any []>([]);
-  const [dalleList, setDalleList] = useState<string[]>([]);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   useEffect(() => {
@@ -69,11 +68,6 @@ function GrimChoice(){
     setGrimList(getGrimList[selectedKeyword]);
   },[selectedKeyword]);
 
-  useEffect(()=>{
-    setDalleList(getDalleList);
-    setChoiceDalleImg(getDalleList[0])
-  },[getDalleList]);
-
   const addImage = (srcImg:any) => {
     const newimage = new Image();
     const image=srcImg.src;
@@ -98,14 +92,10 @@ function GrimChoice(){
     addImage(e.target);
   };
 
-  const changeDalleImg = (e: any) => {
-    e.preventDefault();
-    setChoiceDalleImg(e.target.src);
-  }  
   return(
     <D.DiviContainer>
       <DW.Choicetitle>
-        AIARY가 분석한 그림이에요!
+        'AIARY가 분석한 그림이에요!'
       </DW.Choicetitle>
       <DW.ChoiceWrap>
         <DW.ChoiceKeyword>
@@ -127,15 +117,10 @@ function GrimChoice(){
                   alt="grim" onClick={onChange} crossOrigin="anonymous"/>
               ))
           }
-          {
-            dalleList && dalleList.map((dalle, index) => (
-              <DW.ChoiceGrim key={index} id="image" src={dalle}
-              alt="grim" onClick={changeDalleImg} crossOrigin="anonymous"/>
-            ))
-          }
         </DW.Choice>
       </DW.ChoiceWrap>
-    </D.DiviContainer>)
+    </D.DiviContainer>
+  )
 }
 
 export default GrimChoice;
