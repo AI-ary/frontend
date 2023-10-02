@@ -121,7 +121,7 @@ function Drawing(props:DrawingProps){
   const [selectedId, selectShape] = useState<number | null>(null);
   const [tool, setTool] = useState<string>('pen');
   const [currentColor,setColor]=useState<string>('#000000');
-  const listColors:string[]=['black','red','blue']
+  const listColors:string[]=['#FF0000','#FF6B00','#FFB800', '#00EC42', '#0500FF', '#B200C1', '#FF849D', '#946710', '#000000']
   const [lines, setLines] = useState<any>([]);
   let stageRef=useRef<any>(null);
   const isDrawing = useRef<boolean>(false);
@@ -174,13 +174,6 @@ function Drawing(props:DrawingProps){
       img.src = choiceDalleImg;
       img.onload = () => {
         setDalleImg(img);
-        const stage = stageRef.current;   
-        const dataUrl=stage.toDataURL({
-          mimeType:'image/png',
-          crossorigin:'anonymous'
-        },0.5);
-        console.log(dataUrl);
-        setUpdateCanvas(dataUrl);
       }
     }
   },[choiceDalleImg, canvasSize]);
@@ -223,7 +216,7 @@ function Drawing(props:DrawingProps){
       const dataUrl=stage.toDataURL({
         mimeType:'image/png',
         crossorigin:'anonymous'
-      },0.5);
+      },0.5); 
       setUpdateCanvas(dataUrl);
     }
   }
@@ -257,7 +250,7 @@ function Drawing(props:DrawingProps){
         </Stage>
       ) :(
         <>
-          {props.grim?(
+          {!props.grim?(
             <Stage
               ref={stageRef}
               width={canvasSize.width}
@@ -365,20 +358,18 @@ function Drawing(props:DrawingProps){
               ))}
             </Layer>
           </Stage>)}
-          {!props.grim?(
+          {props.grim?(
             <DW.DrawingBtnWrap>
               {listColors && listColors.map((map,index)=>{
                 return(
-                  <BsFillCircleFill key={index} color={map} size="23" style={{marginRight:'8px'}} onClick={()=>{
+                  <BsFillCircleFill key={index} color={map} size="24" style={{marginRight:'8px'}} onClick={()=>{
                     setTool('pen');
                     setColor(map);
                   }} />
                 )
               })}
-              <BsFillEraserFill size="26" style={{marginRight: '10px'}} onClick={()=>{
-                setTool('eraser');
-              }} />
-              <FaUndoAlt size="22" style={{marginRight:'10px'}} onClick={handleUndo}/>
+              <img src="images/eraser.svg" alt="eraser" onClick={()=>{setTool('eraser');}}/>
+              <img src="/images/undo.svg" alt="undo" onClick={handleUndo}/>
             </DW.DrawingBtnWrap>):('')}
         </>
         )
