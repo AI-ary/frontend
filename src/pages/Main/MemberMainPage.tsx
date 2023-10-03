@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './components/Modal.css';
-import api from '../../apis/baseAxios';
+import baseAxios from '../../apis/baseAxios';
 import * as C from '../../styles/common.style';
 import ClosedBook from '@/components/bookshape/ClosedBook';
 import LogoutBtn from '../../pages/Auth/components/Logout';
@@ -24,11 +24,6 @@ function AfterLogin() {
   let year = now.getFullYear();
 
   useEffect(() => {
-    // api.get(`/users/${sessionStorage.getItem('id')}`).then(function (res) {
-    //   setSelected(res.data.cover_image_url)
-    // }).catch(function (err) {
-    //   console.log(err)
-    // })
     const checkTheme = (theme : string | null) => {
       switch (theme) {
       case 'BLUE': {
@@ -48,8 +43,9 @@ function AfterLogin() {
     if (sessionStorage.getItem('nickname')) {
       setNickname(sessionStorage.getItem('nickname'))
     } else {
-      api.get('users/profile').then((data) => {
-        const { theme: userTheme, nickname: userNickname } = data.data.data
+      baseAxios.get('users/profile').then((res) => {
+        console.log(res)
+        const { theme: userTheme, nickname: userNickname } = res.data.data
         sessionStorage.setItem('nickname', userNickname)
         sessionStorage.setItem('theme', userTheme)
         setNickname(userNickname)
@@ -57,7 +53,7 @@ function AfterLogin() {
       }).catch((err) => console.log(err))
     }
   }, [])
-
+  
   const addFile = ()=>{
     const imgFile = imgRef.current;
     if (imgFile?.files) {
@@ -71,23 +67,29 @@ function AfterLogin() {
   }
 
   function onClick() {
-    // api.patch(`users/${sessionStorage.getItem('id')}/`, {
-    //   cover_image_url: selected
-    // }).then(function (res) {
-    let flip : Element | null= document.querySelector('.flip');
-    let slide : Element | null = document.querySelector('.slide');
-    if (slide && flip) {
-      flip.classList.add('flipStart')
-      slide.classList.add('move');
-      setTimeout(() => {
-        if (flip) {
-          flip.classList.add('open');
-          setTimeout(() => {
-            navigate('/list');
-          }, 450);
-        }
-      }, 800);
-    }
+    const config = {
+      headers: { 'Content-Type': 'multipart/form-data'},
+    };
+    
+    baseAxios.put('users/profile', {'file' : selected}, config).then((res) => {
+      console.log(res)
+      let flip : Element | null= document.querySelector('.flip');
+      let slide : Element | null = document.querySelector('.slide');
+      if (slide && flip) {
+        flip.classList.add('flipStart')
+        slide.classList.add('move');
+        setTimeout(() => {
+          if (flip) {
+            flip.classList.add('open');
+            setTimeout(() => {
+              navigate('/list');
+            }, 450);
+          }
+        }, 800);
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   const onLogout = () => {

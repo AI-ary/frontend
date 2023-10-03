@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components"
 import { ReactComponent as HiddenPalette } from '../../../public/images/palette.svg';
 import { ReactComponent as ShowPalette } from '../../../public/images/palette2.svg';
+import { ReactComponent as CheckIcon } from '../../../public/images/check.svg'
 
 export const Container = styled.div`
   display : flex;
@@ -88,6 +89,11 @@ export const StyledHiddenPalette = styled(HiddenPalette)`
   z-index: 99;
 `
 export const StyledShowPalette = styled(ShowPalette)`
+  cursor: pointer;
+  z-index: 99;
+`
+
+export const StyledCheckIcon = styled(CheckIcon)`
   cursor: pointer;
   z-index: 99;
 `

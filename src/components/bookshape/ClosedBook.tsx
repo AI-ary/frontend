@@ -44,7 +44,7 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
         break;
       }
       }
-      baseAxios.post('users/theme', {
+      baseAxios.put('users/theme', {
         'theme' : sendData
       }).then(() => {
         if (sendData) {
@@ -55,12 +55,13 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
       })
     }
     setThemeMenu(false)
+    setCurrentTheme(null)
   }
 
   return(
     <S.Container className='slide'>
       <S.ThemeContainer>
-        {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} />:<S.StyledShowPalette onClick={changeTheme} />}
+        {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} /> : currentTheme ? <S.StyledCheckIcon onClick={changeTheme} /> : <S.StyledShowPalette onClick={()=>setThemeMenu(false)} /> }
         <S.ToggleTheme className={themeMenu ? 'show-menu' : 'hide-menu'}>
           <li onClick={()=>handleThemeChange('blueTheme')}>
             <img src="images/bluetheme.svg" alt="theme" />
