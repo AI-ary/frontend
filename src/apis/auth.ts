@@ -3,6 +3,10 @@ import baseAxios from './baseAxios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
+const configJSON = {
+  headers: { 'Content-Type': 'application/json'},
+};
+
 interface SignUpProps {
   nickname: string,
   email: string,
@@ -56,7 +60,6 @@ export const signIn = () => {
       sessionStorage.setItem('token', access);
       sessionStorage.setItem('refresh', refresh);
     }, onError: (err) => {
-      console.log(err)
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -106,12 +109,12 @@ export const signUp = () => {
   return { isSignUpError, isSignUpLoading, mutate}
 }
 
-
-export const updateAccessToken = async (access_token: string, refresh_token: string) => {
+export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
   const response = await baseAxios.post("users/reissue", {
-    "access_token": accessToken,
-    "refresh_token": refreshToken
-  });
+    access_token: accessToken,
+    refresh_token: refreshToken
+  }, configJSON);
+  console.log(response);
   console.log(response.data);
   return response.data;
 };

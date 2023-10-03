@@ -7,13 +7,17 @@ import Bookmark from '../../components/bookshape/Bookmark';
 import Loading from '../../components/Loading';
 import * as O from '../../styles/bookshape/opendbook.style'
 import * as C from '../../styles/bookshape/closedbook.style';
+import DalleChoice from './components/DalleChoice';
 
 function WriteGrim(){
+  const [isSelectedDalle, setIsSelectedDalle] = useState<boolean>(false);
   const [isLoading, setIsLoading]=useState<boolean>(false);
-  
-  const [isDisabled, setIsDisabled] = useState<boolean>(false)
-  const loadingState = useRef(isLoading)
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const loadingState = useRef(isLoading);
 
+  const checkSelectedDalle = (check:boolean) => {
+    setIsSelectedDalle(check);
+  }
 
   let percentNum: number;
   let percent: HTMLElement | null;
@@ -69,10 +73,10 @@ function WriteGrim(){
       {isLoading?<Loading isLoading={isLoading} setIsLoading={setIsLoading} cancelLoading={cancelLoading} />:''}
       <O.BookContainer> 
         <OpenBookLeft>
-          <GrimChoice />
+          {!isSelectedDalle ? <GrimChoice /> : <DalleChoice />}
         </OpenBookLeft>
         <OpenBookRight>
-          <DiaryContent getLoading={setIsLoading} startLoading={startLoading} loadingState={loadingState} isDisabled={isDisabled} />
+          <DiaryContent checkSelectedDalle={checkSelectedDalle} getLoading={setIsLoading} startLoading={startLoading} loadingState={loadingState} isDisabled={isDisabled} />
         </OpenBookRight>
         <Bookmark />
       </O.BookContainer>

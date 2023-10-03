@@ -14,6 +14,7 @@ import * as DW from '../../../styles/diary/diarywrite.style';
 
 
 type DiaryContentProps = {
+  checkSelectedDalle: (check:boolean) => void;
   getLoading: (load: boolean) => void;
   startLoading: () => void
   loadingState: {
@@ -29,12 +30,12 @@ interface RefObject {
 function DiaryContent(props:DiaryContentProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [grim, setGrim] = useState<boolean>(true); //그리기모드 버튼 클릭 여부
+  const [grim, setGrim] = useState<boolean>(false); //그리기모드 버튼 클릭 여부
   const [btnType, setBtnType] = useState<number>(0); //그림 ai 타입 결정
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
+  const { updateCanvas, choiceDalleImg, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
   const [emoji, setEmoji] = useState<string>('');
 
   const getDayOfWeek = (date:string) => {
@@ -58,17 +59,23 @@ function DiaryContent(props:DiaryContentProps) {
   const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
 
   const grimDiary = async () => {
-    console.log(updateCanvas);
-    // 캔버스 이미지(base64)를 다시 png로 변환하기
-    let myImg = updateCanvas.replace('data:image/png;base64,', '');
-    const byteString = atob(myImg);
-    const array = [];
-    for (let i = 0; i < byteString.length; i++) {
-      array.push(byteString.charCodeAt(i));
+    let file;
+    if(choiceDalleImg){
+      const response = await fetch(choiceDalleImg);
+      console.log(response);
+      const u8arr = new Uint8Array(await response.arrayBuffer());
+      file = new Blob([u8arr], { type: 'image/png' });
+    }else{
+      // 캔버스 이미지(base64)를 다시 png로 변환하기
+      let myImg = updateCanvas.replace('data:image/png;base64,', '');
+      const byteString = atob(myImg);
+      const array = [];
+      for (let i = 0; i < byteString.length; i++) {
+        array.push(byteString.charCodeAt(i));
+      }
+      const u8arr = new Uint8Array(array);
+      file = new Blob([u8arr], { type: 'image/png' });
     }
-    const u8arr = new Uint8Array(array);
-    const file = new Blob([u8arr], { type: 'image/png' });
-    console.log(file);
     let form = new FormData();
     form.append('file', file);
     const sendData = {
@@ -84,7 +91,6 @@ function DiaryContent(props:DiaryContentProps) {
     console.log(sendData)
     addDiaryContent(form);
   }
-
   useEffect(()=> {
     if(isSaveSuccess){
       props.getLoading(false);
@@ -112,10 +118,12 @@ function DiaryContent(props:DiaryContentProps) {
   const bringGrim = () => {
     // props.getLoading(true);
     // props.startLoading();
+    props.checkSelectedDalle(false);
     if(btnType === 2){
       if(confirm('달리 그림이 사라질 수 있습니다. 정말 초기화 하시겠습니까?')){
         setBtnType(1);
         setChoiceImg([]);
+        setChoiceDalleImg('');
         setGetGrimList([]);
         setGetDalleList([]);
         addKonlpyTextContent(content);
@@ -217,6 +225,7 @@ function DiaryContent(props:DiaryContentProps) {
   const bringDalleGrim = () => {
     // props.getLoading(true);
     // props.startLoading();
+    props.checkSelectedDalle(true);
     if(btnType === 1){
       if(confirm('키워드 그림이 사라질 수 있습니다. 정말 초기화 하시겠습니까?')){
         setBtnType(2);
@@ -316,10 +325,6 @@ function DiaryContent(props:DiaryContentProps) {
   const weatherChange = (weatherName:string) => {
     setWeather(weatherName);
   };
-  //그리기 모드 버튼
-  const clickedGrim = () => {
-    setGrim((prev) => !prev);
-  };
 
   interface WeatherBtnProps{
     mood: string;
@@ -357,23 +362,28 @@ function DiaryContent(props:DiaryContentProps) {
         <D.Canvas>
           <Drawing grim={grim} />
           <DW.ButtonContainer >
-            <DW.Modebutton onClick={bringGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
-              그림가져오기
-            </DW.Modebutton>
-            <DW.Modebutton onClick={bringDalleGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
-              달리가져오기
-            </DW.Modebutton>
-            {
-              btnType !== 2 ? (
-                <DW.Modebutton onClick={clickedGrim} isDisabled={false}>
-                {grim ? '그림그리기' : '스탑'}
-              </DW.Modebutton>
-              ): undefined
-            }
-            <DW.Savebutton
-              onClick={grimDiary}>
-              저장하기
-            </DW.Savebutton>
+            {!grim ? (
+              <>
+                <DW.Modebutton onClick={bringDalleGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
+                  Dall-E 가져오기
+                </DW.Modebutton><DW.Modebutton onClick={bringGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
+                  그림가져오기
+                </DW.Modebutton>
+                {
+                  btnType !== 2 ? (
+                    <DW.Modebutton onClick={()=> { setGrim(true);  props.checkSelectedDalle(false);}} isDisabled={false}>
+                      그림 그리기
+                  </DW.Modebutton>
+                  ): undefined
+                }
+                <DW.Savebutton
+                  onClick={grimDiary}>
+                  저장하기
+                </DW.Savebutton>
+              </>): 
+              <DW.Savebutton onClick={()=> setGrim(false)}>
+                완료
+              </DW.Savebutton>}
           </DW.ButtonContainer>
         </D.Canvas>
         <D.Content>
