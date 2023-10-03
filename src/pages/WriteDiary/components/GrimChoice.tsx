@@ -12,16 +12,6 @@ function GrimChoice() {
   const [grimList, setGrimList]=useState<any []>([]);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-  // useEffect(() => {
-  //   const slider = document.querySelector('.slick-slider'); // 슬라이더 엘리먼트 선택
-  //   if (slider) {
-  //     slider.addEventListener('beforeChange', (e:any) => {
-  //       const nextSlide = e.detail.currentSlide; // 다음으로 이동할 슬라이드 인덱스
-  //       setCurrentSlide(nextSlide);
-  //     });
-  //   }
-  // }, []);
-
   const NextArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
     const {onClick, isDisabled} = props;
     const handleNextClick = () => {
@@ -51,7 +41,6 @@ function GrimChoice() {
       </DW.Arrow>
     )
   }
-console.log(currentSlide);
 
   const settings = {
     dots: false, // 슬라이드 밑에 점 여부

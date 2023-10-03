@@ -7,7 +7,7 @@ import reset from 'styled-reset';
 import { BookContainer, OpenBookLeft, OpenBookRight, Line, Profile, SelectBtn } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
 import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
-import { EmojiWrap, Modebutton,Savebutton, Choicetitle } from "@/styles/diary/diarywrite.style";
+import { DrawingBtnWrap, EmojiWrap, Modebutton,Savebutton, Choicetitle, ChoiceKeyword, Arrow, Keyword, DalleTitle, DalleGrim } from "@/styles/diary/diarywrite.style";
 import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
 import {StyledNavLink} from '@/components/bookshape/Bookmark';
 type DefaultTheme = {
@@ -257,6 +257,19 @@ export const GlobalStyle = createGlobalStyle`
     ${Choicetitle}{
       font-size: 30px;
     }
+    ${DalleTitle}{
+      font-size: 30px;
+    }
+    ${DalleGrim}{
+      width: 45%;
+      height: 155px;
+      &:first-child{
+        margin-right: 35px;
+      }
+      &:last-child{
+        margin-left: 35px;
+      }
+    }
     ${SearchWrap}{
       padding: 15px 0;
       > hr {
@@ -470,9 +483,9 @@ export const GlobalStyle = createGlobalStyle`
       top: 81px;
     }
     ${Modebutton}{
-      padding: 4px 2px;
-      width: 62px;
-      font-size: 9px;
+      padding: 4px 3px;
+      width: 70px;
+      font-size: 8px;
     }
     ${Savebutton}{
       width: 77px;
@@ -498,8 +511,52 @@ export const GlobalStyle = createGlobalStyle`
       margin-bottom: 10px;
       font-size: 12px;
     }
+    ${DrawingBtnWrap}{
+      bottom: 10px;
+      left: 10px;
+      .custom-button{
+        margin-right: 7px;
+        font-size: 16px;
+      }
+      img {
+        width: 18px;
+        height: 18px;
+        margin-right: 6px;
+      }
+    }
     ${Choicetitle}{
       font-size: 24px;
+    }
+    ${ChoiceKeyword}{
+      height: 30px;
+    }
+    ${Arrow}{
+      width: 24px;
+      height: 24px;
+      &.left { 
+        right: 40px;
+      }
+      &.right {
+        right: 10px;
+      }
+    }
+    ${Keyword}{
+      > p {
+        font-size: 14px;
+      }
+    }
+    ${DalleTitle}{
+      font-size: 24px;
+    }
+    ${DalleGrim}{
+      width: 45%;
+      height: 120px;
+      &:first-child{
+        margin-right: 25px;
+      }
+      &:last-child{
+        margin-left: 25px;
+      }
     }
     ${SearchWrap}{
       padding: 12px 4px;

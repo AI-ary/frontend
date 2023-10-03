@@ -62,6 +62,7 @@ export const Modebutton = styled.button<BtnProps>`
 
 export const Savebutton = styled.button`
   background-color: #EB8888;
+  background-color: ${props => props.theme.btnColor};
   color: #FFFFFF;
   border-radius: 24px;
   text-align: center;
@@ -74,9 +75,7 @@ export const Savebutton = styled.button`
   box-sizing: border-box;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   &:hover {
-    color: rgb(54, 54, 54);
-    background-color: transparent;
-    border: 2px solid #373737;
+    background-color: ${props => props.theme.btnHover};
   }
 `;
 
@@ -93,6 +92,10 @@ export const DrawingBtnWrap = styled.div`
   left: 15px;
   display: flex;
   z-index: 100;
+  .custom-button{
+    margin-right: 8px;
+    font-size: 24px;
+  }
   > img {
     margin-right: 10px;
   }
