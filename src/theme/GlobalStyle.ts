@@ -2,18 +2,23 @@ import { Input, PageTitle, WarningContent, WarningWrap } from "@/styles/auth/aut
 import { BackBtn, BehindWrap, Flip, Left, Mid, Right,StyledHiddenPalette, StyledShowPalette, ToggleTheme } from "@/styles/bookshape/closedbook.style";
 import { CommonEmptyBtn, CommonFilledBtn, CommonOutlinedBtn } from "@/styles/common.style";
 import { Aiary, ButtonWrap, Content, Logo } from "@/styles/main/main.style";
-import { createGlobalStyle, ThemeProps } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import reset from 'styled-reset';
 import { BookContainer, OpenBookLeft, OpenBookRight, Line, Profile, SelectBtn } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
 import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
 import { DrawingBtnWrap, EmojiWrap, Modebutton,Savebutton, Choicetitle, ChoiceKeyword, Arrow, Keyword, DalleTitle, DalleGrim } from "@/styles/diary/diarywrite.style";
 import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
-import {StyledNavLink} from '@/components/bookshape/Bookmark';
+import { StyledNavLink } from '@/components/bookshape/Bookmark';
+
 type DefaultTheme = {
   bgImg?: string;
   bgColor?: string;
   fontColor?: string;
+};
+
+type ThemeProps = {
+    theme: DefaultTheme;
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -34,7 +39,7 @@ export const GlobalStyle = createGlobalStyle`
   body{
     overflow: hidden;
     font-family:'KyoboHand';
-    background-image: url(${(props:ThemeProps<DefaultTheme>)=> props.theme.bgImg});
+    background-image: url(${(props:ThemeProps)=> props.theme.bgImg});
     background-color: ${props => props.theme.bgColor}; 
     background-repeat: no-repeat;
     background-size: cover;
