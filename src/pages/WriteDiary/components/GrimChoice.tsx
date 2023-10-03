@@ -4,24 +4,6 @@ import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
-const NextArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
-  const {onClick, isDisabled} = props;
-  return (
-    <DW.Arrow className={`right ${isDisabled ? 'disabled': ''}`} onClick={onClick}>
-      <MdArrowForwardIos size="12px" color='#FFFFFF'/>
-    </DW.Arrow>
-  )
-}
-
-const PrevArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
-  const {onClick, isDisabled} = props;
-  return (
-    <DW.Arrow className={`left ${isDisabled ? 'disabled': ''}`} onClick={onClick}>
-      <MdArrowBackIosNew size="12px" color='#FFFFFF' />
-    </DW.Arrow>
-  )
-}
-
 // AI로부터 받아온 그림들 중 원하는 그림 선택
 function GrimChoice() {
   const {setChoiceImg, getGrimList } = useStore();
@@ -30,15 +12,35 @@ function GrimChoice() {
   const [grimList, setGrimList]=useState<any []>([]);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-  useEffect(() => {
-    const slider = document.querySelector('.slick-slider'); // 슬라이더 엘리먼트 선택
-    if (slider) {
-      slider.addEventListener('beforeChange', (e:any) => {
-        const nextSlide = e.detail.currentSlide; // 다음으로 이동할 슬라이드 인덱스
-        setCurrentSlide(nextSlide);
-      });
+  const NextArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
+    const {onClick, isDisabled} = props;
+    const handleNextClick = () => {
+      onClick();
+      if(currentSlide<keywordList?.length-1){
+        setCurrentSlide(currentSlide+4);
+      }
     }
-  }, []);
+    return (
+      <DW.Arrow className={`right ${isDisabled ? 'disabled': ''}`} onClick={handleNextClick}>
+        <MdArrowForwardIos size="12px" color='#FFFFFF'/>
+      </DW.Arrow>
+    )
+  }
+  
+  const PrevArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
+    const {onClick, isDisabled} = props;
+    const handlePrevClick = () => {
+      onClick();
+      if(currentSlide>0){
+        setCurrentSlide(currentSlide-4);
+      }
+    }
+    return (
+      <DW.Arrow className={`left ${isDisabled ? 'disabled': ''}`} onClick={handlePrevClick}>
+        <MdArrowBackIosNew size="12px" color='#FFFFFF' />
+      </DW.Arrow>
+    )
+  }
 
   const settings = {
     dots: false, // 슬라이드 밑에 점 여부
@@ -50,7 +52,7 @@ function GrimChoice() {
     arrows: true,
     vertical: false,
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
-    nextArrow: <NextArrow isDisabled={currentSlide >= grimList?.length - 4} onClick={function (): void {
+    nextArrow: <NextArrow isDisabled={currentSlide >= keywordList?.length - 4} onClick={function (): void {
       throw new Error('Function not implemented.');
     } } />,
     prevArrow: <PrevArrow isDisabled={currentSlide <= 0} onClick={function (): void {
@@ -60,8 +62,7 @@ function GrimChoice() {
 
   useEffect(() => {
     setKeywordList(Object.keys(getGrimList));
-    // setSelectedKeyword(Object.keys(getGrimList)[0]);
-    setSelectedKeyword('카페');
+    setSelectedKeyword(Object.keys(getGrimList)[0]);
   }, [getGrimList]);
 
   useEffect(()=>{
@@ -98,18 +99,13 @@ function GrimChoice() {
         'AIARY가 분석한 그림이에요!'
       </DW.Choicetitle>
       <DW.ChoiceWrap>
-        <DW.ChoiceKeyword>
+        {keywordList.length>0 && <DW.ChoiceKeyword> 
           <DW.StyledSlider {...settings}>
-            <DW.Keyword isSelected={selectedKeyword === '카페'} onClick={()=>setSelectedKeyword('카페')}>카페</DW.Keyword>
-            <DW.Keyword isSelected={selectedKeyword === '커피1'} onClick={()=>setSelectedKeyword('커피1')}>커피1</DW.Keyword>
-            <DW.Keyword isSelected={selectedKeyword === '커피2'} onClick={()=>setSelectedKeyword('커피2')}>커피2</DW.Keyword>
-            <DW.Keyword isSelected={selectedKeyword === '커피3'} onClick={()=>setSelectedKeyword('커피3')}>커피3</DW.Keyword>
-            <DW.Keyword isSelected={selectedKeyword === '커피4'} onClick={()=>setSelectedKeyword('커피4')}>커피4</DW.Keyword>
-            <DW.Keyword isSelected={selectedKeyword === '커피5'} onClick={()=>setSelectedKeyword('커피5')}>커피5</DW.Keyword>
+            {keywordList && keywordList.map((x, index) => <DW.Keyword isSelected={selectedKeyword === x} key={index} onClick={()=>setSelectedKeyword(x)}><p>{x}</p>{x}</DW.Keyword>)}
           </DW.StyledSlider>
-        {/* {keywordList && keywordList.map((x, index) => <div key={index} onClick={()=>setSelectedKeyword(x)}>{x}</div>)} */}
         </DW.ChoiceKeyword>
-        <DW.Choice>
+        }
+        <DW.Choice isKeywordList={keywordList.length > 0}>
           {
             grimList && grimList.map((data,index)=>
               (

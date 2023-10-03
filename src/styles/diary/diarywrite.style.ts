@@ -9,6 +9,9 @@ interface BtnProps {
 interface KeywordProps {
   isSelected: boolean;
 }
+interface ChoiceProps {
+  isKeywordList: boolean;
+}
 
 export const GridContent =styled.textarea`
   position: absolute;
@@ -59,6 +62,7 @@ export const Modebutton = styled.button<BtnProps>`
 
 export const Savebutton = styled.button`
   background-color: #EB8888;
+  background-color: ${props => props.theme.btnColor};
   color: #FFFFFF;
   border-radius: 24px;
   text-align: center;
@@ -71,9 +75,7 @@ export const Savebutton = styled.button`
   box-sizing: border-box;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   &:hover {
-    color: rgb(54, 54, 54);
-    background-color: transparent;
-    border: 2px solid #373737;
+    background-color: ${props => props.theme.btnHover};
   }
 `;
 
@@ -90,6 +92,10 @@ export const DrawingBtnWrap = styled.div`
   left: 15px;
   display: flex;
   z-index: 100;
+  .custom-button{
+    margin-right: 8px;
+    font-size: 24px;
+  }
   > img {
     margin-right: 10px;
   }
@@ -130,6 +136,7 @@ export const StyledSlider = styled(Slider)`
   }
   .slick-track{
     height: 100%;
+    margin: 0px;
   }
   .slick-slide {
     height: 100%;
@@ -171,26 +178,34 @@ export const Keyword = styled.div<KeywordProps>`
   border: none;
   box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.4); 
   cursor: pointer;
-  font-size: 20px;
-  font-family: 'Poor Story';
-  -webkit-text-stroke: 0.2px #FFFFFF;
-  color: #FFFFFF;
-  text-align: center;
+  > p {
+    height: 100%;
+    font-size: 20px;
+    font-family: 'Poor Story';
+    -webkit-text-stroke: 0.2px #FFFFFF;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   ${({ isSelected }) =>
   isSelected &&`
   background-color: #FFFFFF;
   -webkit-text-stroke: 0.2px #EB8888;
-  color: #EB8888; 
+  > p {
+    color: #EB8888; 
+  }
   `}
 `
 
-export const Choice = styled.div`
+export const Choice = styled.div<ChoiceProps>`
   width: 100%;   
   height: 92%;
   background-color: #FFFFFF;
   display:flex;
   flex-wrap: wrap;
-  border-radius: 0 0 12px 12px;
+  margin-top: ${props => props.isKeywordList ? '0px' : '10px'};
+  border-radius: ${props => props.isKeywordList ? '0 0 12px 12px' : '12px'};
   box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.4);
   border: none;
   overflow: auto;

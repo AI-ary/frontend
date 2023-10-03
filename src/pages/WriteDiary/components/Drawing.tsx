@@ -361,7 +361,7 @@ function Drawing(props:DrawingProps){
             <DW.DrawingBtnWrap>
               {listColors && listColors.map((map,index)=>{
                 return(
-                  <BsFillCircleFill key={index} color={map} size="24" style={{marginRight:'8px'}} onClick={()=>{
+                  <BsFillCircleFill key={index} color={map} className="custom-button" onClick={()=>{
                     setTool('pen');
                     setColor(map);
                   }} />
