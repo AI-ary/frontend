@@ -15,8 +15,9 @@ interface Props {
 
 export default function Modal(props: Props) {
   const [modalIcon, setModalIcon] = useState<any>()
-  const { setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete } = useStore()
+  const { setConfirm, setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete } = useStore()
   const setFalse = () => {
+    setConfirm(false)
     setConfirmDelete(false)
     setLimitWordLength(false)
     setConfirmWeather(false)

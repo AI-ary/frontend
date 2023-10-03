@@ -43,7 +43,6 @@ function AfterLogin() {
     }
     baseAxios.get('users/profile').then((res) => {
       const { profile_image : userProfileImage } = res.data.data
-      sessionStorage.setItem('profile_image', userProfileImage)
       setSelected(userProfileImage)
     }).catch((err) => console.log(err))
 
@@ -55,7 +54,6 @@ function AfterLogin() {
         const { theme: userTheme, nickname: userNickname, profile_image : userProfileImage } = res.data.data
         sessionStorage.setItem('nickname', userNickname)
         sessionStorage.setItem('theme', userTheme)
-        sessionStorage.setItem('profile_image', userProfileImage)
         setNickname(userNickname)
         checkTheme(userTheme)
         setSelected(userProfileImage)
