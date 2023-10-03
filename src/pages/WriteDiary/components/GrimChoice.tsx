@@ -4,24 +4,6 @@ import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
-const NextArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
-  const {onClick, isDisabled} = props;
-  return (
-    <DW.Arrow className={`right ${isDisabled ? 'disabled': ''}`} onClick={onClick}>
-      <MdArrowForwardIos size="12px" color='#FFFFFF'/>
-    </DW.Arrow>
-  )
-}
-
-const PrevArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
-  const {onClick, isDisabled} = props;
-  return (
-    <DW.Arrow className={`left ${isDisabled ? 'disabled': ''}`} onClick={onClick}>
-      <MdArrowBackIosNew size="12px" color='#FFFFFF' />
-    </DW.Arrow>
-  )
-}
-
 // AI로부터 받아온 그림들 중 원하는 그림 선택
 function GrimChoice() {
   const {setChoiceImg, getGrimList } = useStore();
@@ -40,19 +22,37 @@ function GrimChoice() {
   //   }
   // }, []);
 
-  const nextSlide = () => {
-    if(currentSlide<grimList?.length-4){
-      console.log('');
-      setCurrentSlide(currentSlide+1);
+  const NextArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
+    const {onClick, isDisabled} = props;
+    const handleNextClick = () => {
+      onClick();
+      if(currentSlide<keywordList?.length-1){
+        setCurrentSlide(currentSlide+4);
+      }
     }
+    return (
+      <DW.Arrow className={`right ${isDisabled ? 'disabled': ''}`} onClick={handleNextClick}>
+        <MdArrowForwardIos size="12px" color='#FFFFFF'/>
+      </DW.Arrow>
+    )
   }
-
-  const prevSlide = () => {
-    if(currentSlide>0){
-      setCurrentSlide(currentSlide-1);
+  
+  const PrevArrow = (props: { onClick: () => void; isDisabled: boolean }) => {
+    const {onClick, isDisabled} = props;
+    const handlePrevClick = () => {
+      onClick();
+      if(currentSlide>0){
+        setCurrentSlide(currentSlide-4);
+      }
     }
+    return (
+      <DW.Arrow className={`left ${isDisabled ? 'disabled': ''}`} onClick={handlePrevClick}>
+        <MdArrowBackIosNew size="12px" color='#FFFFFF' />
+      </DW.Arrow>
+    )
   }
 console.log(currentSlide);
+
   const settings = {
     dots: false, // 슬라이드 밑에 점 여부
     infinite: false, // 무한 반복 여부
@@ -63,10 +63,13 @@ console.log(currentSlide);
     arrows: true,
     vertical: false,
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
-    nextArrow: <NextArrow isDisabled={currentSlide >= grimList?.length - 4} onClick={nextSlide} />,
-    prevArrow: <PrevArrow isDisabled={currentSlide <= 0} onClick={prevSlide} />,
+    nextArrow: <NextArrow isDisabled={currentSlide >= keywordList?.length - 4} onClick={function (): void {
+      throw new Error('Function not implemented.');
+    } } />,
+    prevArrow: <PrevArrow isDisabled={currentSlide <= 0} onClick={function (): void {
+      throw new Error('Function not implemented.');
+    } } />,
   };
-
 
   useEffect(() => {
     setKeywordList(Object.keys(getGrimList));
