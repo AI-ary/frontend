@@ -187,7 +187,7 @@ function DiaryContent(props:DiaryContentProps) {
   },[isKonlpyTextSuccess, isKonlpyTextError]);
 
   useEffect(()=>{
-    let intervalId: number | undefined;
+    let intervalId: any;
     if(isKonlpyPollingSuccess) {
       console.log(konlpyState);
       intervalId = setInterval(() => {
@@ -294,7 +294,7 @@ function DiaryContent(props:DiaryContentProps) {
     }
   },[isDalleTextSuccess, isDalleTextError]);
   useEffect(()=>{
-    let intervalId: number | undefined;
+    let intervalId: any;
     if(isDallePollingSuccess) {
       console.log(dalleState);
       intervalId = setInterval(() => {

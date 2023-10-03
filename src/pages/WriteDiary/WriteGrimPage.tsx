@@ -22,7 +22,7 @@ function WriteGrim(){
   let percentNum: number;
   let percent: HTMLElement | null;
   let percentBar: HTMLElement | null;
-  let timer: number;
+  let timer: any;
 
   const startLoading = () => {
     setIsLoading(true);
