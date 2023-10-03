@@ -3,6 +3,10 @@ import baseAxios from './baseAxios';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '@/store/store';
 
+const configJSON = {
+  headers: { 'Content-Type': 'application/json'},
+};
+
 interface SignUpProps {
   nickname: string,
   email: string,
@@ -75,11 +79,10 @@ export const signUp = () => {
   return { isSignUpError, isSignUpLoading, mutate}
 }
 
-
-export const updateAccessToken = async (access_token: string, refresh_token: string) => {
+export const updateAccessToken = async (accessToken: string, refreshToken: string) => {
   const response = await baseAxios.post("users/reissue", {
-    "access_token": accessToken,
-    "refresh_token": refreshToken
+    "access_token": access_token,
+    "refresh_token": refresh_token
   });
   console.log(response.data);
   return response.data;
