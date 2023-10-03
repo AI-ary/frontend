@@ -59,17 +59,23 @@ function DiaryContent(props:DiaryContentProps) {
   const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
 
   const grimDiary = async () => {
-    console.log(updateCanvas);
-    // 캔버스 이미지(base64)를 다시 png로 변환하기
-    let myImg = updateCanvas.replace('data:image/png;base64,', '');
-    const byteString = atob(myImg);
-    const array = [];
-    for (let i = 0; i < byteString.length; i++) {
-      array.push(byteString.charCodeAt(i));
+    let file;
+    if(choiceDalleImg){
+      const response = await fetch(choiceDalleImg);
+      console.log(response);
+      const u8arr = new Uint8Array(await response.arrayBuffer());
+      file = new Blob([u8arr], { type: 'image/png' });
+    }else{
+      // 캔버스 이미지(base64)를 다시 png로 변환하기
+      let myImg = updateCanvas.replace('data:image/png;base64,', '');
+      const byteString = atob(myImg);
+      const array = [];
+      for (let i = 0; i < byteString.length; i++) {
+        array.push(byteString.charCodeAt(i));
+      }
+      const u8arr = new Uint8Array(array);
+      file = new Blob([u8arr], { type: 'image/png' });
     }
-    const u8arr = new Uint8Array(array);
-    const file = new Blob([u8arr], { type: 'image/png' });
-    console.log(file);
     let form = new FormData();
     form.append('file', file);
     const sendData = {
