@@ -1,12 +1,15 @@
-import { useRef, useState }  from 'react';
+import { useState }  from 'react';
 import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
 import { signIn } from '@/apis/auth';
 import { useNavigate } from 'react-router-dom';
+import Modal from '@/components/Modal';
+import { useStore } from '@/store/store';
 
 function SignInForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const {confirm, success} = useStore()
   let isSigning = '로그인'
   const navigate = useNavigate()
 
@@ -50,6 +53,8 @@ function SignInForm() {
         <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={()=>onClick()}>로그인</C.CommonFilledBtn>
         <C.CommonEmptyBtn onClick={()=>navigate('/signup')} isValid={false}>회원가입</C.CommonEmptyBtn>
       </S.BtnWrap>
+      {confirm && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="아이디 혹은 비밀번호를 다시 확인해주세요." content="" />}
+      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="회원가입 성공!" content="" />}
     </S.Container>
   );
 }

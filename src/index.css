@@ -14,3 +14,25 @@
     justify-self: center;
     margin-top: 30px;
 }
+
+.modal_shake {
+    animation-name: shaking;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shaking {
+    0% {
+        transform: rotate(0deg);
+    }
+    33% {
+        transform: rotate(20deg);
+    }
+    66% {
+        transform: rotate(-20deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

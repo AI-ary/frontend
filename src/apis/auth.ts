@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
 import baseAxios from './baseAxios';
-import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '@/store/store';
 
 const configJSON = {
   headers: { 'Content-Type': 'application/json'},
@@ -23,10 +23,7 @@ interface LogoutProps {
   refresh_token: string | null;
 }
 
-let temp : SignInProps;
-
 const onSignIn = (data : SignInProps) => {
-  temp = data
   return baseAxios.post('users/login', data)
 }
 
@@ -42,16 +39,11 @@ let count = 0;
 
 export const signIn = () => {
   const navigate = useNavigate();
+  const { setConfirm, setSuccess } = useStore();
   const { mutate, isLoading:isSignInLoading, isError: isSignInError } = useMutation(onSignIn, {
     onSuccess: (res: any) => {
-      if (count === 0) {  
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '로그인 성공!',
-          showConfirmButton: false,
-          timer: 2000
-        })
+      if (count === 0) {
+        setSuccess(true)
         navigate('/main')
         count++;
       }
@@ -60,13 +52,8 @@ export const signIn = () => {
       sessionStorage.setItem('token', access);
       sessionStorage.setItem('refresh', refresh);
     }, onError: (err) => {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '아이디 혹은 비밀번호를 다시 확인해주세요.',
-        showConfirmButton: true,
-        // timer: 2000
-      })
+      console.log(err)
+      setConfirm(true)
     }
   })
     
@@ -75,34 +62,17 @@ export const signIn = () => {
 
 export const signUp = () => {
   const navigate = useNavigate();
+  const { setSuccess, setDuplicateNickname, setDuplicateEmail } = useStore();
   const { mutate, isLoading: isSignUpLoading, isError: isSignUpError } = useMutation(onSignUp, {
     onSuccess: () => {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '회원가입 성공!',
-        showConfirmButton: false,
-        timer: 2000,
-      });
+      setSuccess(true)
       navigate('/signin')
     },
-    onError: (err:any) => {
+    onError: (err: any) => {
       if (err.response.data.businessCode === 'U004') {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '이미 존재하는 이메일 입니다.',
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        setDuplicateEmail(true)
       } else if (err.response.data.businessCode === 'U005') {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '이미 존재하는 닉네임 입니다.',
-          showConfirmButton: false,
-          timer: 2000,
-        });
+        setDuplicateNickname(true)
       }
     }
   })
@@ -120,13 +90,10 @@ export const updateAccessToken = async (accessToken: string, refreshToken: strin
 
 export const logout = () => {
   const navigate = useNavigate();
+  const {setSuccess} = useStore()
   const { mutate } = useMutation(onLogout, {
     onSuccess: () => {
-      Swal.fire(
-        '로그아웃 성공!',
-        '',
-        'success'
-      )
+      setSuccess(true)
       sessionStorage.clear();
       navigate('/')
     },

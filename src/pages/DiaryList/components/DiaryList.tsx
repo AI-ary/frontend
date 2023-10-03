@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { deleteDiaryData } from '@/apis/diaryList';
-import Swal, { SweetAlertResult } from 'sweetalert2';
 import ResultManuscript from './ResultManuscript';
 import * as D from '../../../styles/diary/diary.style';
 import * as DL from '../../../styles/diary/diarylist.style';
+import { useStore } from '@/store/store';
+import Modal from '@/components/Modal';
 
 interface DiaryListProps{
   data: {
@@ -17,10 +18,11 @@ interface DiaryListProps{
   };
 }
 
-type Props = SweetAlertResult<any>;
-
 function DiaryList({data}:DiaryListProps){
   const [shareMenu, setShareMenu] = useState<boolean>(false);
+  const [urlCopy, setUrlCopy] = useState<boolean>(false)
+  const [deleteSuccess, setDeleteSuccess] = useState<boolean>(false)
+  const {confirmDelete, setConfirmDelete} = useStore()
   
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
@@ -31,14 +33,6 @@ function DiaryList({data}:DiaryListProps){
   let todayMonth=new Date(data.diary_date).getMonth() + 1;  //월 구하기
   let todayDate=new Date(data.diary_date).getDate();  //일 구하기
   let todayDay = getDayOfWeek(data.diary_date);
-
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true
-  })
 
   const kakaoShare = () => {
     // window.Kakao.Share.sendDefault({
@@ -66,44 +60,25 @@ function DiaryList({data}:DiaryListProps){
   const urlShare = () => {
     const location = window.location.href;
     window.navigator.clipboard.writeText(location).then(() => {
-      Toast.fire({
-        icon: 'success',
-        title: '복사 성공!'
-      })
+      setUrlCopy(true)
     })
   }
 
   const { isDeleteLoading, result, isDeleteSuccess, isError, deleteDiaryList } = deleteDiaryData();
 
-  const DeleteDiary = (id:number) => {
-    Swal.fire({
-      title: '정말 삭제하시겠습니까?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '네',
-      cancelButtonText: '아니오'
-    }).then((result: Props) => {
-      console.log(result);
-      if (result.isConfirmed) {
-        deleteDiaryList(data.diary_id);
-      }
-    })
+  const confirmDeleteDiary = () => {
+    deleteDiaryList(data.diary_id);
+    setConfirmDelete(false)
   }
-
+  
+  const deleteDiarySuccess = () => {
+    location.reload()
+    setDeleteSuccess(false)
+  }
+  
   useEffect(() => {
-    if(isDeleteSuccess && result.code==="D002"){
-      Swal.fire({
-        title: '삭제 성공!',
-        icon: 'success',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK',
-      }).then((result: Props) => {
-        if (result.isConfirmed) {
-          location.reload();
-        }
-      })
+    if (isDeleteSuccess && result.code === 'D002') {
+      setDeleteSuccess(true)
     }else if(isError){
       alert('삭제 실패하였습니다.')
     }
@@ -142,18 +117,21 @@ function DiaryList({data}:DiaryListProps){
         </D.TitleContainer>
         <D.Canvas>
           <img src={data.drawing_url} alt="diarygrim" />
-          <DL.ShareWrap className={shareMenu ? "show-menu" : "hide-menu"}>
+          <DL.ShareWrap className={shareMenu ? 'show-menu' : 'hide-menu'}>
             <DL.SNSImg onClick={kakaoShare} src='/images/kakao.png' alt='none' />
             <DL.SNSImg onClick={twitterShare} src='/images/twitter.png' alt='none' />
             <DL.SNSImg onClick={urlShare} src='/images/url.png' alt='none' />
           </DL.ShareWrap>
           <D.ChoiceButtonContainer>
             <D.ButtonItem onClick={toggleshareMenu}><D.StyledShare /></D.ButtonItem>
-            <D.ButtonItem onClick={()=>DeleteDiary(data.diary_id)}><D.StyledDelete /></D.ButtonItem>
+            <D.ButtonItem onClick={()=>setConfirmDelete(true)}><D.StyledDelete /></D.ButtonItem>
           </D.ChoiceButtonContainer>
         </D.Canvas>
         <D.Content><ResultManuscript content={data.contents}/></D.Content>
       </D.DiaryContainer>
+      {confirmDelete && <Modal onClick={confirmDeleteDiary} icon='warning' version='two_btn' title="정말 삭제하시겠습니까?" content="" />}
+      {deleteSuccess && <Modal onClick={deleteDiarySuccess} icon='success' version='one_btn' title="삭제 성공!" content="" />}
+      {urlCopy && <Modal onClick={()=>setUrlCopy(false)} icon='success' version='one_btn' title="복사 성공!" content="" />}
     </D.DiviContainer>
   )
 }

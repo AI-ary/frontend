@@ -9,10 +9,12 @@ import * as D from '../../styles/diary/diary.style';
 import * as DL from '../../styles/diary/diarylist.style';
 import { RiArrowLeftSLine } from 'react-icons/ri';
 import { ThemeType, useThemeContext } from '../../App';
+import baseAxios from '@/apis/baseAxios';
 
 const ClosedBook = ({ children }: React.PropsWithChildren) => {
   const {changeThemeType} =useThemeContext()
   const [themeMenu, setThemeMenu] = useState<boolean>(false);
+  const [currentTheme,setCurrentTheme] = useState<string | null>(null)
   const path = window.location.pathname;
   const navigate = useNavigate();
   const {choiceDate}=useStore();
@@ -22,13 +24,45 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
 
   const handleThemeChange = (themeType:ThemeType) => {
     changeThemeType(themeType);
+    setCurrentTheme(themeType)
+  }
+
+  const changeTheme = () => {
+    if (sessionStorage.getItem('nickname') && currentTheme) {
+      let sendData: string | null = null;
+      switch (currentTheme) {
+      case 'blueTheme': {
+        sendData = 'BLUE'
+        break;
+      }
+      case 'rainbowTheme': {
+        sendData = 'RAINBOW'
+        break;
+      }
+      case 'originTheme': {
+        sendData = 'ORIGINAL'
+        break;
+      }
+      }
+      baseAxios.put('users/theme', {
+        'theme' : sendData
+      }).then(() => {
+        if (sendData) {
+          sessionStorage.setItem('theme', sendData);
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    setThemeMenu(false)
+    setCurrentTheme(null)
   }
 
   return(
     <S.Container className='slide'>
       <S.ThemeContainer>
-        {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} />:<S.StyledShowPalette onClick={() => setThemeMenu(false)} />}
-        <S.ToggleTheme className={themeMenu ? "show-menu" : "hide-menu"}>
+        {!themeMenu? <S.StyledHiddenPalette onClick={()=> setThemeMenu(true)} /> : currentTheme ? <S.StyledCheckIcon onClick={changeTheme} /> : <S.StyledShowPalette onClick={()=>setThemeMenu(false)} /> }
+        <S.ToggleTheme className={themeMenu ? 'show-menu' : 'hide-menu'}>
           <li onClick={()=>handleThemeChange('blueTheme')}>
             <img src="images/bluetheme.svg" alt="theme" />
           </li>
@@ -71,7 +105,6 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
           </S.Flip>    
         </S.FrontWrap>
       </B.BookContainer>
-
     </S.Container>
   )
 }

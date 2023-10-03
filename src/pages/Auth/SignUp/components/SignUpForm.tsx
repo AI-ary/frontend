@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import Swal from 'sweetalert2';
 import * as S from '../../../../styles/auth/auth.style'
 import * as C from '../../../../styles/common.style'
 import { signUp } from '@/apis/auth';
+import Modal from '@/components/Modal';
+import { useStore } from '@/store/store';
+
 
 function SignUpForm() {
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
   const [confirm, setConfirm] = useState<string>('');
-  const { isSignUpError, isSignUpLoading, mutate} = signUp()
+  const { isSignUpError, isSignUpLoading, mutate } = signUp()
+  const { duplicateNickname, duplicateEmail } = useStore();
+  const [nicknameError, setNicknameError] = useState<boolean>(false)
   let isMaking = '계정 생성'
 
   if (isSignUpLoading) {
@@ -22,13 +26,7 @@ function SignUpForm() {
   function nameInput(e: React.ChangeEvent<HTMLInputElement>) {
     setNickname(e.target.value);
     if (nickname.length > 10) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '10글자 이하로 작성해 주세요.',
-        showConfirmButton: false,
-        timer: 2000,
-      });
+      setNicknameError(true)
       setNickname((name) => name.substring(0, 10));
     }
   }
@@ -89,6 +87,12 @@ function SignUpForm() {
         </S.WarningWrap>
       </S.InputWrap>
       <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</C.CommonFilledBtn>
+      {nicknameError &&
+        <Modal onClick={()=>setNicknameError(false)} icon='warning' version='one_btn' title="10글자 이하로 작성해 주세요." content="" />}
+      {duplicateNickname &&
+        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 닉네임 입니다." content="" />}
+      {duplicateEmail &&
+        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 이메일 입니다." content="" />}
     </S.Container>
   );
 }

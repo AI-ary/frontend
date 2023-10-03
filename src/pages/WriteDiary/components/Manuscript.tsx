@@ -1,11 +1,12 @@
 import {useState} from 'react';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
-import Swal from 'sweetalert2';
+import { useStore } from '@/store/store';
 
 /* 원고지 틀 컴포넌트 */
 function Manuscript(props:any) {
   const [word, setWord] = useState<string>('');
+  const {setLimitWordLength} = useStore()
   let tr:number[] = Array.apply(null, new Array(5)).map(Number.prototype.valueOf, 0);
   let td:number[] = Array.apply(null, new Array(10)).map(Number.prototype.valueOf, 0);
   const textlist = tr.map((tr,index:number) => (
@@ -22,13 +23,7 @@ function Manuscript(props:any) {
     setWord(e.target.value)
     props.setContent(e.target.value);
     if(word.length > 50) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '50글자 이하로 작성해 주세요.',
-        showConfirmButton: false,
-        timer: 2000
-      })
+      setLimitWordLength(true)
       setWord(word => word.substring(0, 50))
     }
   }

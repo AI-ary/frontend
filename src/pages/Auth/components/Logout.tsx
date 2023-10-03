@@ -1,38 +1,16 @@
 import React from 'react';
-import Swal, { SweetAlertResult } from 'sweetalert2';
 import styled from 'styled-components';
 import { IoLogOutOutline } from "react-icons/io5";
-import { logout } from '@/apis/auth';
-
-
-type Props = SweetAlertResult<any>;
+import { useStore } from '@/store/store';
 
 export default function LogoutBtn() {
-  const { mutate } = logout()
+  const {setConfirmLogout} = useStore()
   
-  function onClick(e : React.MouseEvent) {
-    Swal.fire({
-      title: '로그아웃하시겠습니까?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '네',
-      cancelButtonText: '아니오'
-    }).then((result: Props) => {
-      console.log(result)
-      if (result.isConfirmed) {
-        const access = sessionStorage.getItem('token');
-        const refresh = sessionStorage.getItem('refresh');
-        mutate({
-          access_token: access,
-          refresh_token: refresh
-        })
-      }
-    })
+  function onClick() {
+    setConfirmLogout(true)
   }
   return (
-    <LogOutBtn type='button' onClick={(e:any)=>onClick(e)}>
+    <LogOutBtn type='button' onClick={onClick}>
       <span>로그아웃</span>
       <IoLogOutOutline size="24" className='logOutIcon'/>
     </LogOutBtn>
