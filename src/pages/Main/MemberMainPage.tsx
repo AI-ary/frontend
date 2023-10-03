@@ -15,6 +15,7 @@ import { useThemeContext } from '@/App';
 function AfterLogin() {
   const {changeThemeType} =useThemeContext()
   const [selected, setSelected] = useState<string>('images/rainbow.png');
+  const extension = useRef<string | null>(null)
   const [nickname, setNickname] = useState<string | null>(null)
   const navigate = useNavigate();
   const imgRef = useRef<HTMLInputElement | null>(null);
@@ -40,16 +41,24 @@ function AfterLogin() {
       }
       }
     }
+    baseAxios.get('users/profile').then((res) => {
+      const { profile_image : userProfileImage } = res.data.data
+      sessionStorage.setItem('profile_image', userProfileImage)
+      setSelected(userProfileImage)
+    }).catch((err) => console.log(err))
+
     if (sessionStorage.getItem('nickname')) {
       setNickname(sessionStorage.getItem('nickname'))
     } else {
       baseAxios.get('users/profile').then((res) => {
         console.log(res)
-        const { theme: userTheme, nickname: userNickname } = res.data.data
+        const { theme: userTheme, nickname: userNickname, profile_image : userProfileImage } = res.data.data
         sessionStorage.setItem('nickname', userNickname)
         sessionStorage.setItem('theme', userTheme)
+        sessionStorage.setItem('profile_image', userProfileImage)
         setNickname(userNickname)
         checkTheme(userTheme)
+        setSelected(userProfileImage)
       }).catch((err) => console.log(err))
     }
   }, [])
@@ -62,34 +71,55 @@ function AfterLogin() {
       reader.readAsDataURL(file);
       reader.onloadend=()=>{
         setSelected(reader.result as string);
+        const result = reader.result as string
+        const slash = result.indexOf('/')
+        const semiColumn = result.indexOf(';')
+        extension.current = result.slice(slash + 1, semiColumn)
       }
     }
   }
 
-  function onClick() {
+  const openDiary = () => {
+    let flip : Element | null= document.querySelector('.flip');
+    let slide : Element | null = document.querySelector('.slide');
+    if (slide && flip) {
+      flip.classList.add('flipStart')
+      slide.classList.add('move');
+      setTimeout(() => {
+        if (flip) {
+          flip.classList.add('open');
+          setTimeout(() => {
+            navigate('/list');
+          }, 450);
+        }
+      }, 800);
+    }
+  }
+
+  const startDiary = async () => {
     const config = {
       headers: { 'Content-Type': 'multipart/form-data'},
     };
-    
-    baseAxios.put('users/profile', {'file' : selected}, config).then((res) => {
-      console.log(res)
-      let flip : Element | null= document.querySelector('.flip');
-      let slide : Element | null = document.querySelector('.slide');
-      if (slide && flip) {
-        flip.classList.add('flipStart')
-        slide.classList.add('move');
-        setTimeout(() => {
-          if (flip) {
-            flip.classList.add('open');
-            setTimeout(() => {
-              navigate('/list');
-            }, 450);
-          }
-        }, 800);
+    let form = new FormData();
+    console.log(extension.current)
+    if (extension.current) {
+      let myImg = selected.replace(`data:image/${extension.current};base64,`, '');
+      const byteString = atob(myImg);
+      const array = [];
+      for (let i = 0; i < byteString.length; i++) {
+        array.push(byteString.charCodeAt(i));
       }
-    }).catch((err) => {
-      console.log(err)
-    })
+      const u8arr = new Uint8Array(array);
+      const file = new Blob([u8arr], { type: 'image/png' });
+      console.log(file);
+      form.append('file', file);
+      await baseAxios.put('users/profile', form, config).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    openDiary()
   }
 
   const onLogout = () => {
@@ -113,7 +143,7 @@ function AfterLogin() {
         <MdPhotoLibrary className='profile'/>
       </O.SelectBtn>
       <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
-      <C.CommonFilledBtn onClick={onClick} isValid={false}>시작하기</C.CommonFilledBtn>
+      <C.CommonFilledBtn onClick={startDiary} isValid={false}>시작하기</C.CommonFilledBtn>
       <LogoutBtn />
       {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그인 성공!" content="" />}
       {confirmLogout && <Modal onClick={onLogout} icon='warning' version='two_btn' title="로그아웃하시겠습니까?" content="" />}
