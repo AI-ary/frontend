@@ -1,0 +1,41 @@
+[
+    {
+        "contents": "피자 치킨 술",
+        "created_at" : "2023-02-02T01:23:05.039496+09:00",
+        "diary_date": "2023-02-15",
+        "drawing_url": "https://gdiary-s3-bucket.s3.ap-northeast-2.amazonaws.com/image/ef5f2123-44ab-4a44-be69-163ea9beacb9",
+        "emoji": "💩",
+        "id": 1,
+        "is_deleted": false,
+        "title": "제발",
+        "updated_at" : "2023-02-02T01:23:05.718571+09:00",
+        "user_id": 1,
+        "weather": 1
+    },
+    {
+        "contents": "길을 걷고싶다 바닷가에 걸으며 라면을먹고싶다바다",
+        "created_at" : "2023-02-02T01:30:21.789904+09:00",
+        "diary_date": "2023-02-23",
+        "drawing_url": "https://gdiary-s3-bucket.s3.ap-northeast-2.amazonaws.com/image/b56cfe64-cb10-4e66-8455-5b17010bc7e8",
+        "emoji": "🛳️",
+        "id": 2,
+        "is_deleted": false,
+        "title": "제발~!",
+        "updated_at" : "2023-02-02T01:30:22.156150+09:00",
+        "user_id": 1,
+        "weather": 2
+    },
+    {
+        "contents": "행복하다~",
+        "created_at" : "2023-02-02T01:30:21.789904+09:00",
+        "diary_date":"2023-04-28",
+        "drawing_url": "https://gdiary-s3-bucket.s3.ap-northeast-2.amazonaws.com/image/e9ca41bc-a4db-441a-8099-50b6ff700573",
+        "emoji": "🙂",
+        "id": 16,
+        "is_deleted": false,
+        "title": "오늘은 내 생일",
+        "updated_at" : "2023-02-02T01:30:22.156150+09:00",
+        "user_id": 1,
+        "weather": 3
+    }
+  ]
