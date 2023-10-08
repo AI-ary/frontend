@@ -298,7 +298,7 @@ function DiaryContent(props:DiaryContentProps) {
     if(isDallePollingSuccess) {
       console.log(dalleState);
       intervalId = setInterval(() => {
-        sendDallePollingState( dalleTaskId);
+        sendDallePollingState(dalleTaskId);
       }, 8000);
       if (dalleState === 'SUCCESS') {
         clearInterval(intervalId);
@@ -348,7 +348,7 @@ function DiaryContent(props:DiaryContentProps) {
             <WeatherBtn mood='RAIN' />
             <label htmlFor='RAIN'><D.StyledRainy fill={weather=== 'RAIN' ? '#5A5A5A' : '#969696'} className='weather' /></label>
             <WeatherBtn mood='SNOW' />
-            <label htmlFor='SNOW'><D.StyledSnow fill={weather === 'SNOW' ? '#F5F5F5' : '#969696'} /></label>
+            <label htmlFor='SNOW'><D.StyledSnow fill={weather === 'SNOW' ? '#98ffed' : '#969696'} /></label>
           </D.WeatherWrap>
         </D.DateContainer>
         <D.TitleContainer>
