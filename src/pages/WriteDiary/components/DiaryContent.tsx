@@ -36,7 +36,7 @@ function DiaryContent(props:DiaryContentProps) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
+  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents } = useStore();
   const [emoji, setEmoji] = useState<string>('');
 
   const getDayOfWeek = (date:string) => {
@@ -88,8 +88,6 @@ function DiaryContent(props:DiaryContentProps) {
     }
     const jsonBlob = new Blob([JSON.stringify(sendData)], { type: 'application/json' });
     form.append('createRequest', jsonBlob);
-    console.log(file);
-    console.log(sendData)
     addDiaryContent(form);
   }
   useEffect(()=> {
@@ -224,6 +222,10 @@ function DiaryContent(props:DiaryContentProps) {
 
   // 달리 가져오기
   const bringDalleGrim = () => {
+    if(content===''){
+      setConfirmContents(true);
+      return;
+    }
     // props.getLoading(true);
     // props.startLoading();
     props.checkSelectedDalle(true);
@@ -298,7 +300,7 @@ function DiaryContent(props:DiaryContentProps) {
     if(isDallePollingSuccess) {
       console.log(dalleState);
       intervalId = setInterval(() => {
-        sendDallePollingState( dalleTaskId);
+        sendDallePollingState(dalleTaskId);
       }, 8000);
       if (dalleState === 'SUCCESS') {
         clearInterval(intervalId);
@@ -348,7 +350,7 @@ function DiaryContent(props:DiaryContentProps) {
             <WeatherBtn mood='RAIN' />
             <label htmlFor='RAIN'><D.StyledRainy fill={weather=== 'RAIN' ? '#5A5A5A' : '#969696'} className='weather' /></label>
             <WeatherBtn mood='SNOW' />
-            <label htmlFor='SNOW'><D.StyledSnow fill={weather === 'SNOW' ? '#F5F5F5' : '#969696'} /></label>
+            <label htmlFor='SNOW'><D.StyledSnow fill={weather === 'SNOW' ? '#98ffed' : '#969696'} /></label>
           </D.WeatherWrap>
         </D.DateContainer>
         <D.TitleContainer>

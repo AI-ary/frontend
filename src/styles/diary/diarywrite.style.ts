@@ -150,7 +150,7 @@ export const Arrow = styled.p`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #EB8888;
+  background-color: ${props => props.theme.btnColor};
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -166,14 +166,14 @@ export const Arrow = styled.p`
     right: 15px;
   }
   &.disabled {
-    background-color: #FFD2DC;
+    background-color: ${props => props.theme.btnDisabled};
     cursor: default;
   }
 `
 
 export const Keyword = styled.div<KeywordProps>`
   height: 100%;
-  background-color: #EB8888;
+  background-color: ${(props: any) => !props.isSelected ? props.theme.btnColor : '#FFFFFF'};
   border-radius: 12px 12px 0 0;
   border: none;
   box-shadow: 0px 2px 2px 0.5px rgba(0, 0, 0, 0.4); 
@@ -182,20 +182,12 @@ export const Keyword = styled.div<KeywordProps>`
     height: 100%;
     font-size: 20px;
     font-family: 'Poor Story';
-    -webkit-text-stroke: 0.2px #FFFFFF;
-    color: #FFFFFF;
+    -webkit-text-stroke: 0.2px ${(props: any) => !props.isSelected ? '#FFFFFF' : props.theme.btnColor};;
+    color: ${(props: any) => !props.isSelected ? '#FFFFFF' : props.theme.btnColor};
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  ${({ isSelected }) =>
-  isSelected &&`
-  background-color: #FFFFFF;
-  -webkit-text-stroke: 0.2px #EB8888;
-  > p {
-    color: #EB8888; 
-  }
-  `}
 `
 
 export const Choice = styled.div<ChoiceProps>`

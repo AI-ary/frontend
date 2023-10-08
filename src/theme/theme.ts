@@ -18,7 +18,7 @@ export const blueTheme = {
   noDiaryState: '#578ABE',
   goToDiaryWrite: '#578ABE',
   goToDiaryWriteHover: '#3F6892',
-  todayBorderColor : '#A1C7EE'
+  todayBorderColor : '#A1C7EE',
 }
 export const rainbowTheme = {
   bgImg: '/images/bg-rainbow.svg',
@@ -40,7 +40,7 @@ export const rainbowTheme = {
   noDiaryState: '#EB8888',
   goToDiaryWrite: '#EB8888',
   goToDiaryWriteHover: '#FF839C',
-  todayBorderColor : '#FDAEBE'
+  todayBorderColor : '#FDAEBE',
 }
 export const originTheme = {
   bgImg:'/images/background.PNG',
@@ -62,7 +62,7 @@ export const originTheme = {
   noDiaryState: '#EAB839',
   goToDiaryWrite: '#EAB839',
   goToDiaryWriteHover: '#FAC130',
-  todayBorderColor : '#F2DF9A'
+  todayBorderColor : '#F2DF9A',
 }
 
 export const theme = {

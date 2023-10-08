@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface SearchWrapProps {
+  isSelected: boolean;
+}
+
 export const SearchContainer = styled.div`
   width: 100%;
   height: 85%;
@@ -17,11 +21,11 @@ export const SearchContainer = styled.div`
 }
 `
 
-export const SearchWrap = styled.div`
+export const SearchWrap = styled.div<SearchWrapProps>`
   width: 95%;
   border-radius: 8px;
   background-color: #FFFFFF;
-  border: 0.8px solid #E4E4E4;
+  border: ${(props: any) => !props.isSelected ? '0.8px solid #E4E4E4': `3px solid ${props.theme.btnColor}`};
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
