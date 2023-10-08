@@ -36,7 +36,7 @@ function DiaryContent(props:DiaryContentProps) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
+  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents } = useStore();
   const [emoji, setEmoji] = useState<string>('');
 
   const getDayOfWeek = (date:string) => {
@@ -88,8 +88,6 @@ function DiaryContent(props:DiaryContentProps) {
     }
     const jsonBlob = new Blob([JSON.stringify(sendData)], { type: 'application/json' });
     form.append('createRequest', jsonBlob);
-    console.log(file);
-    console.log(sendData)
     addDiaryContent(form);
   }
   useEffect(()=> {
@@ -224,6 +222,10 @@ function DiaryContent(props:DiaryContentProps) {
 
   // 달리 가져오기
   const bringDalleGrim = () => {
+    if(content===''){
+      setConfirmContents(true);
+      return;
+    }
     // props.getLoading(true);
     // props.startLoading();
     props.checkSelectedDalle(true);
