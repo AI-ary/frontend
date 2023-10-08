@@ -47,8 +47,8 @@ function Navbar() {
           <img src="/images/aiary.png" alt="logo" />
         </Logo>
         <BtnContainer>
-          <button>소개</button>
-          <button>커뮤니티</button>
+          <button onClick={()=>alert('죄송합니다. 해당 서비스는 아직 이용할 수 없습니다.')}>소개</button>
+          <button onClick={()=>alert('죄송합니다. 해당 서비스는 아직 이용할 수 없습니다.')}>커뮤니티</button>
           <SearchContainer margin={visible}>
             {visible && 
               <SearchInputWrap>
