@@ -33,6 +33,7 @@ interface SearchCalenderProps{
 
 function SearchCalender({list, search, getDiaryDetail, getdiaryMonth}:SearchCalenderProps){
   const [currentMonth, setCurrentMonth]=useState<Date>(new Date());
+  const [clickedItem, setClickedItem] = useState<number>(0);
   const prevMonth = () =>{
     const date = subMonths(currentMonth, 1);
     const year = date.getFullYear();
@@ -58,7 +59,9 @@ function SearchCalender({list, search, getDiaryDetail, getdiaryMonth}:SearchCale
           const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
           const weekday = weekdays[diaryDate.getDay()]+'요일'; 
           return(
-            <DS.SearchWrap key={key} onClick={()=>getDiaryDetail(data)}>
+            <DS.SearchWrap isSelected={clickedItem === key} key={key} onClick={()=> {
+              getDiaryDetail(data);
+              setClickedItem(key)}}>
               <DS.SearchDate>
                 <h2>{day}</h2>
                 <div>{weekday}</div>

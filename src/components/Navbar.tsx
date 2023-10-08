@@ -1,6 +1,6 @@
-import React, {useState, DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import React, {useState, DetailedHTMLProps, InputHTMLAttributes, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
@@ -13,10 +13,21 @@ interface SearchContainerProps {
 
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const param = useParams();
   const searchText = param.word;
   const [visible, setVisible] = useState<boolean>(false);
   const [search, setSearch]=useState<string>('');
+  
+  useEffect(()=>{
+    if(location.pathname.startsWith('/search/')){
+      setSearch(searchText ?? '');
+      setVisible(true);
+    }else{
+      setSearch('');
+      setVisible(false);
+    }
+  }, [location.pathname]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
     setSearch(e.target.value);
@@ -52,7 +63,7 @@ function Navbar() {
           <SearchContainer margin={visible}>
             {visible && 
               <SearchInputWrap>
-                <SearchInput visible={visible} type="text" value={search} placeholder={searchText?searchText:'검색어를 입력하세요'} onChange={onChange} onKeyDown={(e)=>handleEnter(e)} />
+                <SearchInput visible={visible} type="text" value={search} placeholder={'검색어를 입력하세요'} onChange={onChange} onKeyDown={(e)=>handleEnter(e)} />
               </SearchInputWrap>
             }
             <SearchImgWrap>
