@@ -1,5 +1,6 @@
 import { useMutation } from 'react-query';
 import aiAxios from './aiAxios';
+import { useStore } from '@/store/store';
 
 const configJSON = {
   headers: { 'Content-Type': 'application/json'},
@@ -23,7 +24,7 @@ const getKonlpyDrawing = async (taskId: string) => {
   return response.data;
 }
 
-export const addKonlpyTextData = () =>{
+export const addKonlpyTextData = () => {
   const {mutate, data: konlpyTaskId, isLoading: isKonlpyTextLoading, isSuccess: isKonlpyTextSuccess, isError: isKonlpyTextError} = useMutation(addKonlpyText, {
     onError: () => {
       console.log("텍스트 전송 실패");
@@ -59,13 +60,16 @@ export const sendKonlpyPollingData = () => {
 }
 
 export const getKonlpyDrawingData = () => {
+  const {setLoading} = useStore()
   const {mutate, data: konlpyImg, isSuccess: isGetKonlpyImgSuccess, isError: isGetKonlpyImgError} = useMutation(getKonlpyDrawing,{
     onError: (e) => {
       console.log('이미지 가져오기 실패');
       console.log(e);
+      setLoading(false)
     },
     onSuccess: (res) => {
       console.log("이미지 가져오기 성공");
+      setLoading(false)
     }
   });
   const getKonlpyImg = async (taskId: string) => {

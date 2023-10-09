@@ -11,6 +11,7 @@ import Drawing from './Drawing';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 import Modal from '@/components/Modal';
+import KonlplyLoading from '@/components/KonlpyLoading';
 
 
 type DiaryContentProps = {
@@ -31,13 +32,12 @@ function DiaryContent(props:DiaryContentProps) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents, setBringGrimWarning } = useStore();
+  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, loading, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents, setBringGrimWarning, setLoading } = useStore();
   const [emoji, setEmoji] = useState<string>('');
   const [textSendingError, setTextSendingError] = useState<boolean>(false)  // 텍스트 전송 실패
   const [noMatchingImg, setNoMatchingImg] = useState<boolean>(false)  // 키워드에 맞는 이미지 없음
   const [modalTitle, setModalTitle] = useState<string>('달리를 가져오게 되면 기존 그림이 사라집니다.')
   const [modalContent, setModalContent] = useState<string>('달리에서 이미지를 가져올까요?')
-
 
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
@@ -124,6 +124,7 @@ function DiaryContent(props:DiaryContentProps) {
     setModalTitle(isKonlply === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 가져오게 되면 달리 그림이 사라집니다.')
     setModalContent(isKonlply === 2 ? '달리에서 이미지를 가져올까요?' : '그림을 가져올까요?')
     isKonlply === 2 ? addKonlpyTextContent(content) : addDalleTextContent(content)
+    setLoading(true)
   }
 
   const bringGrim = () => {
@@ -138,6 +139,7 @@ function DiaryContent(props:DiaryContentProps) {
       setGetGrimList([]);
       setGetDalleList([]);
       addKonlpyTextContent(content);
+      setLoading(true)
     }  
   }
 
@@ -178,6 +180,7 @@ function DiaryContent(props:DiaryContentProps) {
       props.loadingState.current = false
       setTextSendingError(true)
     }
+    // setLoading(false)
   },[isKonlpyTextSuccess, isKonlpyTextError]);
 
   useEffect(()=>{
@@ -227,6 +230,7 @@ function DiaryContent(props:DiaryContentProps) {
       setGetDalleList([]);
       setChoiceDalleImg('');
       addDalleTextContent(content);
+      setLoading(true)
     }  
   }
 
@@ -267,6 +271,7 @@ function DiaryContent(props:DiaryContentProps) {
       props.loadingState.current = false
       setTextSendingError(true)
     }
+    // setLoading(false)
   },[isDalleTextSuccess, isDalleTextError]);
   useEffect(()=>{
     let intervalId: any;
@@ -366,6 +371,7 @@ function DiaryContent(props:DiaryContentProps) {
           <Manuscript setContent={setContent} />
         </D.Content>
       </D.DiaryContainer>
+      {loading && <KonlplyLoading />}
       {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="날씨를 선택해 주세요." content="" />}
       {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="제목을 입력해 주세요." content="" />}
       {confirmContents && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="내용을 입력해 주세요." content="" />}
