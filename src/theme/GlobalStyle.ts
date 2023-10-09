@@ -319,7 +319,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  @media screen and (max-width: 1180px), screen and (max-height: 680px) {
+  @media screen and (max-width: 1024px), screen and (max-height: 680px) {
     ${BehindWrap} {
       height : 468px;
       width:476px;
@@ -607,7 +607,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-    @media screen and (max-width: 1050px), screen and (max-height: 550px) {
+    @media screen and (max-width: 768px), screen and (max-height: 550px) {
       #root {
           display: none;
       }
