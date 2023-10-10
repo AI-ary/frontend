@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import aiAxios from './aiAxios';
+import { useStore } from '@/store/store';
 
 const configJSON = {
   headers: { 'Content-Type': 'application/json'},
@@ -59,14 +60,17 @@ export const sendDallePollingData = () => {
 }
 
 export const getDalledDrawingData = () => {
+  const {setLoading} = useStore()
   const {mutate, data: dalleImg, isSuccess: isGetDalleImgSuccess, isError: isGetDalleImgError} = useMutation(getDalleDrawing,{
     onError: (e) => {
       console.log('이미지 가져오기 실패');
       console.log(e);
+      setLoading(false)
     },
     onSuccess: (res) => {
       console.log("이미지 가져오기 성공");
       console.log(res);
+      setLoading(false)
     }
   });
   const getDalleImg = async (taskId: string) => {

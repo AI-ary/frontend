@@ -18,6 +18,8 @@ interface StoreState{
   confirmContents : boolean
   limitWordLength : boolean
   confirmDelete: boolean
+  bringGrimWarning: boolean
+  loading: boolean;
 }
 
 interface StoreActions{
@@ -38,6 +40,8 @@ interface StoreActions{
   setConfirmContents: (state: boolean) => void;
   setLimitWordLength: (state: boolean) => void;
   setConfirmDelete: (state: boolean) => void;
+  setBringGrimWarning: (state: boolean) => void;
+  setLoading: (state: boolean) => void;
 }
 
 // set 함수를 통해서만 상태를 변경할 수 있다
@@ -59,6 +63,8 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   confirmContents: false, // 일기장 내용 미입력 시 알림창
   limitWordLength:false, // 50글자 이상 입력 시 알림창
   confirmDelete: false, // 일기 삭제 클릭 시 알림창
+  bringGrimWarning: false, // dall-e/konlpy 그림 가져오기 버튼 클릭 시 알림창
+  loading: false, // 로딩창
   setCurrentCanvas: (updateCanvas:string)=>set({currentCanvas:updateCanvas}),
   setUpdateCanvas:(canvas:string)=>set({updateCanvas:canvas}),
   setGetGrimList:(data:any[string])=>set({getGrimList:data}),
@@ -78,4 +84,6 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   setConfirmContents :(state: boolean) => set({ confirmContents: state }),
   setLimitWordLength :(state: boolean) => set({ limitWordLength: state }),
   setConfirmDelete :(state: boolean) => set({ confirmDelete: state }),
+  setBringGrimWarning :(state: boolean) => set({ bringGrimWarning: state }),
+  setLoading :(state: boolean) => set({ loading: state }),
 }));

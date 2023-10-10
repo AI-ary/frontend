@@ -19,7 +19,6 @@ export const Container = styled.div`
   height: 300px;
   border-radius: 16px;
   flex-direction: column;
-  align-items: center;
   padding: 45px 100px;
   text-align: center;
   font-size: 36px;
@@ -34,7 +33,7 @@ export const ContentWrap = styled.div`
 
 export const IconWrap = styled.div<{icon : string}>`
   align-self : center;
-  color:${props => props.icon === 'warning' ? 'red' : 'green'};
+  color:${props => props.icon === 'warning' ? 'red' : '#ADD4AB'};
 `
 
 export const Title = styled.div`
@@ -52,6 +51,11 @@ export const TwoButtonWrap = styled.div`
 `
 
 export const ButtonWrap = styled.div`
+  display:flex;
+  justify-content : center;
+`
+
+export const LoadingWrap = styled.div`
   display:flex;
   justify-content : center;
 `

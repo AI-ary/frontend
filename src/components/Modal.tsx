@@ -15,8 +15,9 @@ interface Props {
 
 export default function Modal(props: Props) {
   const [modalIcon, setModalIcon] = useState<any>()
-  const { setConfirm, setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete } = useStore()
+  const { setConfirm, setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete, setBringGrimWarning } = useStore()
   const setFalse = () => {
+    setBringGrimWarning(false)
     setConfirm(false)
     setConfirmDelete(false)
     setLimitWordLength(false)
@@ -28,11 +29,15 @@ export default function Modal(props: Props) {
     setDuplicateEmail(false)
     setDuplicateNickname(false)
   }
+
+  const onClickConfirm = () => {
+    setFalse()
+    props.onClick()
+  }
     
   const OneButton = () => {
     return (<CommonFilledBtn autoFocus isValid={false} onClick={() => {
-      setFalse()
-      props.onClick()
+      onClickConfirm()
       if (modalIcon) {
         modalIcon.classList.remove('modal_shake')
       }
@@ -41,7 +46,7 @@ export default function Modal(props: Props) {
   const TwoButton = () => {
     return (
       <S.TwoButtonWrap>
-        <CommonFilledBtn autoFocus isValid={false} onClick={props.onClick}>예</CommonFilledBtn>
+        <CommonFilledBtn autoFocus isValid={false} onClick={onClickConfirm}>예</CommonFilledBtn>
         <CommonOutlinedBtn onClick={setFalse}>아니요</CommonOutlinedBtn>
       </S.TwoButtonWrap>
     )

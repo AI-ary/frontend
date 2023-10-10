@@ -2,6 +2,7 @@ import React, {useState, DetailedHTMLProps, InputHTMLAttributes, useEffect } fro
 import styled, { css, keyframes } from 'styled-components';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router';
+import Modal from './Modal';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
@@ -18,6 +19,7 @@ function Navbar() {
   const searchText = param.word;
   const [visible, setVisible] = useState<boolean>(false);
   const [search, setSearch]=useState<string>('');
+  const [searchWarning, setSearchWarning] = useState<boolean>(false)
   
   useEffect(()=>{
     if(location.pathname.startsWith('/search/')){
@@ -36,7 +38,8 @@ function Navbar() {
   const handleSearch = async () =>{
     if(visible){
       if(search.trim() === ''){
-        alert('검색어를 입력해주세요!');
+        // alert('검색어를 입력해주세요!');
+        setSearchWarning(true)
       }else{
         navigate('/search/'+search);
       }
@@ -74,6 +77,7 @@ function Navbar() {
             <img src="/images/person.svg" alt="person" />  
           </UserWrap>
         </BtnContainer>
+        {searchWarning && <Modal onClick={()=>{setSearchWarning(false)}} icon='warning' version='one_btn' title="검색어를 입력해주세요!" content="" />}
       </NavbarWrap>
       <Outlet />
     </>
