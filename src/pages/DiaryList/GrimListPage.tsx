@@ -12,11 +12,6 @@ import * as C from '../../styles/bookshape/closedbook.style';
 import * as D from '../../styles/diary/diary.style';
 import * as DL from '../../styles/diary/diarylist.style';
 
-interface ListContent{
-  user_id:number|undefined;
-  diary_date:string|undefined;
-}
-
 function GrimList() {
   const today = new Date();
   const year = today.getFullYear();
@@ -51,7 +46,7 @@ function GrimList() {
         <OpenBookLeft>
           <Calender list={diaryList} exist={existDate} getdiaryMonth={getDiaryListDate}/>
         </OpenBookLeft>
-        <div style={{display:'flex',flexDirection:'row',height:'100%'}} className='will-move'>
+        <div style={{display:'flex',flexDirection:'row',height:'100%'}} className='will-move div-slide'>
           <OpenBookRight>
             {diaryList?.filter(x=>new Date(x.diary_date).toDateString()===choiceDate.toDateString())
               .map((data,index)=>{
