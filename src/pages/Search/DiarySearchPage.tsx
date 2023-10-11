@@ -1,16 +1,18 @@
 import {useState, useEffect} from 'react';
 import { useParams } from 'react-router';
 import { getSearchData } from '@/apis/searchDiary';
-import OpenBookLeft from '../../components/bookshape/OpenBookLeft';
-import OpenBookRight from '../../components/bookshape/OpenBookRight';
-import Bookmark from '../../components/bookshape/Bookmark';
-import DiaryList from '../DiaryList/components/DiaryList'
-import * as C from '../../styles/bookshape/closedbook.style';
-import * as O from '../../styles/bookshape/opendbook.style';
+import OpenBookLeft from '@/components/bookshape/OpenBookLeft';
+import OpenBookRight from '@/components/bookshape/OpenBookRight';
+import Bookmark from '@/components/bookshape/Bookmark';
+import DiaryList from '@/pages/DiaryList/components/DiaryList'
+import * as C from '@/styles/bookshape/closedbook.style';
+import * as O from '@/styles/bookshape/opendbook.style';
 import SearchCalender from './components/SearchCalender';
+import Modal from '@/components/Modal';
 
 function DiarySearchList(){ 
   const [searchList, setSearchList] = useState<any>([]);
+  const [hasSearchContent, setHasSearchContent] = useState<boolean>(false);  // 검색 내용에 맞는 일기가 있는지 없는지
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth()+1;
@@ -35,9 +37,23 @@ function DiarySearchList(){
 
   useEffect(()=>{
     if(isSuccess){
-      console.log(data);
-      setSearchList(data);
-      setDetail(data[0]);
+      if(data.length !== 0){
+        setSearchList(data);
+        setDetail(data[0]);
+      }else{
+        setHasSearchContent(true);
+        setSearchList([]);
+        setDetail({
+          diary_id:-1,
+          title:'',
+          weather:'',
+          drawing_url:'',
+          contents:'',
+          diary_date:'',
+          emoji:''
+        });
+      }
+
     }
   },[isSuccess, isLoading, data]);
 
@@ -58,6 +74,7 @@ function DiarySearchList(){
         </OpenBookRight>
         <Bookmark />
       </O.BookContainer>
+      {hasSearchContent && <Modal onClick={()=>{setHasSearchContent(false)}} icon='warning' version='one_btn' title="해당 달에 찾으신 내용은 없습니다." content="" />}
     </C.Container>
   )
 }
