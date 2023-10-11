@@ -26,9 +26,11 @@ const getDalleDrawing = async (taskId: string) => {
 
 // Dalle 키워드 전송
 export const addDalleTextData = () =>{
+  const {setLoading} = useStore()
   const {mutate, data: dalleTaskId, isLoading: isDalleTextLoading, isSuccess: isDalleTextSuccess, isError: isDalleTextError} = useMutation(addDalleText, {
     onError: () => {
       console.log("텍스트 전송 실패");
+      setLoading(false)
     },
     onSuccess: () => {
       console.log("텍스트 전송 성공");
@@ -43,10 +45,12 @@ export const addDalleTextData = () =>{
 }
 
 export const sendDallePollingData = () => {
+  const {setLoading} = useStore()
   const {mutate, data: dalleState, isSuccess: isDallePollingSuccess, isError: isDallePollingError} = useMutation(sendDallePolling, {
     onError: (e) => {
       console.log("상태 조회 실패");
       console.log(e)
+      setLoading(false)
     },
     onSuccess: (res) => {
       console.log("상태 확인");

@@ -3,9 +3,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-interface BtnProps {
-  isDisabled:boolean
-}
 interface KeywordProps {
   isSelected: boolean;
 }
@@ -40,13 +37,13 @@ export const ButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const Modebutton = styled.button<BtnProps>`
+export const Modebutton = styled.button`
   border-radius: 24px;
   font-size: 16px;
   font-family: 'Poor Story';
   -webkit-text-stroke: 0.4px #6A6A6A;
   text-align: center;
-  color: ${props => !props.isDisabled ? '#6A6A6A' : 'rgba(1,1,1,0.5)'};
+  color: #6A6A6A;
   background-color: transparent;
   margin-right: 5px;
   border: 2px solid #6A6A6A;

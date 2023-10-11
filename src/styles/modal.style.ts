@@ -59,3 +59,7 @@ export const LoadingWrap = styled.div`
   display:flex;
   justify-content : center;
 `
+
+export const LoadingImg = styled.img`
+  height : 150px;
+`

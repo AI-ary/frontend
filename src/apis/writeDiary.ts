@@ -14,7 +14,7 @@ const addDiary = async (formData: FormData) => {
 export const addDiaryData = () => {
   const queryClient = useQueryClient();
   const {setConfirmWeather, setConfirmContents, setConfirmTitle} = useStore()
-  const {mutate, isLoading: isSaveLoading, isSuccess: isSaveSuccess, isError: isSaveError} = useMutation(addDiary, {
+  const {mutate, isLoading: isSaveLoading, isSuccess: isSaveSuccess} = useMutation(addDiary, {
     onError: (error:any) => {
       if(error.response.data.errors[0].field === 'title'){
         setConfirmTitle(true)
@@ -32,5 +32,5 @@ export const addDiaryData = () => {
   const addDiaryContent =async (formData:FormData) => {
     mutate(formData);
   }
-  return {isSaveLoading, isSaveSuccess, isSaveError, addDiaryContent};
+  return {isSaveLoading, isSaveSuccess, addDiaryContent};
 }

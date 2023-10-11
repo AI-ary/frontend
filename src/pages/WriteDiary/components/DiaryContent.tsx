@@ -16,12 +16,6 @@ import KonlplyLoading from '@/components/KonlpyLoading';
 
 type DiaryContentProps = {
   checkSelectedDalle: (check:boolean) => void;
-  getLoading: (load: boolean) => void;
-  startLoading: () => void
-  loadingState: {
-    current : boolean
-  }
-  isDisabled : boolean
 };
 
 function DiaryContent(props:DiaryContentProps) {
@@ -57,7 +51,7 @@ function DiaryContent(props:DiaryContentProps) {
   };
 
   //작성한 일기 보내기
-  const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
+  const {isSaveSuccess, addDiaryContent} = addDiaryData();
 
   const grimDiary = async () => {
     let file;
@@ -92,17 +86,13 @@ function DiaryContent(props:DiaryContentProps) {
   }
   useEffect(()=> {
     if(isSaveSuccess){
-      props.getLoading(false);
       setChoiceImg([]);
       setChoiceDalleImg('');
       setGetDalleList([]);
       setGetGrimList([]);
       navigate('/list');
     }
-    if(isSaveError){
-      props.getLoading(false);
-    }
-  },[isSaveSuccess, isSaveError]);
+  },[isSaveSuccess]);
 
   //AI키워드 그림 가져오기 버튼
   const { isKonlpyTextSuccess, isKonlpyTextError, konlpyTaskId, addKonlpyTextContent } = addKonlpyTextData();
@@ -128,8 +118,6 @@ function DiaryContent(props:DiaryContentProps) {
   }
 
   const bringGrim = () => {
-    // props.getLoading(true);
-    // props.startLoading();
     if(btnType === 2){
       setBringGrimWarning(true)
     }
@@ -145,42 +133,11 @@ function DiaryContent(props:DiaryContentProps) {
 
   useEffect(()=>{
     if(isKonlpyTextSuccess && konlpyTaskId){
-      // setSend(true);
       sendKonlpyPollingState(konlpyTaskId);
-      // if (isKeywordSuccess) {
-      //   const percent : HTMLElement | null = document.querySelector('#percent');
-      //   const percentBar : HTMLElement | null = document.querySelector('#percentBar');
-      //   if (percent !== null && percentBar !== null) {
-      //     percent.textContent = '100%';
-      //     percentBar.style.width = '100%';
-      //   }
-      //   setTimeout(() => {
-      //     setGetGrimList(data);
-      //     setSend(false);
-      //     props.getLoading(false);
-      //     props.loadingState.current = false
-      //   },300)
-      // }
-  
-      // if(isError && comContent === ''){
-      //   props.getLoading(false);
-      //   setSend(false);
-      //   Swal.fire({
-      //     position: 'center',
-      //     icon: 'warning',
-      //     title: '키워드에 맞는 이미지가 없습니다.',
-      //     showConfirmButton: false,
-      //     timer: 2000
-      //   })
-      //   props.loadingState.current = false
-      // }
     }
     if(isKonlpyTextError) {
-      props.getLoading(false);
-      props.loadingState.current = false
       setTextSendingError(true)
     }
-    // setLoading(false)
   },[isKonlpyTextSuccess, isKonlpyTextError]);
 
   useEffect(()=>{
@@ -219,8 +176,6 @@ function DiaryContent(props:DiaryContentProps) {
       setConfirmContents(true);
       return;
     }
-    // props.getLoading(true);
-    // props.startLoading();
     if (btnType === 1) {
       setBringGrimWarning(true)
     }else{
@@ -236,42 +191,11 @@ function DiaryContent(props:DiaryContentProps) {
 
   useEffect(()=>{
     if(isDalleTextSuccess && dalleTaskId){
-      // setSend(true);
       sendDallePollingState(dalleTaskId);
-      // if (isKeywordSuccess) {
-      //   const percent : HTMLElement | null = document.querySelector('#percent');
-      //   const percentBar : HTMLElement | null = document.querySelector('#percentBar');
-      //   if (percent !== null && percentBar !== null) {
-      //     percent.textContent = '100%';
-      //     percentBar.style.width = '100%';
-      //   }
-      //   setTimeout(() => {
-      //     setGetGrimList(data);
-      //     setSend(false);
-      //     props.getLoading(false);
-      //     props.loadingState.current = false
-      //   },300)
-      // }
-  
-      // if(isError && comContent === ''){
-      //   props.getLoading(false);
-      //   setSend(false);
-      //   Swal.fire({
-      //     position: 'center',
-      //     icon: 'warning',
-      //     title: '키워드에 맞는 이미지가 없습니다.',
-      //     showConfirmButton: false,
-      //     timer: 2000
-      //   })
-      //   props.loadingState.current = false
-      // }
     }
     if(isDalleTextError) {
-      props.getLoading(false);
-      props.loadingState.current = false
       setTextSendingError(true)
     }
-    // setLoading(false)
   },[isDalleTextSuccess, isDalleTextError]);
   useEffect(()=>{
     let intervalId: any;
@@ -345,14 +269,14 @@ function DiaryContent(props:DiaryContentProps) {
           <DW.ButtonContainer >
             {!grim ? (
               <>
-                <DW.Modebutton onClick={bringDalleGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
+                <DW.Modebutton onClick={bringDalleGrim}>
                   Dall-E 가져오기
-                </DW.Modebutton><DW.Modebutton onClick={bringGrim} disabled={props.isDisabled} isDisabled={props.isDisabled}>
+                </DW.Modebutton><DW.Modebutton onClick={bringGrim}>
                   그림가져오기
                 </DW.Modebutton>
                 {
                   btnType !== 2 ? (
-                    <DW.Modebutton onClick={()=> { setGrim(true);  props.checkSelectedDalle(false);}} isDisabled={false}>
+                    <DW.Modebutton onClick={()=> { setGrim(true);  props.checkSelectedDalle(false);}}>
                       그림 그리기
                     </DW.Modebutton>
                   ): undefined
@@ -384,5 +308,3 @@ function DiaryContent(props:DiaryContentProps) {
 }
 
 export default DiaryContent;
-
-// TODO: Swal 사용 부분 query 호출 부분으로 넘기기
