@@ -54,7 +54,7 @@ function SignInForm() {
         <C.CommonEmptyBtn onClick={()=>navigate('/signup')} isValid={false}>회원가입</C.CommonEmptyBtn>
       </S.BtnWrap>
       {confirm && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="아이디 혹은 비밀번호를 다시 확인해주세요." content="" />}
-      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="회원가입 성공!" content="" />}
+      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그인 성공!" content="" />}
     </S.Container>
   );
 }
