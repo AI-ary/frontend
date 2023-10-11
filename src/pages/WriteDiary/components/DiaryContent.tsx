@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useStore } from '../../../store/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { addDiaryData } from '@/apis/writeDiary';
@@ -24,6 +24,10 @@ type DiaryContentProps = {
   isDisabled : boolean
 };
 
+interface RefObject {
+  isDoubleClick: boolean;
+}
+
 function DiaryContent(props:DiaryContentProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,10 +38,11 @@ function DiaryContent(props:DiaryContentProps) {
   const [weather, setWeather] = useState<string>(); //날씨 선택
   const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, loading, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents, setBringGrimWarning, setLoading } = useStore();
   const [emoji, setEmoji] = useState<string>('');
-  const [textSendingError, setTextSendingError] = useState<boolean>(false)  // 텍스트 전송 실패
-  const [noMatchingImg, setNoMatchingImg] = useState<boolean>(false)  // 키워드에 맞는 이미지 없음
-  const [modalTitle, setModalTitle] = useState<string>('달리를 가져오게 되면 기존 그림이 사라집니다.')
-  const [modalContent, setModalContent] = useState<string>('달리에서 이미지를 가져올까요?')
+  const [textSendingError, setTextSendingError] = useState<boolean>(false);  // 텍스트 전송 실패
+  const [noMatchingImg, setNoMatchingImg] = useState<boolean>(false);  // 키워드에 맞는 이미지 없음
+  const [modalTitle, setModalTitle] = useState<string>('달리를 가져오게 되면 기존 그림이 사라집니다.');
+  const [modalContent, setModalContent] = useState<string>('달리에서 이미지를 가져올까요?');
+  const variables = useRef<RefObject>({isDoubleClick: false}); // 더블 클릭 방지 변수
 
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
@@ -60,6 +65,9 @@ function DiaryContent(props:DiaryContentProps) {
   const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
 
   const grimDiary = async () => {
+    // 더블 클릭 방지 로직
+    if(variables.current.isDoubleClick) return;
+    variables.current.isDoubleClick = true;
     let file;
     if(choiceDalleImg){
       const response = await fetch(choiceDalleImg);
@@ -97,6 +105,7 @@ function DiaryContent(props:DiaryContentProps) {
       setChoiceDalleImg('');
       setGetDalleList([]);
       setGetGrimList([]);
+      variables.current.isDoubleClick = false;
       navigate('/list');
     }
     if(isSaveError){
@@ -130,6 +139,7 @@ function DiaryContent(props:DiaryContentProps) {
   const bringGrim = () => {
     // props.getLoading(true);
     // props.startLoading();
+    props.checkSelectedDalle(false);
     if(btnType === 2){
       setBringGrimWarning(true)
     }
@@ -221,6 +231,7 @@ function DiaryContent(props:DiaryContentProps) {
     }
     // props.getLoading(true);
     // props.startLoading();
+    props.checkSelectedDalle(true);
     if (btnType === 1) {
       setBringGrimWarning(true)
     }else{
