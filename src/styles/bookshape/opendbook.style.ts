@@ -5,6 +5,11 @@ export const BookContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  .div-slide{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 export const OpenBookLeft = styled.div`
   position: relative;

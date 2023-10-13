@@ -18,11 +18,7 @@ export const getSearchData = ({date, keyword}:SearchDataType) => {
     {
       retry: 0,
       enabled: date !== '',
-      onSuccess: (data)=>{
-        if(data.length === 0){
-          alert('해당 달에 찾으시는 내용은 없습니다.');
-        }
-      },
+      onSuccess: ()=>{},
       onError: () => {}
     }
   );
