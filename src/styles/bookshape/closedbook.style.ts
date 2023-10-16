@@ -59,11 +59,14 @@ export const Right = styled.div`
 `
 
 export const BehindWrap = styled.div`
-  display : flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position : absolute;
   z-index:-1;
   height : 780px;
   margin-left : 134px;
+
 `
 
 export const FrontWrap = styled.div`
