@@ -25,9 +25,11 @@ const getKonlpyDrawing = async (taskId: string) => {
 }
 
 export const addKonlpyTextData = () => {
+  const {setLoading} = useStore()
   const {mutate, data: konlpyTaskId, isLoading: isKonlpyTextLoading, isSuccess: isKonlpyTextSuccess, isError: isKonlpyTextError} = useMutation(addKonlpyText, {
     onError: () => {
       console.log("텍스트 전송 실패");
+      setLoading(false)
     },
     onSuccess: () => {
       console.log("텍스트 전송 성공");
@@ -42,10 +44,12 @@ export const addKonlpyTextData = () => {
 }
 
 export const sendKonlpyPollingData = () => {
+  const {setLoading} = useStore()
   const {mutate, data: konlpyState, isSuccess: isKonlpyPollingSuccess, isError: isKonlpyPollingError} = useMutation(sendKonlpyPolling, {
     onError: (e) => {
       console.log("상태 조회 실패");
       console.log(e)
+      setLoading(false)
     },
     onSuccess: (res) => {
       console.log(res)
