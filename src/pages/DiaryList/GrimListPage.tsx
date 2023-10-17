@@ -43,7 +43,7 @@ function GrimList() {
   return(
     <C.Container>
       <O.BookContainer style={{marginBottom: '100px'}}> 
-        <OpenBookLeft>
+        <OpenBookLeft withClose={true}>
           <Calender list={diaryList} exist={existDate} getdiaryMonth={getDiaryListDate}/>
         </OpenBookLeft>
         <div style={{display:'flex',flexDirection:'row',height:'100%'}} className='will-move div-slide'>

@@ -76,6 +76,9 @@ function Bookmark() {
         {/* style={{ pointerEvents: Valid() }}  */}
         일기 쓰기
       </StyledNavLink>
+      <StyledNavLink to='/introduce' onClick={onClick}>
+        소개
+      </StyledNavLink>
     </BookMark>
   );
 }
