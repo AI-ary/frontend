@@ -74,7 +74,7 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
           </li>
         </S.ToggleTheme>
       </S.ThemeContainer>
-      <B.BookContainer style={path === '/main' ? { marginBottom: '100px' } : {}}>
+      <B.BookContainer>
         <S.BehindWrap>
           <OpenBookRight>
             <D.DiviContainer style={{zIndex: '0'}}>
@@ -102,7 +102,7 @@ const ClosedBook = ({ children }: React.PropsWithChildren) => {
               {children}
             </S.Mid>
             <S.Right />
-          </S.Flip>    
+          </S.Flip>   
         </S.FrontWrap>
       </B.BookContainer>
     </S.Container>

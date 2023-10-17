@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const BookContainer = styled.div`
   height: 780px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
