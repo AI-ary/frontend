@@ -30,7 +30,7 @@ function DiaryContent(props:DiaryContentProps) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, loading, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents, setBringGrimWarning, setLoading } = useStore();
+  const { updateCanvas, getGrimList, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, loading, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents, setBringGrimWarning, setLoading } = useStore();
   const [emoji, setEmoji] = useState<string>('');
   const [textSendingError, setTextSendingError] = useState<boolean>(false);  // 텍스트 전송 실패
   const [noMatchingImg, setNoMatchingImg] = useState<boolean>(false);  // 키워드에 맞는 이미지 없음
@@ -122,18 +122,24 @@ function DiaryContent(props:DiaryContentProps) {
     props.checkSelectedDalle(isKonlply === 2 ? false : true);
     setModalTitle(isKonlply === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 가져오게 되면 달리 그림이 사라집니다.')
     setModalContent(isKonlply === 2 ? '달리에서 이미지를 가져올까요?' : '그림을 가져올까요?')
-    isKonlply === 2 ? addKonlpyTextContent(content) : addDalleTextContent(content)
+    if(isKonlply === 2){
+      addKonlpyTextContent(content);
+      props.checkSelectedDalle(false);
+    }else{
+      addDalleTextContent(content);
+      props.checkSelectedDalle(true);
+    }
     setLoading(true)
   }
 
   const bringGrim = () => {
     // props.getLoading(true);
     // props.startLoading();
-    props.checkSelectedDalle(false);
-    if(btnType === 2){
+    if(btnType === 2 && getDalleList.length !== 0){
       setBringGrimWarning(true)
     }
     else {
+      props.checkSelectedDalle(false);
       setBtnType(1);
       setChoiceImg([]);
       setGetGrimList([]);
@@ -190,10 +196,10 @@ function DiaryContent(props:DiaryContentProps) {
     }
     // props.getLoading(true);
     // props.startLoading();
-    props.checkSelectedDalle(true);
-    if (btnType === 1) {
+    if (btnType === 1 && getGrimList.length !== 0) {
       setBringGrimWarning(true)
     }else{
+      props.checkSelectedDalle(true);
       setBtnType(2);
       setChoiceImg([]);
       setGetGrimList([]);
