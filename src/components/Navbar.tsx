@@ -1,5 +1,6 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { useStore } from '../store/store';
 import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import Modal from './Modal';
@@ -20,6 +21,7 @@ function Navbar() {
   const searchText = param.word;
   const [visible, setVisible] = useState<boolean>(false);
   const [search, setSearch]=useState<string>('');
+  const { setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
   const [searchWarning, setSearchWarning] = useState<boolean>(false)
   const [notLoggedinSearchWarning, setNotLoggedinSearchWarning] = useState<boolean>(false)
   const [notAvailable, setNotAvailable] = useState<boolean>(false)
@@ -45,6 +47,10 @@ function Navbar() {
           // alert('검색어를 입력해주세요!');
           setSearchWarning(true)
         }else{
+          setChoiceImg([]);
+          setChoiceDalleImg('');
+          setGetDalleList([]);
+          setGetGrimList([]);
           navigate('/search/'+search);
         }
       } else{
@@ -64,7 +70,12 @@ function Navbar() {
   return(
     <>
       <NavbarWrap>
-        <Logo onClick={()=>navigate('main')}>
+        <Logo onClick={()=> {
+            setChoiceImg([]);
+            setChoiceDalleImg('');
+            setGetDalleList([]);
+            setGetGrimList([]);
+            navigate('main'); }}>
           <img src="/images/aiary.png" alt="logo" />
         </Logo>
         <BtnContainer>

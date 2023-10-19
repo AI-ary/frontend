@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import IsLogin from '../../pages/Auth/components/IsLogin';
 import { useStore } from '../../store/store';
 
 function Bookmark() {
   // const location = useLocation();
-  const { setChoiceImg, setGetGrimList } = useStore();
+  const { setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
   const width = window.innerWidth
   
   let marginLeft : string
@@ -40,6 +40,8 @@ function Bookmark() {
 
   function onClick() {
     setChoiceImg([]);
+    setChoiceDalleImg('');
+    setGetDalleList([]);
     setGetGrimList([]);
     // let willClose : HTMLElement | null = document.querySelector('.will-close')
     // let willMove : HTMLElement | null = document.querySelector('.will-move')

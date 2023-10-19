@@ -51,6 +51,7 @@ function GrimChoice() {
     initialSlide: 0,
     arrows: true,
     vertical: false,
+    draggable: false,
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
     nextArrow: <NextArrow isDisabled={currentSlide >= keywordList?.length - 4} onClick={function (): void {
       throw new Error('Function not implemented.');
