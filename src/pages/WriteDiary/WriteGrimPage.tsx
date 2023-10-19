@@ -17,7 +17,7 @@ function WriteGrim(){
   return(
     <C.Container>
       <O.BookContainer> 
-        <OpenBookLeft>
+        <OpenBookLeft withClose={false}>
           {!isSelectedDalle ? <GrimChoice /> : <DalleChoice />}
         </OpenBookLeft>
         <OpenBookRight>

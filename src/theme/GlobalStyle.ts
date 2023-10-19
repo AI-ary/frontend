@@ -10,6 +10,7 @@ import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, Style
 import { DrawingBtnWrap, EmojiWrap, Modebutton,Savebutton, Choicetitle, ChoiceKeyword, Arrow, Keyword, DalleTitle, DalleGrim } from "@/styles/diary/diarywrite.style";
 import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
 import { StyledNavLink } from '@/components/bookshape/Bookmark';
+import { GuideContainer, GuideContent, GuideImgKonlpy, GuideNum, GuideTitle, GuideTitleWrap } from "@/styles/introduce.style";
 
 type DefaultTheme = {
   bgImg?: string;
@@ -317,6 +318,29 @@ export const GlobalStyle = createGlobalStyle`
         font-size : 22px;
       }
     }
+    ${GuideContainer} {
+      padding: 48px;
+    }
+    ${GuideTitle} {
+      font-size: 25px;
+    }
+    ${GuideTitleWrap} {
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+    ${GuideNum} {
+      width: 22px;
+      height: 22px;
+      margin-right: 8px;
+      font-size: 12px;
+    }
+    ${GuideContent} {
+      font-size: 14px;
+      line-height: 19px;
+    }
+    ${GuideImgKonlpy} {
+      margin-top: 8px;
+    }
   }
 
   @media screen and (max-width: 1024px), screen and (max-height: 680px) {
@@ -604,6 +628,29 @@ export const GlobalStyle = createGlobalStyle`
       .profile {
         font-size : 16px;
       }
+    }
+    ${GuideContainer} {
+      padding: 36px;
+    }
+    ${GuideTitle} {
+      font-size: 18px;
+    }
+    ${GuideTitleWrap} {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    ${GuideNum} {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      font-size: 9px;
+    }
+    ${GuideContent} {
+      font-size: 10px;
+      line-height: 10px;
+    }
+    ${GuideImgKonlpy} {
+      margin-top: 6px;
     }
   }
 

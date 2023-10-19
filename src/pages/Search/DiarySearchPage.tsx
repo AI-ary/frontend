@@ -64,7 +64,7 @@ function DiarySearchList(){
   return(
     <C.Container>
       <O.BookContainer style={{marginBottom: '100px'}}> 
-        <OpenBookLeft>
+        <OpenBookLeft withClose={false}>
           <SearchCalender list={searchList} search={keyword} getDiaryDetail={showDiaryDetail} getdiaryMonth={getSearchDiaryListDate}/>
         </OpenBookLeft>
         <OpenBookRight>

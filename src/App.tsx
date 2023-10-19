@@ -15,6 +15,7 @@ import Navbar from './components/Navbar';
 import { GlobalStyle } from './theme/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme/theme';
+import Introduce from './pages/Introduce';
 
 export type ThemeType = 'blueTheme' | 'rainbowTheme' | 'originTheme';
 
@@ -38,13 +39,14 @@ const router= createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {path:'/', element:<PublicPages Component={Main} restricted/>},
-      {path:'/signin', element:<PublicPages Component={SignIn} restricted/>},
-      {path:'/signup', element:<PublicPages Component={SignUp} restricted/>},
-      {path:'/write', element:<PrivatePages Component={WriteGrim} />},
       {
-        path:'/', element:<PrivatePages Component={Navbar} />,
+        path: '/', element: <PublicPages Component={Navbar} restricted={false} />,
         children:[
+          {path:'/', element:<PublicPages Component={Main} restricted />},
+          {path:'/signin', element:<PublicPages Component={SignIn} restricted />},
+          {path:'/signup', element:<PublicPages Component={SignUp} restricted />},
+          {path:'/write', element:<PrivatePages Component={WriteGrim} />},
+          {path:'/introduce', element:<PublicPages Component={Introduce} restricted={false} />},
           {path:'main', element:<PrivatePages Component={AfterLogin}/>},
           {path:'list', element:<PrivatePages Component={GrimList}/>},
           {path:'/search/:word', element:<DiarySearchList />}

@@ -1,8 +1,9 @@
 import React, {useState, DetailedHTMLProps, InputHTMLAttributes, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import Modal from './Modal';
+import IsLogin from '@/pages/Auth/components/IsLogin';
 
 interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   visible: boolean;
@@ -20,6 +21,8 @@ function Navbar() {
   const [visible, setVisible] = useState<boolean>(false);
   const [search, setSearch]=useState<string>('');
   const [searchWarning, setSearchWarning] = useState<boolean>(false)
+  const [notLoggedinSearchWarning, setNotLoggedinSearchWarning] = useState<boolean>(false)
+  const [notAvailable, setNotAvailable] = useState<boolean>(false)
   
   useEffect(()=>{
     if(location.pathname.startsWith('/search/')){
@@ -35,16 +38,20 @@ function Navbar() {
     setSearch(e.target.value);
   }
 
-  const handleSearch = async () =>{
-    if(visible){
-      if(search.trim() === ''){
-        // alert('검색어를 입력해주세요!');
-        setSearchWarning(true)
-      }else{
-        navigate('/search/'+search);
+  const handleSearch = async () => {
+    if (IsLogin()) {
+      if(visible){
+        if(search.trim() === ''){
+          // alert('검색어를 입력해주세요!');
+          setSearchWarning(true)
+        }else{
+          navigate('/search/'+search);
+        }
+      } else{
+        setVisible(!visible);
       }
-    } else{
-      setVisible(!visible);
+    } else {
+      setNotLoggedinSearchWarning(true)
     }
   }
 
@@ -61,23 +68,26 @@ function Navbar() {
           <img src="/images/aiary.png" alt="logo" />
         </Logo>
         <BtnContainer>
-          <button onClick={()=>alert('죄송합니다. 해당 서비스는 아직 이용할 수 없습니다.')}>소개</button>
-          <button onClick={()=>alert('죄송합니다. 해당 서비스는 아직 이용할 수 없습니다.')}>커뮤니티</button>
+          <StyledLink to="/introduce">소개</StyledLink>
+          <button onClick={()=>setNotAvailable(true)}>커뮤니티</button>
           <SearchContainer margin={visible}>
-            {visible && 
+            {IsLogin() && 
+              visible && 
               <SearchInputWrap>
                 <SearchInput visible={visible} type="text" value={search} placeholder={'검색어를 입력하세요'} onChange={onChange} onKeyDown={(e)=>handleEnter(e)} />
               </SearchInputWrap>
             }
-            <SearchImgWrap>
-              <img src="/images/search.svg" alt="search" onClick={handleSearch} />
+            <SearchImgWrap onClick={handleSearch}>
+              <img src="/images/search.svg" alt="search" />
             </SearchImgWrap>
           </SearchContainer>
-          <UserWrap>
+          <UserWrap onClick={()=>setNotAvailable(true)}>
             <img src="/images/person.svg" alt="person" />  
           </UserWrap>
         </BtnContainer>
         {searchWarning && <Modal onClick={()=>{setSearchWarning(false)}} icon='warning' version='one_btn' title="검색어를 입력해주세요!" content="" />}
+        {notLoggedinSearchWarning && <Modal onClick={()=>{setNotLoggedinSearchWarning(false)}} icon='warning' version='one_btn' title="로그인 후 사용 가능합니다!" content="" />}
+        {notAvailable && <Modal onClick={()=>{setNotAvailable(false)}} icon='warning' version='one_btn' title="해당 서비스는 아직 이용할 수 없습니다." content="" />}
       </NavbarWrap>
       <Outlet />
     </>
@@ -193,4 +203,11 @@ const UserWrap = styled.div`
   background-color: #78ADE1;
   margin-top: 2px;
   cursor: pointer;
+`
+
+const StyledLink = styled(Link)`
+  font-family:'Poor Story';
+  margin-right: 50px;
+  font-size: 20px;
+  color: #6A6A6A; 
 `

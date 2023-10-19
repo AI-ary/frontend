@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 
 type OpenBookLeftProps = {
   children:React.ReactNode;
+  withClose: boolean;
 }
 
-function OpenBookLeft({ children }:OpenBookLeftProps) {
+function OpenBookLeft({ children, withClose }:OpenBookLeftProps) {
   const nickname = sessionStorage.getItem('nickname');
   
   let now = new Date();
@@ -22,6 +23,7 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
   return ( 
     <div className='will-close' style={{height:'100%'}}>
       <O.OpenBookLeft>
+        {withClose && 
         <S.FrontWrap style={{zIndex:-1, transform:'rotateY(180deg)', top:'0px',left:'0px'}} className='behind'>
           <S.Left/>
           <S.Flip className='flip'>
@@ -43,7 +45,7 @@ function OpenBookLeft({ children }:OpenBookLeftProps) {
             </S.Mid>
             <S.Right />
           </S.Flip>    
-        </S.FrontWrap>
+        </S.FrontWrap>}
         {children}
         <O.Line position="right" deg="to right" />
       </O.OpenBookLeft>
