@@ -10,7 +10,7 @@ import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, Style
 import { DrawingBtnWrap, EmojiWrap, Modebutton,Savebutton, Choicetitle, ChoiceKeyword, Arrow, Keyword, DalleTitle, DalleGrim } from "@/styles/diary/diarywrite.style";
 import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
 import { StyledNavLink } from '@/components/bookshape/Bookmark';
-import { GuideContainer, GuideContent, GuideImgKonlpy, GuideNum, GuideTitle, GuideTitleWrap } from "@/styles/introduce.style";
+import { GuideContainer, GuideContent, GuideImgKonlpy, GuideImgRealDiary, GuideImgTheme, GuideNum, GuideTitle, GuideTitleWrap } from "@/styles/introduce.style";
 
 type DefaultTheme = {
   bgImg?: string;
@@ -338,7 +338,7 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 14px;
       line-height: 19px;
     }
-    ${GuideImgKonlpy} {
+    ${GuideImgKonlpy}, ${GuideImgTheme}, ${GuideImgRealDiary} {
       margin-top: 8px;
     }
   }
@@ -649,7 +649,7 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 10px;
       line-height: 10px;
     }
-    ${GuideImgKonlpy} {
+    ${GuideImgKonlpy}, ${GuideImgTheme}, ${GuideImgRealDiary} {
       margin-top: 6px;
     }
   }

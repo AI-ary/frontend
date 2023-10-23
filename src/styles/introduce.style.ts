@@ -48,6 +48,7 @@ export const GuideImgWrap = styled.div`
 
 export const GuideImgTheme = styled.img`
   width: 33%;
+  margin-top: 10px;
 `
 
 export const GuideImgKonlpy = styled.img`
@@ -55,5 +56,6 @@ export const GuideImgKonlpy = styled.img`
 `
 
 export const GuideImgRealDiary = styled.img`
-  width: 56%;
+  width: 50%;
+  margin-top: 10px;
 `
