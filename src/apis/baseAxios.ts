@@ -2,7 +2,7 @@ import axios from 'axios';
 import { updateAccessToken } from './auth';
 
 const baseAxios = axios.create({
-  baseURL: 'http://localhost:80/api/',
+  baseURL: 'http://www.aiary.net/api/',
 });
 
 baseAxios.interceptors.request.use(
