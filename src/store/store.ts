@@ -68,7 +68,7 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   setCurrentCanvas: (updateCanvas:string)=>set({currentCanvas:updateCanvas}),
   setUpdateCanvas:(canvas:string)=>set({updateCanvas:canvas}),
   setGetGrimList:(data:any[string])=>set({getGrimList:data}),
-  setGetDalleList:(data:string[])=>set({getDalleList:data}),
+  setGetDalleList: (data: string[]) => set((state: StoreState & StoreActions) => ({ ...state, getDalleList: data })),
   setChoiceImg:(img: { id: any; img: string; x: number; y: number; width: any; height: any; }[])=>{
     set((state:StoreState&StoreActions)=>({...state,choiceImg:img}));
   },

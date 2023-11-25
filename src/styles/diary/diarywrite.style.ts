@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { ReactComponent as Add } from '../../../public/images/add_circle.svg';
 
 interface KeywordProps {
   isSelected: boolean;
@@ -257,10 +258,34 @@ export const DalleGrim = styled.img`
   object-fit: cover;
   cursor: pointer;
   border-radius: 8px;
+  box-sizing: border-box;
   &:first-child{
     margin-right: 53px;
   }
-  &:last-child{
-    margin-left: 53px;
+  &:nth-child{
+    margin-right: 53px;
+  }
+`
+
+export const StyledAdd = styled(Add)`
+  fill: #7E7E7E;
+`
+
+export const AddDalleGrim = styled.div`
+  width: 45%;
+  height: 175px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 3px solid #FFFFFF;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  &:hover{
+    border: 3px solid #78ADE1;
+    ${StyledAdd} {
+      fill: #78ADE1;
+    }
   }
 `

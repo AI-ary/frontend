@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import aiAxios from './aiAxios';
 import { useStore } from '@/store/store';
 
