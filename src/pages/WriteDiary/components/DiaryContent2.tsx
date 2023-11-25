@@ -151,15 +151,16 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     }else{
       props.checkSelectedDalle(true);
       setBtnType(2);
-      setLoading(true);
       if (getDalleList.length >= 4){
         if(window.confirm('달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?')){
           setGetDalleList([]);
           setChoiceDalleImg('');
           addDalleTextContent(content);
+          setLoading(true);
         }
       }else{
         addDalleTextContent(content);
+        setLoading(true);
       }
     }  
   }
