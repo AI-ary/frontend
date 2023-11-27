@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -8,6 +8,11 @@ interface KeywordProps {
 }
 interface ChoiceProps {
   isKeywordList: boolean;
+}
+
+interface CursorProps {
+  idx: number;
+  cursor: number;
 }
 
 export const GridContent =styled.textarea`
@@ -263,4 +268,25 @@ export const DalleGrim = styled.img`
   &:last-child{
     margin-left: 53px;
   }
+`
+
+const blinkCursor = keyframes`
+  50% {
+    opacity: 0;
+  }
+`;
+
+const CommonCursorProps = styled.div<CursorProps>`
+  border: 0px solid black;
+  animation: ${blinkCursor} 1s infinite;
+`
+
+export const LeftCursor = styled(CommonCursorProps)`
+  border-right-width: ${props => props.cursor === 0 && props.idx === 0 ? '2px' : '0px'};
+  margin-right: 3px;
+`
+
+export const RightCursor = styled(CommonCursorProps)`
+  border-right-width: ${props => props.cursor - 1 === props.idx && props.cursor > 0 ? '2px' : '0px'};
+  margin-left: 3px;
 `
