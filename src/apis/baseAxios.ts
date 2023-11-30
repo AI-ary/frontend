@@ -39,10 +39,10 @@ baseAxios.interceptors.response.use(
           return await baseAxios(originalRequest);
         }
       }
-      sessionStorage.clear();
-      alert("로그인 정보 만료");
-      window.location.href="/";
     }
+    sessionStorage.clear();
+    alert("로그인 정보 만료");
+    window.location.href="/";
     return await Promise.reject(error);
   }
 );
