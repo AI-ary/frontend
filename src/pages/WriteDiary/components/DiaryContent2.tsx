@@ -10,7 +10,7 @@ import Drawing from './Drawing';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 import Modal from '@/components/Modal';
-
+import KonlplyLoading from '@/components/KonlpyLoading';
 
 type DiaryContentProps = {
   checkSelectedDalle: (check:boolean) => void;
@@ -29,7 +29,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, loading, setChoiceDalleImg, setGetDalleList,  setConfirmContents, setBringGrimWarning, setLoading } = useStore();
+  const { updateCanvas, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, bringMoreDalleWarning, loading, setChoiceDalleImg, setGetDalleList,  setConfirmContents, setBringGrimWarning, setBringMoreDalleWarning, setLoading } = useStore();
   const [emoji, setEmoji] = useState<string>('');
   const [textSendingError, setTextSendingError] = useState<boolean>(false);  // 텍스트 전송 실패
   const [modalTitle, setModalTitle] = useState<string>('달리를 가져오게 되면 기존 그림이 사라집니다.');
@@ -113,8 +113,8 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     setChoiceDalleImg('');
     setGetDalleList([]);
     props.checkSelectedDalle(isKonlply === 2 ? false : true);
-    setModalTitle(isKonlply === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 그리시게 되면 달리 그림이 사라집니다.')
-    setModalContent(isKonlply === 2 ? '달리에서 이미지를 가져올까요?' : '그림 그리시겠습니까?')
+    setModalTitle(btnType === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 그리시게 되면 달리 그림이 사라집니다.')
+    setModalContent(btnType === 2 ? '달리에서 이미지를 가져올까요?' : '그림 그리시겠습니까?')
     if(isKonlply === 2){
       props.checkSelectedDalle(false);
     }else{
@@ -127,7 +127,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   const bringGrim = () => {
     // props.getLoading(true);
     // props.startLoading();
-    if(btnType === 2 && getDalleList.length !== 0){
+    if(btnType === 2){
       setBringGrimWarning(true)
     }
     else {
@@ -152,15 +152,10 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       props.checkSelectedDalle(true);
       setBtnType(2);
       if (getDalleList.length >= 4){
-        if(window.confirm('달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?')){
-          setGetDalleList([]);
-          setChoiceDalleImg('');
-          addDalleTextContent(content);
-          setLoading(true);
-        }
+        setBringMoreDalleWarning(true);
       }else{
-        addDalleTextContent(content);
         setLoading(true);
+        addDalleTextContent(content);  
       }
     }  
   }
@@ -248,7 +243,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
                 <DW.Modebutton onClick={bringDalleGrim}>
                   Dall-E 가져오기
                 </DW.Modebutton>
-                <DW.Modebutton onClick={()=> {props.checkSelectedDalle(false); bringGrim();}}>
+                <DW.Modebutton onClick={bringGrim}>
                   그림 그리기
                 </DW.Modebutton>
                 <DW.Savebutton
@@ -265,12 +260,14 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
           <Manuscript setContent={setContent} />
         </D.Content>
       </D.DiaryContainer>
+      {loading && <KonlplyLoading />}
       {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="날씨를 선택해 주세요." content="" />}
       {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="제목을 입력해 주세요." content="" />}
       {confirmContents && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="내용을 입력해 주세요." content="" />}
       {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="50글자 이하로 작성해 주세요." content="" />}
       {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='one_btn' title="텍스트 전송 실패." content="" />}
       {bringGrimWarning && <Modal onClick={()=>{resetImgList(btnType)}} icon='warning' version='two_btn' title={modalTitle} content={modalContent} />}
+      {bringMoreDalleWarning && <Modal onClick={()=>{setLoading(true); setGetDalleList([]); setChoiceDalleImg(''); addDalleTextContent(content); return;}} icon='warning' version='two_btn' title="달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?" content="" /> }
     </D.DiviContainer>
   );
 }

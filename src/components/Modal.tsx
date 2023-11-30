@@ -15,7 +15,7 @@ interface Props {
 
 export default function Modal(props: Props) {
   const [modalIcon, setModalIcon] = useState<any>()
-  const { setConfirm, setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete, setBringGrimWarning } = useStore()
+  const { setConfirm, setSuccess, setConfirmLogout, setDuplicateEmail, setDuplicateNickname, setConfirmWeather, setConfirmContents, setConfirmTitle, setLimitWordLength, setConfirmDelete, setBringGrimWarning, setBringMoreDalleWarning } = useStore()
   const setFalse = () => {
     setBringGrimWarning(false)
     setConfirm(false)
@@ -28,6 +28,7 @@ export default function Modal(props: Props) {
     setConfirmLogout(false)
     setDuplicateEmail(false)
     setDuplicateNickname(false)
+    setBringMoreDalleWarning(false)
   }
 
   const onClickConfirm = () => {
