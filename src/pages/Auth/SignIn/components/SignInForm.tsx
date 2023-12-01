@@ -5,10 +5,12 @@ import { signIn } from '@/apis/auth';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@/components/Modal';
 import { useStore } from '@/store/store';
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 function SignInForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const {confirm, success} = useStore()
   let isSigning = '로그인'
   const navigate = useNavigate()
@@ -49,7 +51,12 @@ function SignInForm() {
         <S.WarningWrap>
           <S.WarningContent valid={email ? !emailValid() : emailValid()}>이메일 형식으로 입력해 주세요.</S.WarningContent>
         </S.WarningWrap>
-        <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} onKeyDown={onLogin} />
+        <S.PasswordInputWrap>
+          <S.Input type={!isVisible ? "password" : "text"} placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} onKeyDown={onLogin} />
+          <S.ToggleVisibleButton onClick={()=>setIsVisible(!isVisible)}>
+            {!isVisible ? <IoMdEyeOff /> : <IoMdEye />} 
+          </S.ToggleVisibleButton>
+        </S.PasswordInputWrap>
       </S.InputWrap>
       <S.BtnWrap>
         <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onLogin}>로그인</C.CommonFilledBtn>
