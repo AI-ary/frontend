@@ -33,11 +33,13 @@ function SignInForm() {
     isSigning = '로그인'
   }
 
-  const onClick = () => {
-    mutate({
-      email: email,
-      password: password
-    })
+  const onLogin = (e: React.MouseEvent | React.KeyboardEvent) => {
+      if (!Valid() && ((e as React.KeyboardEvent)?.key === 'Enter' || (e as React.MouseEvent)?.type === 'click')) {
+      mutate({
+        email: email,
+        password: password
+      })
+    }
   }
 
   return (
@@ -47,10 +49,10 @@ function SignInForm() {
         <S.WarningWrap>
           <S.WarningContent valid={email ? !emailValid() : emailValid()}>이메일 형식으로 입력해 주세요.</S.WarningContent>
         </S.WarningWrap>
-        <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} />
+        <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={false} onKeyDown={onLogin} />
       </S.InputWrap>
       <S.BtnWrap>
-        <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={()=>onClick()}>로그인</C.CommonFilledBtn>
+        <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onLogin}>로그인</C.CommonFilledBtn>
         <C.CommonEmptyBtn onClick={()=>navigate('/signup')} isValid={false}>회원가입</C.CommonEmptyBtn>
       </S.BtnWrap>
       {confirm && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="아이디 혹은 비밀번호를 다시 확인해주세요." content="" />}
