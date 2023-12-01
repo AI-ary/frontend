@@ -143,7 +143,7 @@ function AfterLogin() {
       <input type="file" id="input-file" accept="image/png, image/jpeg, image/svg+xml" style={{display:'none'}} onChange={addFile} ref={imgRef} /> 
       <C.CommonFilledBtn onClick={startDiary} isValid={false}>시작하기</C.CommonFilledBtn>
       <LogoutBtn />
-      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그인 성공!" content="" />}
+      {success && <Modal onClick={()=>{}} icon='success' version='no_btn' title="로그인 성공!" content="" />}
       {confirmLogout && <Modal onClick={onLogout} icon='warning' version='two_btn' title="로그아웃하시겠습니까?" content="" />}
     </ClosedBook>
   );

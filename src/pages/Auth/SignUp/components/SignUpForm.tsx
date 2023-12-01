@@ -88,11 +88,11 @@ function SignUpForm() {
       </S.InputWrap>
       <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</C.CommonFilledBtn>
       {nicknameError &&
-        <Modal onClick={()=>setNicknameError(false)} icon='warning' version='one_btn' title="10글자 이하로 작성해 주세요." content="" />}
+        <Modal onClick={()=>setNicknameError(false)} icon='warning' version='no_btn' title="10글자 이하로 작성해 주세요." content="" />}
       {duplicateNickname &&
-        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 닉네임 입니다." content="" />}
+        <Modal onClick={()=>{}} icon='warning' version='no_btn' title="이미 존재하는 닉네임 입니다." content="" />}
       {duplicateEmail &&
-        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 이메일 입니다." content="" />}
+        <Modal onClick={()=>{}} icon='warning' version='no_btn' title="이미 존재하는 이메일 입니다." content="" />}
     </S.Container>
   );
 }

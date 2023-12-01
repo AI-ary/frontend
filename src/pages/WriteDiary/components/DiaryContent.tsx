@@ -317,12 +317,12 @@ function DiaryContent(props:DiaryContentProps) {
         </D.Content>
       </D.DiaryContainer>
       {loading && <KonlplyLoading />}
-      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="날씨를 선택해 주세요." content="" />}
-      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="제목을 입력해 주세요." content="" />}
-      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="내용을 입력해 주세요." content="" />}
-      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="50글자 이하로 작성해 주세요." content="" />}
-      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='one_btn' title="텍스트 전송 실패." content="" />}
-      {noMatchingImg && <Modal onClick={()=>{setNoMatchingImg(false)}} icon='warning' version='one_btn' title="키워드에 맞는 이미지가 없습니다." content="" />}
+      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="날씨를 선택해 주세요." content="" />}
+      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="제목을 입력해 주세요." content="" />}
+      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="내용을 입력해 주세요." content="" />}
+      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="50글자 이하로 작성해 주세요." content="" />}
+      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='no_btn' title="텍스트 전송 실패." content="" />}
+      {noMatchingImg && <Modal onClick={()=>{setNoMatchingImg(false)}} icon='warning' version='no_btn' title="키워드에 맞는 이미지가 없습니다." content="" />}
       {bringGrimWarning && <Modal onClick={()=>{resetImgList(btnType)}} icon='warning' version='two_btn' title={modalTitle} content={modalContent} />}
     </D.DiviContainer>
   );

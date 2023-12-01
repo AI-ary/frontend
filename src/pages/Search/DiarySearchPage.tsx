@@ -74,7 +74,7 @@ function DiarySearchList(){
         </OpenBookRight>
         <Bookmark />
       </O.BookContainer>
-      {hasSearchContent && <Modal onClick={()=>{setHasSearchContent(false)}} icon='warning' version='one_btn' title="해당 달에 찾으신 내용은 없습니다." content="" />}
+      {hasSearchContent && <Modal onClick={()=>{setHasSearchContent(false)}} icon='warning' version='no_btn' title="해당 달에 찾으신 내용은 없습니다." content="" />}
     </C.Container>
   )
 }

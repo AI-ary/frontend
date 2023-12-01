@@ -96,9 +96,9 @@ function Navbar() {
             <img src="/images/person.svg" alt="person" />  
           </UserWrap>
         </BtnContainer>
-        {searchWarning && <Modal onClick={()=>{setSearchWarning(false)}} icon='warning' version='one_btn' title="검색어를 입력해주세요!" content="" />}
-        {notLoggedinSearchWarning && <Modal onClick={()=>{setNotLoggedinSearchWarning(false)}} icon='warning' version='one_btn' title="로그인 후 사용 가능합니다!" content="" />}
-        {notAvailable && <Modal onClick={()=>{setNotAvailable(false)}} icon='warning' version='one_btn' title="해당 서비스는 아직 이용할 수 없습니다." content="" />}
+        {searchWarning && <Modal onClick={()=>{setSearchWarning(false)}} icon='warning' version='no_btn' title="검색어를 입력해주세요!" content="" />}
+        {notLoggedinSearchWarning && <Modal onClick={()=>{setNotLoggedinSearchWarning(false)}} icon='warning' version='no_btn' title="로그인 후 사용 가능합니다!" content="" />}
+        {notAvailable && <Modal onClick={()=>{setNotAvailable(false)}} icon='warning' version='no_btn' title="해당 서비스는 아직 이용할 수 없습니다." content="" />}
       </NavbarWrap>
       <Outlet />
     </>

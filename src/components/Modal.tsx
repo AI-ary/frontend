@@ -34,14 +34,16 @@ export default function Modal(props: Props) {
     setFalse()
     props.onClick()
   }
-    
-  const OneButton = () => {
-    return (<CommonFilledBtn autoFocus isValid={false} onClick={() => {
-      onClickConfirm()
+
+  const NoButton = () => {
+    setTimeout(() => {
+      onClickConfirm();
       if (modalIcon) {
         modalIcon.classList.remove('modal_shake')
       }
-    }}>확인</CommonFilledBtn>)
+    }, 1000)
+    
+    return <></>;
   }
   const TwoButton = () => {
     return (
@@ -63,7 +65,7 @@ export default function Modal(props: Props) {
           <S.IconWrap icon={props.icon} className='modal_icon'>{props.icon === 'warning' ? <PiWarningCircleLight size={50}/> : <PiCheckCircleLight size={50}/>}</S.IconWrap>
           <S.Title>{props.title}</S.Title>
           <S.Content>{props.content}</S.Content>
-          <S.ButtonWrap>{props.version === 'one_btn' ? <OneButton/> : <TwoButton/>}</S.ButtonWrap>
+          <S.ButtonWrap>{props.version === 'no_btn' ? <NoButton /> : <TwoButton/>}</S.ButtonWrap>
         </S.ContentWrap>
       </S.Container>
     </S.Background>,
