@@ -67,7 +67,6 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     let file;
     if(choiceDalleImg){
       const response = await fetch(choiceDalleImg);
-      console.log(response);
       const u8arr = new Uint8Array(await response.arrayBuffer());
       file = new Blob([u8arr], { type: 'image/png' });
     }else{
@@ -157,7 +156,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
         setLoading(true);
         addDalleTextContent(content);  
       }
-    }  
+    }
   }
 
   useEffect(()=>{
@@ -165,17 +164,16 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       sendDallePollingState(dalleTaskId);
     }
     if(isDalleTextError) {
-      setTextSendingError(true)
+      setTextSendingError(true);
     }
   },[isDalleTextSuccess, isDalleTextError]);
   useEffect(()=>{
     let intervalId: any;
     if(isDallePollingSuccess) {
-      console.log(dalleState);
       intervalId = setInterval(() => {
         sendDallePollingState(dalleTaskId);
       }, 8000);
-      if (dalleState === 'SUCCESS') {
+      if (dalleState === 'SUCCESS' && dalleTaskId !== undefined) {
         clearInterval(intervalId);
         getDalleImg(dalleTaskId);
       }
@@ -185,10 +183,10 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     }
   },[isDallePollingSuccess, dalleTaskId, dalleState]);
 
-  useEffect(()=>{
-    if(isGetDalleImgSuccess){
+  useEffect(()=>{    
+    if(isGetDalleImgSuccess && dalleImg.length !== 0){
       setGetDalleList([...getDalleList, ...(dalleImg as string[])]);
-      console.log(dalleImg);
+      setLoading(false);
     }
   },[isGetDalleImgSuccess]);
 

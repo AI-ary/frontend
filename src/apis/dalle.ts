@@ -64,7 +64,7 @@ export const sendDallePollingData = () => {
 }
 
 export const getDalledDrawingData = () => {
-  const {setLoading} = useStore()
+  const {setLoading} = useStore();
   const {mutate, data: dalleImg, isSuccess: isGetDalleImgSuccess, isError: isGetDalleImgError} = useMutation(getDalleDrawing,{
     onError: (e) => {
       console.log('이미지 가져오기 실패');
@@ -73,8 +73,6 @@ export const getDalledDrawingData = () => {
     },
     onSuccess: (res) => {
       console.log("이미지 가져오기 성공");
-      console.log(res);
-      setLoading(false)
     }
   });
   const getDalleImg = async (taskId: string) => {
