@@ -36,7 +36,7 @@ function Main() {
         </C.CommonFilledBtn>
         <C.CommonOutlinedBtn onClick={() => navigate('/signup')}>회원가입</C.CommonOutlinedBtn>
       </S.ButtonWrap>
-      {success && <Modal onClick={()=>{}} icon='success' version='one_btn' title="로그아웃 성공!" content="" />}
+      {success && <Modal onClick={()=>{}} icon='success' version='no_btn' title="로그아웃 성공!" content="" />}
     </ClosedBook>
   );
 }

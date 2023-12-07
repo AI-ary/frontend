@@ -2,7 +2,7 @@ import axios from 'axios';
 import { updateAccessToken } from './auth';
 
 const baseAxios = axios.create({
-  baseURL: 'http://localhost:80/api/',
+  baseURL: 'http://www.aiary.net/api/',
 });
 
 baseAxios.interceptors.request.use(
@@ -39,6 +39,8 @@ baseAxios.interceptors.response.use(
           return await baseAxios(originalRequest);
         }
       }
+    }
+    if(error.response?.status === 403 ){
       sessionStorage.clear();
       alert("로그인 정보 만료");
       window.location.href="/";

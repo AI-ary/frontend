@@ -2,8 +2,7 @@ import {useState, useEffect, useRef, Fragment} from 'react';
 import { useStore } from '../../../store/store';
 import {Stage, Layer, Line, Image, Transformer, Circle} from 'react-konva';
 import useImage from 'use-image';
-import {BsFillCircleFill, BsFillEraserFill } from 'react-icons/bs';
-import { FaUndoAlt } from 'react-icons/fa';
+import {BsFillCircleFill} from 'react-icons/bs';
 import * as DW from '../../../styles/diary/diarywrite.style';
 
 interface RectangleProps{
@@ -138,9 +137,9 @@ function Drawing(props:DrawingProps){
     window.addEventListener('resize', handleResize);
     if(viewportSize.width>=1441 && viewportSize.height>=831){
       setCanvasSize({width:579, height:290})
-    }else if(viewportSize.width>=1181 && viewportSize.height>=681){
+    }else if(viewportSize.width>=1025 && viewportSize.height>=681){
       setCanvasSize({width:483, height:250})
-    }else if(viewportSize.width>=1101 && viewportSize.height>=601){
+    }else if(viewportSize.width>=769 && viewportSize.height>=551){
       setCanvasSize({width:356, height:197})
     }
     return () => {
@@ -263,6 +262,19 @@ function Drawing(props:DrawingProps){
               onMouseLeave={handleExport}
             >
               <Layer>
+                {lines && lines.map((line:any, i:any) => (
+                  <Line
+                    key={i}
+                    points={line.points}
+                    stroke={line.color}
+                    strokeWidth={5}
+                    tension={0.5}
+                    lineCap="round"
+                    globalCompositeOperation={
+                      line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                    }
+                  />
+                ))}
                 {grimimage && grimimage.map((rect, i) => {
                   return (
                     <Rectangle
@@ -285,19 +297,6 @@ function Drawing(props:DrawingProps){
                     />
                   );
                 })}
-                {lines && lines.map((line:any, i:any) => (
-                  <Line
-                    key={i}
-                    points={line.points}
-                    stroke={line.color}
-                    strokeWidth={5}
-                    tension={0.5}
-                    lineCap="round"
-                    globalCompositeOperation={
-                      line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                    }
-                  />
-                ))}
               </Layer>
             </Stage>
           ):( <Stage
@@ -323,6 +322,19 @@ function Drawing(props:DrawingProps){
             onMouseLeave={handleExport}
           >
             <Layer>
+              {lines && lines.map((line:any, i:any) => (
+                <Line
+                  key={i}
+                  points={line.points}
+                  stroke={line.color}
+                  strokeWidth={5}
+                  tension={0.5}
+                  lineCap="round"
+                  globalCompositeOperation={
+                    line.tool === 'eraser' ? 'destination-out' : 'source-over'
+                  }
+                />
+              ))}
               {grimimage && grimimage.map((rect, i) => {
                 return (
                   <Rectangle
@@ -342,19 +354,6 @@ function Drawing(props:DrawingProps){
                   />
                 );
               })}
-              {lines && lines.map((line:any, i:any) => (
-                <Line
-                  key={i}
-                  points={line.points}
-                  stroke={line.color}
-                  strokeWidth={5}
-                  tension={0.5}
-                  lineCap="round"
-                  globalCompositeOperation={
-                    line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                  }
-                />
-              ))}
             </Layer>
           </Stage>)}
           {props.grim?(

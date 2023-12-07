@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { useStore } from '../../../store/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { addDiaryData } from '@/apis/writeDiary';
-import { addKonlpyTextData, sendKonlpyPollingData, getKonlpyDrawingData } from '@/apis/konlpy';
 import { addDalleTextData, sendDallePollingData, getDalledDrawingData } from '@/apis/dalle';
 import { format } from 'date-fns';
 import Manuscript from './Manuscript';
@@ -13,16 +12,16 @@ import * as DW from '../../../styles/diary/diarywrite.style';
 import Modal from '@/components/Modal';
 import KonlplyLoading from '@/components/KonlpyLoading';
 
-
 type DiaryContentProps = {
   checkSelectedDalle: (check:boolean) => void;
 };
 
 interface RefObject {
   isDoubleClick: boolean;
+  bringDalleGrim: () => void;
 }
 
-function DiaryContent(props:DiaryContentProps) {
+function DiaryContent2(props:DiaryContentProps, ref: any) {
   const navigate = useNavigate();
   const location = useLocation();
   const [grim, setGrim] = useState<boolean>(false); //그리기모드 버튼 클릭 여부
@@ -30,13 +29,12 @@ function DiaryContent(props:DiaryContentProps) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, getGrimList, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, loading, setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList,  setConfirmContents, setBringGrimWarning, setLoading } = useStore();
+  const { updateCanvas, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, bringMoreDalleWarning, loading, setChoiceDalleImg, setGetDalleList,  setConfirmContents, setBringGrimWarning, setBringMoreDalleWarning, setLoading } = useStore();
   const [emoji, setEmoji] = useState<string>('');
   const [textSendingError, setTextSendingError] = useState<boolean>(false);  // 텍스트 전송 실패
-  const [noMatchingImg, setNoMatchingImg] = useState<boolean>(false);  // 키워드에 맞는 이미지 없음
-  const [modalTitle, setModalTitle] = useState<string>('달리를 가져오게 되면 기존 그림이 사라집니다.');
-  const [modalContent, setModalContent] = useState<string>('달리에서 이미지를 가져올까요?');
-  const variables = useRef<RefObject>({isDoubleClick: false}); // 더블 클릭 방지 변수
+  const [modalTitle, setModalTitle] = useState<string>('');
+  const [modalContent, setModalContent] = useState<string>('');
+  const variables = useRef<RefObject>({isDoubleClick: false, bringDalleGrim: () => {}}); // 더블 클릭 방지 변수
 
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
@@ -49,6 +47,10 @@ function DiaryContent(props:DiaryContentProps) {
   let todayDate = rawDate.getDate(); //일 구하기
   let todayDay = getDayOfWeek(rawDate);
   let date = format(rawDate, 'yyyy-MM-dd');
+
+  useImperativeHandle(ref, () => ({
+    bringDalleGrim,
+  }));
 
   //이모지 받아오기
   const getEmoji = (x:string) => {
@@ -65,7 +67,6 @@ function DiaryContent(props:DiaryContentProps) {
     let file;
     if(choiceDalleImg){
       const response = await fetch(choiceDalleImg);
-      console.log(response);
       const u8arr = new Uint8Array(await response.arrayBuffer());
       file = new Blob([u8arr], { type: 'image/png' });
     }else{
@@ -94,19 +95,12 @@ function DiaryContent(props:DiaryContentProps) {
   }
   useEffect(()=> {
     if(isSaveSuccess){
-      setChoiceImg([]);
       setChoiceDalleImg('');
       setGetDalleList([]);
-      setGetGrimList([]);
       variables.current.isDoubleClick = false;
       navigate('/list');
     }
   },[isSaveSuccess]);
-
-  //AI키워드 그림 가져오기 버튼
-  const { isKonlpyTextSuccess, isKonlpyTextError, konlpyTaskId, addKonlpyTextContent } = addKonlpyTextData();
-  const { isKonlpyPollingSuccess, konlpyState, sendKonlpyPollingState } = sendKonlpyPollingData();
-  const { isGetKonlpyImgSuccess, isGetKonlpyImgError, konlpyImg, getKonlpyImg } = getKonlpyDrawingData ();
 
   //Dalle 그림 가져오기 버튼
   const {isDalleTextSuccess, isDalleTextError, dalleTaskId, addDalleTextContent} = addDalleTextData();
@@ -114,79 +108,34 @@ function DiaryContent(props:DiaryContentProps) {
   const {isGetDalleImgSuccess, dalleImg, getDalleImg} = getDalledDrawingData();
 
   const resetImgList = (isKonlply : number) => {
-    setBtnType(isKonlply === 2 ? 1 : 2)
-    setChoiceImg([]);
     setChoiceDalleImg('');
-    setGetGrimList([]);
     setGetDalleList([]);
-    props.checkSelectedDalle(isKonlply === 2 ? false : true);
-    setModalTitle(isKonlply === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 가져오게 되면 달리 그림이 사라집니다.')
-    setModalContent(isKonlply === 2 ? '달리에서 이미지를 가져올까요?' : '그림을 가져올까요?')
+    setModalTitle(btnType === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 그리시게 되면 달리 그림이 사라집니다.')
+    setModalContent(btnType === 2 ? '달리에서 이미지를 가져올까요?' : '그림 그리시겠습니까?')
     if(isKonlply === 2){
-      addKonlpyTextContent(content);
       props.checkSelectedDalle(false);
+      setGrim(true); 
     }else{
+      setLoading(true);
       addDalleTextContent(content);
       props.checkSelectedDalle(true);
     }
-    setLoading(true)
+    setBtnType(isKonlply === 2 ? 1 : 2);
   }
 
   const bringGrim = () => {
-    // props.getLoading(true);
-    // props.startLoading();
-    if(btnType === 2 && getDalleList.length !== 0){
+    if(btnType === 2){
       setBringGrimWarning(true)
     }
     else {
+      setModalTitle('달리를 가져오게 되면 기존 그림이 사라집니다.');
+      setModalContent('달리에서 이미지를 가져올까요?');
       props.checkSelectedDalle(false);
       setBtnType(1);
-      setChoiceImg([]);
-      setGetGrimList([]);
+      setGrim(true);  
       setGetDalleList([]);
-      addKonlpyTextContent(content);
-      setLoading(true)
     }  
   }
-
-  useEffect(()=>{
-    if(isKonlpyTextSuccess && konlpyTaskId){
-      sendKonlpyPollingState(konlpyTaskId);
-    }
-    if(isKonlpyTextError) {
-      setTextSendingError(true)
-    }
-  },[isKonlpyTextSuccess, isKonlpyTextError]);
-
-  useEffect(()=>{
-    let intervalId: any;
-    if(isKonlpyPollingSuccess) {
-      console.log(konlpyState);
-      intervalId = setInterval(() => {
-        sendKonlpyPollingState(konlpyTaskId);
-      }, 2000);
-      if (konlpyState === 'SUCCESS') {
-        clearInterval(intervalId);
-        getKonlpyImg(konlpyTaskId);
-      }
-    }
-    return () => {
-      clearInterval(intervalId);
-    }
-  },[isKonlpyPollingSuccess, konlpyTaskId, konlpyState]);
-
-  useEffect(()=>{
-    if(isGetKonlpyImgSuccess){
-      if(Object.keys(konlpyImg).length !== 0){
-        setGetGrimList(konlpyImg);
-      }else{
-        setNoMatchingImg(true)
-      }
-    }
-    if(isGetKonlpyImgError){
-      console.log('가져오기 실패');
-    }
-  },[isGetKonlpyImgSuccess, isGetKonlpyImgError]);
 
   // 달리 가져오기
   const bringDalleGrim = () => {
@@ -194,20 +143,20 @@ function DiaryContent(props:DiaryContentProps) {
       setConfirmContents(true);
       return;
     }
-    // props.getLoading(true);
-    // props.startLoading();
-    if (btnType === 1 && getGrimList.length !== 0) {
+    if (btnType === 1) {
       setBringGrimWarning(true)
     }else{
+      setModalTitle('그림을 그리시게 되면 달리 그림이 사라집니다.');
+      setModalContent('그림 그리시겠습니까?');
       props.checkSelectedDalle(true);
       setBtnType(2);
-      setChoiceImg([]);
-      setGetGrimList([]);
-      setGetDalleList([]);
-      setChoiceDalleImg('');
-      addDalleTextContent(content);
-      setLoading(true)
-    }  
+      if (getDalleList.length >= 4){
+        setBringMoreDalleWarning(true);
+      }else{
+        setLoading(true);
+        addDalleTextContent(content);  
+      }
+    }
   }
 
   useEffect(()=>{
@@ -215,17 +164,17 @@ function DiaryContent(props:DiaryContentProps) {
       sendDallePollingState(dalleTaskId);
     }
     if(isDalleTextError) {
-      setTextSendingError(true)
+      setTextSendingError(true);
     }
   },[isDalleTextSuccess, isDalleTextError]);
+
   useEffect(()=>{
     let intervalId: any;
     if(isDallePollingSuccess) {
-      console.log(dalleState);
       intervalId = setInterval(() => {
         sendDallePollingState(dalleTaskId);
       }, 8000);
-      if (dalleState === 'SUCCESS') {
+      if (dalleState === 'SUCCESS' && dalleTaskId !== undefined) {
         clearInterval(intervalId);
         getDalleImg(dalleTaskId);
       }
@@ -235,10 +184,10 @@ function DiaryContent(props:DiaryContentProps) {
     }
   },[isDallePollingSuccess, dalleTaskId, dalleState]);
 
-  useEffect(()=>{
-    if(isGetDalleImgSuccess){
-      setGetDalleList(dalleImg);
-      console.log(dalleImg);
+  useEffect(()=>{    
+    if(isGetDalleImgSuccess && dalleImg.length !== 0){
+      setGetDalleList([...getDalleList, ...(dalleImg as string[])]);
+      setLoading(false);
     }
   },[isGetDalleImgSuccess]);
 
@@ -292,16 +241,10 @@ function DiaryContent(props:DiaryContentProps) {
               <>
                 <DW.Modebutton onClick={bringDalleGrim}>
                   Dall-E 가져오기
-                </DW.Modebutton><DW.Modebutton onClick={bringGrim}>
-                  그림가져오기
                 </DW.Modebutton>
-                {
-                  btnType !== 2 ? (
-                    <DW.Modebutton onClick={()=> { setGrim(true);  props.checkSelectedDalle(false);}}>
-                      그림 그리기
-                    </DW.Modebutton>
-                  ): undefined
-                }
+                <DW.Modebutton onClick={bringGrim}>
+                  그림 그리기
+                </DW.Modebutton>
                 <DW.Savebutton
                   onClick={grimDiary}>
                   저장하기
@@ -317,15 +260,15 @@ function DiaryContent(props:DiaryContentProps) {
         </D.Content>
       </D.DiaryContainer>
       {loading && <KonlplyLoading />}
-      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="날씨를 선택해 주세요." content="" />}
-      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="제목을 입력해 주세요." content="" />}
-      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="내용을 입력해 주세요." content="" />}
-      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="50글자 이하로 작성해 주세요." content="" />}
-      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='no_btn' title="텍스트 전송 실패." content="" />}
-      {noMatchingImg && <Modal onClick={()=>{setNoMatchingImg(false)}} icon='warning' version='no_btn' title="키워드에 맞는 이미지가 없습니다." content="" />}
+      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="날씨를 선택해 주세요." content="" />}
+      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="제목을 입력해 주세요." content="" />}
+      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="내용을 입력해 주세요." content="" />}
+      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="50글자 이하로 작성해 주세요." content="" />}
+      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='one_btn' title="텍스트 전송 실패." content="" />}
       {bringGrimWarning && <Modal onClick={()=>{resetImgList(btnType)}} icon='warning' version='two_btn' title={modalTitle} content={modalContent} />}
+      {bringMoreDalleWarning && <Modal onClick={()=>{setLoading(true); setGetDalleList([]); setChoiceDalleImg(''); addDalleTextContent(content); return;}} icon='warning' version='two_btn' title="달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?" content="" /> }
     </D.DiviContainer>
   );
 }
 
-export default DiaryContent;
+export default forwardRef(DiaryContent2);

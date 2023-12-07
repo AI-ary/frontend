@@ -130,8 +130,8 @@ function DiaryList({data}:DiaryListProps){
         <D.Content><ResultManuscript content={data.contents}/></D.Content>
       </D.DiaryContainer>
       {confirmDelete && <Modal onClick={confirmDeleteDiary} icon='warning' version='two_btn' title="정말 삭제하시겠습니까?" content="" />}
-      {deleteSuccess && <Modal onClick={deleteDiarySuccess} icon='success' version='one_btn' title="삭제 성공!" content="" />}
-      {urlCopy && <Modal onClick={()=>setUrlCopy(false)} icon='success' version='one_btn' title="복사 성공!" content="" />}
+      {deleteSuccess && <Modal onClick={deleteDiarySuccess} icon='success' version='no_btn' title="삭제 성공!" content="" />}
+      {urlCopy && <Modal onClick={()=>setUrlCopy(false)} icon='success' version='no_btn' title="복사 성공!" content="" />}
     </D.DiviContainer>
   )
 }
