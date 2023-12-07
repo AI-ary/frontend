@@ -19,6 +19,7 @@ interface StoreState{
   limitWordLength : boolean
   confirmDelete: boolean
   bringGrimWarning: boolean
+  bringMoreDalleWarning: boolean
   loading: boolean;
 }
 
@@ -41,6 +42,7 @@ interface StoreActions{
   setLimitWordLength: (state: boolean) => void;
   setConfirmDelete: (state: boolean) => void;
   setBringGrimWarning: (state: boolean) => void;
+  setBringMoreDalleWarning: (state: boolean) => void;
   setLoading: (state: boolean) => void;
 }
 
@@ -64,11 +66,12 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   limitWordLength:false, // 50글자 이상 입력 시 알림창
   confirmDelete: false, // 일기 삭제 클릭 시 알림창
   bringGrimWarning: false, // dall-e/konlpy 그림 가져오기 버튼 클릭 시 알림창
+  bringMoreDalleWarning: false, // dall-e 4개 이상 가져오기 버튼 클릭 시 알림창
   loading: false, // 로딩창
   setCurrentCanvas: (updateCanvas:string)=>set({currentCanvas:updateCanvas}),
   setUpdateCanvas:(canvas:string)=>set({updateCanvas:canvas}),
   setGetGrimList:(data:any[string])=>set({getGrimList:data}),
-  setGetDalleList:(data:string[])=>set({getDalleList:data}),
+  setGetDalleList: (data: string[]) => set((state: StoreState & StoreActions) => ({ ...state, getDalleList: data })),
   setChoiceImg:(img: { id: any; img: string; x: number; y: number; width: any; height: any; }[])=>{
     set((state:StoreState&StoreActions)=>({...state,choiceImg:img}));
   },
@@ -85,5 +88,6 @@ export const useStore = create<StoreState & StoreActions>((set)=>({
   setLimitWordLength :(state: boolean) => set({ limitWordLength: state }),
   setConfirmDelete :(state: boolean) => set({ confirmDelete: state }),
   setBringGrimWarning :(state: boolean) => set({ bringGrimWarning: state }),
+  setBringMoreDalleWarning: (state: boolean) => set({bringMoreDalleWarning: state}),
   setLoading :(state: boolean) => set({ loading: state }),
 }));

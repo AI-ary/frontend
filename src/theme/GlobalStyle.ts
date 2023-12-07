@@ -7,7 +7,7 @@ import reset from 'styled-reset';
 import { BookContainer, OpenBookLeft, OpenBookRight, Line, Profile, SelectBtn } from "@/styles/bookshape/opendbook.style";
 import { HeaderYear,HeaderDate,WeekWrap,DaysCol,IconWrap,ListEmoji, NonDiaryContainer, GotoDiaryWrite, ArrowBackIcon, ArrowForwardIcon, PlusCircle} from "@/styles/diary/diarylist.style";
 import { DateContainer,DateContent,WeatherWrap, StyledSunny, StyledCloudy, StyledRainy, StyledSnow, TitleContainer, Title, Titlecontent, Emoji, Canvas, TableTd, StyledShare, StyledDelete, ButtonItem  } from "@/styles/diary/diary.style";
-import { DrawingBtnWrap, EmojiWrap, Modebutton,Savebutton, Choicetitle, ChoiceKeyword, Arrow, Keyword, DalleTitle, DalleGrim } from "@/styles/diary/diarywrite.style";
+import { DrawingBtnWrap, EmojiWrap, Modebutton,Savebutton, Choicetitle, ChoiceKeyword, Arrow, Keyword, DalleTitle, DalleGrim, AddDalleGrim } from "@/styles/diary/diarywrite.style";
 import { SearchWrap,SearchDate,SearchContentContainer, SearchTitleWrap, SearchContent } from "@/styles/diary/diarysearch.style";
 import { StyledNavLink } from '@/components/bookshape/Bookmark';
 import { GuideContainer, GuideContent, GuideImgKonlpy, GuideImgRealDiary, GuideImgTheme, GuideNum, GuideTitle, GuideTitleWrap } from "@/styles/introduce.style";
@@ -272,9 +272,13 @@ export const GlobalStyle = createGlobalStyle`
       &:first-child{
         margin-right: 35px;
       }
-      &:last-child{
-        margin-left: 35px;
+      &:nth-child(3){
+        margin-right: 35px;
       }
+    }
+    ${AddDalleGrim}{
+      width: 45%;
+      height: 155px;
     }
     ${SearchWrap}{
       padding: 15px 0;
@@ -583,9 +587,13 @@ export const GlobalStyle = createGlobalStyle`
       &:first-child{
         margin-right: 25px;
       }
-      &:last-child{
-        margin-left: 25px;
+      &:nth-child(3){
+        margin-right: 25px;
       }
+    }
+    ${AddDalleGrim}{
+      width: 45%;
+      height: 120px;
     }
     ${SearchWrap}{
       padding: 12px 4px;

@@ -39,6 +39,8 @@ baseAxios.interceptors.response.use(
           return await baseAxios(originalRequest);
         }
       }
+    }
+    if(error.response?.status === 403 ){
       sessionStorage.clear();
       alert("로그인 정보 만료");
       window.location.href="/";
