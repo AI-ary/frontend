@@ -260,11 +260,11 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
         </D.Content>
       </D.DiaryContainer>
       {loading && <KonlplyLoading />}
-      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="날씨를 선택해 주세요." content="" />}
-      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="제목을 입력해 주세요." content="" />}
-      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="내용을 입력해 주세요." content="" />}
-      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='one_btn' title="50글자 이하로 작성해 주세요." content="" />}
-      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='one_btn' title="텍스트 전송 실패." content="" />}
+      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="날씨를 선택해 주세요." content="" />}
+      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="제목을 입력해 주세요." content="" />}
+      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="내용을 입력해 주세요." content="" />}
+      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="50글자 이하로 작성해 주세요." content="" />}
+      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='no_btn' title="텍스트 전송 실패." content="" />}
       {bringGrimWarning && <Modal onClick={()=>{resetImgList(btnType)}} icon='warning' version='two_btn' title={modalTitle} content={modalContent} />}
       {bringMoreDalleWarning && <Modal onClick={()=>{setLoading(true); setGetDalleList([]); setChoiceDalleImg(''); addDalleTextContent(content); return;}} icon='warning' version='two_btn' title="달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?" content="" /> }
     </D.DiviContainer>
