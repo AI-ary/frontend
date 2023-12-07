@@ -275,10 +275,11 @@ export const ShowManuScriptWrap = styled.div`
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(5, 1fr);
   height: 100%;
+  font-size: 24px;
 `
 
 export const EachWordWrap = styled.div`
-  border: 1px solid rgb(67,67,67);
+  border: 1px solid #434343;
   display: flex;
   justify-content: center;
   align-items: center;
