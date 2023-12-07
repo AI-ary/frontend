@@ -32,8 +32,8 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   const { updateCanvas, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, bringMoreDalleWarning, loading, setChoiceDalleImg, setGetDalleList,  setConfirmContents, setBringGrimWarning, setBringMoreDalleWarning, setLoading } = useStore();
   const [emoji, setEmoji] = useState<string>('');
   const [textSendingError, setTextSendingError] = useState<boolean>(false);  // 텍스트 전송 실패
-  const [modalTitle, setModalTitle] = useState<string>('달리를 가져오게 되면 기존 그림이 사라집니다.');
-  const [modalContent, setModalContent] = useState<string>('달리에서 이미지를 가져올까요?');
+  const [modalTitle, setModalTitle] = useState<string>('');
+  const [modalContent, setModalContent] = useState<string>('');
   const variables = useRef<RefObject>({isDoubleClick: false, bringDalleGrim: () => {}}); // 더블 클릭 방지 변수
 
   const getDayOfWeek = (date:string) => {
@@ -108,28 +108,28 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   const {isGetDalleImgSuccess, dalleImg, getDalleImg} = getDalledDrawingData();
 
   const resetImgList = (isKonlply : number) => {
-    setBtnType(isKonlply === 2 ? 1 : 2)
     setChoiceDalleImg('');
     setGetDalleList([]);
-    props.checkSelectedDalle(isKonlply === 2 ? false : true);
     setModalTitle(btnType === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 그리시게 되면 달리 그림이 사라집니다.')
     setModalContent(btnType === 2 ? '달리에서 이미지를 가져올까요?' : '그림 그리시겠습니까?')
     if(isKonlply === 2){
       props.checkSelectedDalle(false);
+      setGrim(true); 
     }else{
+      setLoading(true);
       addDalleTextContent(content);
       props.checkSelectedDalle(true);
     }
-    setLoading(true)
+    setBtnType(isKonlply === 2 ? 1 : 2);
   }
 
   const bringGrim = () => {
-    // props.getLoading(true);
-    // props.startLoading();
     if(btnType === 2){
       setBringGrimWarning(true)
     }
     else {
+      setModalTitle('달리를 가져오게 되면 기존 그림이 사라집니다.');
+      setModalContent('달리에서 이미지를 가져올까요?');
       props.checkSelectedDalle(false);
       setBtnType(1);
       setGrim(true);  
@@ -143,11 +143,11 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       setConfirmContents(true);
       return;
     }
-    // props.getLoading(true);
-    // props.startLoading();
     if (btnType === 1) {
       setBringGrimWarning(true)
     }else{
+      setModalTitle('그림을 그리시게 되면 달리 그림이 사라집니다.');
+      setModalContent('그림 그리시겠습니까?');
       props.checkSelectedDalle(true);
       setBtnType(2);
       if (getDalleList.length >= 4){
@@ -167,6 +167,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       setTextSendingError(true);
     }
   },[isDalleTextSuccess, isDalleTextError]);
+
   useEffect(()=>{
     let intervalId: any;
     if(isDallePollingSuccess) {
