@@ -2,14 +2,24 @@ import {useEffect, useState} from 'react';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 import { useStore } from '@/store/store';
+import moveCursor from '@/utils/moveCursor';
 
 /* 원고지 틀 컴포넌트 */
 function Manuscript(props:any) {
-  const [cursorLocation, setCursorLocation] = useState<any>();
-  const [word, setWord] = useState<string>('');
-  const { setLimitWordLength } = useStore();
   const emptySections: unknown[] = Array.from({length:50}).fill(0)
+
+  const [cursorLocation, setCursorLocation] = useState<any>(undefined);
+  const [word, setWord] = useState<string>('');
   const [cursor, setCursor] = useState<number>(0);
+
+  const { setLimitWordLength } = useStore();
+
+  const moveCursorDatas = {
+    cursor: cursor,
+    cursorLocation: cursorLocation?.selectionStart,
+    word: word,
+    setCursor: setCursor,
+  };
 
   const showManuscript = emptySections.map((emptySection: unknown, idx: number) => 
     <DW.EachWordWrap>
@@ -30,17 +40,13 @@ function Manuscript(props:any) {
     }
   }
 
-  const keyDown = (e: React.KeyboardEvent) => {
-    setCursor(cursorLocation.selectionStart);
-  }
-
   useEffect(() => {
     setCursorLocation(document.querySelector('#word'))
   },[])
   
   return (
     <D.PaperContainer>
-      <DW.GridContent spellCheck="false" id="word" value={word} onChange={wordInput} onKeyUp={keyDown}/>
+      <DW.GridContent spellCheck="false" id="word" value={word} onChange={wordInput} onKeyUp={(e) => moveCursor(e, moveCursorDatas)} />
       <label htmlFor='word'>
         <DW.ShowManuScriptWrap>
           {showManuscript}

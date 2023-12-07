@@ -274,7 +274,7 @@ export const ShowManuScriptWrap = styled.div`
   display: grid; 
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  height: 100%
+  height: 100%;
 `
 
 export const EachWordWrap = styled.div`
@@ -292,7 +292,7 @@ const blinkCursor = keyframes`
   50% {
     opacity: 0;
   }
-`;
+`
 
 const CommonCursorProps = styled.div<CursorProps>`
   border: 0px solid black;
