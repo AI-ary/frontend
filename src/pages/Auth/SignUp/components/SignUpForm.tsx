@@ -4,13 +4,15 @@ import * as C from '../../../../styles/common.style'
 import { signUp } from '@/apis/auth';
 import Modal from '@/components/Modal';
 import { useStore } from '@/store/store';
-
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 function SignUpForm() {
   const [nickname, setNickname] = useState <string>('');
   const [email, setEmail] = useState < string > ('');
   const [password, setPassword] = useState < string > ('');
   const [confirm, setConfirm] = useState<string>('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
   const { isSignUpError, isSignUpLoading, mutate } = signUp()
   const { duplicateNickname, duplicateEmail } = useStore();
   const [nicknameError, setNicknameError] = useState<boolean>(false)
@@ -77,22 +79,32 @@ function SignUpForm() {
         <S.WarningWrap>
           <S.WarningContent valid={email ? !emailValid() : emailValid()}>이메일 형식으로 입력해 주세요.</S.WarningContent>
         </S.WarningWrap>
-        <S.Input type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={password ? !passwordValid() : passwordValid()} />
+        <S.PasswordInputWrap>
+          <S.Input type={!isPasswordVisible ? "password" : "text"} placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} isValid={password ? !passwordValid() : passwordValid()} />
+          <S.ToggleVisibleButton onClick={()=>setIsPasswordVisible(!isPasswordVisible)}>
+            {!isPasswordVisible ? <IoMdEyeOff /> : <IoMdEye />} 
+          </S.ToggleVisibleButton>
+        </S.PasswordInputWrap>
         <S.WarningWrap>
           <S.WarningContent valid={password ? !passwordValid() : passwordValid()}>대소문자와 숫자, 특수문자를 포함한 8자 이상 16자 이하의 비밀번호를 입력해야 합니다.</S.WarningContent>
         </S.WarningWrap>
-        <S.Input type="password" placeholder="비밀번호 확인" value={confirm} onChange={(e)=>setConfirm(e.target.value)} isValid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
+        <S.PasswordInputWrap>
+          <S.Input type={!isConfirmPasswordVisible ? "password" : "text"} placeholder="비밀번호 확인" value={confirm} onChange={(e)=>setConfirm(e.target.value)} isValid={confirm ? (!confirm ? isSame() : !isSame()) : false} />
+          <S.ToggleVisibleButton onClick={()=>setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}>
+            {!isConfirmPasswordVisible ? <IoMdEyeOff /> : <IoMdEye />} 
+          </S.ToggleVisibleButton>
+        </S.PasswordInputWrap>
         <S.WarningWrap>
           <S.WarningContent valid={confirm ? (!confirm ? isSame() : !isSame()) : false}>비밀번호를 다시 확인해 주세요.</S.WarningContent>
         </S.WarningWrap>
       </S.InputWrap>
       <C.CommonFilledBtn disabled={Valid()} isValid={Valid()} onClick={onClick} >계정 생성</C.CommonFilledBtn>
       {nicknameError &&
-        <Modal onClick={()=>setNicknameError(false)} icon='warning' version='one_btn' title="10글자 이하로 작성해 주세요." content="" />}
+        <Modal onClick={()=>setNicknameError(false)} icon='warning' version='no_btn' title="10글자 이하로 작성해 주세요." content="" />}
       {duplicateNickname &&
-        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 닉네임 입니다." content="" />}
+        <Modal onClick={()=>{}} icon='warning' version='no_btn' title="이미 존재하는 닉네임 입니다." content="" />}
       {duplicateEmail &&
-        <Modal onClick={()=>{}} icon='warning' version='one_btn' title="이미 존재하는 이메일 입니다." content="" />}
+        <Modal onClick={()=>{}} icon='warning' version='no_btn' title="이미 존재하는 이메일 입니다." content="" />}
     </S.Container>
   );
 }

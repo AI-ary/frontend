@@ -58,3 +58,14 @@ export const WarningContent = styled.span<{valid:boolean}>`
   margin : 0px 4px;
   visibility : ${props => props.valid ? 'visible' : 'hidden'};
 `
+
+export const PasswordInputWrap = styled.div`
+  display:flex;
+  flex-direction:row-reverse;
+`
+
+export const ToggleVisibleButton = styled.button`
+  position: absolute;
+  align-self: center;
+  margin-right: 15px;
+`
