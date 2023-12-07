@@ -270,6 +270,24 @@ export const DalleGrim = styled.img`
   }
 `
 
+export const ShowManuScriptWrap = styled.div`
+  display: grid; 
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  height: 100%
+`
+
+export const EachWordWrap = styled.div`
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const CursorWrap = styled.div`
+  display: flex;
+`
+
 const blinkCursor = keyframes`
   50% {
     opacity: 0;
