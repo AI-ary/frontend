@@ -137,9 +137,9 @@ function Drawing(props:DrawingProps){
     window.addEventListener('resize', handleResize);
     if(viewportSize.width>=1441 && viewportSize.height>=831){
       setCanvasSize({width:579, height:290})
-    }else if(viewportSize.width>=1181 && viewportSize.height>=681){
+    }else if(viewportSize.width>=1025 && viewportSize.height>=681){
       setCanvasSize({width:483, height:250})
-    }else if(viewportSize.width>=1101 && viewportSize.height>=601){
+    }else if(viewportSize.width>=769 && viewportSize.height>=551){
       setCanvasSize({width:356, height:197})
     }
     return () => {
