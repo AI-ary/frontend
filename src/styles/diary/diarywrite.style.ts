@@ -278,7 +278,7 @@ export const ShowManuScriptWrap = styled.div`
 `
 
 export const EachWordWrap = styled.div`
-  border: 1px solid black;
+  border: 1px solid rgb(67,67,67);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -300,11 +300,11 @@ const CommonCursorProps = styled.div<CursorProps>`
 `
 
 export const LeftCursor = styled(CommonCursorProps)`
-  border-right-width: ${props => props.cursor === 0 && props.idx === 0 ? '2px' : '0px'};
+  border-right-width: ${props => props.cursor === 0 && props.idx === 0 ? '3px' : '0px'};
   margin-right: 3px;
 `
 
 export const RightCursor = styled(CommonCursorProps)`
-  border-right-width: ${props => props.cursor - 1 === props.idx && props.cursor > 0 ? '2px' : '0px'};
+  border-right-width: ${props => props.cursor - 1 === props.idx && props.cursor > 0 ? '3px' : '0px'};
   margin-left: 3px;
 `

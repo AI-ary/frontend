@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
 import { useStore } from '@/store/store';
@@ -10,13 +10,14 @@ function Manuscript(props:any) {
 
   const [cursorLocation, setCursorLocation] = useState<any>(undefined);
   const [word, setWord] = useState<string>('');
+  const wordLength = useRef<number>(word.length);
   const [cursor, setCursor] = useState<number>(0);
 
   const { setLimitWordLength } = useStore();
 
   const moveCursorDatas = {
     cursor: cursor,
-    cursorLocation: cursorLocation?.selectionStart,
+    cursorLocation: cursorLocation,
     word: word,
     setCursor: setCursor,
   };
@@ -33,10 +34,13 @@ function Manuscript(props:any) {
     
   const wordInput = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setWord(e.target.value);
+    wordLength.current = e.target.value.length;
     props.setContent(e.target.value);
-    if(word.length > 50) {
+    if(wordLength.current > 50) {
       setLimitWordLength(true);
       setWord(word => word.substring(0, 50));
+    } else if (wordLength.current === 50) {
+      return;
     }
   }
 
