@@ -997,6 +997,7 @@ Error generating stack: `+a.message+`
   grid-template-rows: repeat(5, 1fr);
   height: 100%;
   font-size: 24px;
+  color: #000000;
 `,Uz=U.div`
   border: 1px solid #434343;
   display: flex;
