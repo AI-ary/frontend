@@ -278,6 +278,7 @@ export const ShowManuScriptWrap = styled.div`
   grid-template-rows: repeat(5, 1fr);
   height: 100%;
   font-size: 24px;
+  color: #000000;
 `
 
 export const EachWordWrap = styled.div`
