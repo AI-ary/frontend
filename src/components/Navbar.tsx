@@ -11,7 +11,7 @@ interface SearchInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInp
 }
 
 interface SearchContainerProps {
-  margin: boolean; // Add the margin prop
+  searchmargin: string; // Add the margin prop
 }
 
 function Navbar() {
@@ -81,7 +81,7 @@ function Navbar() {
         <BtnContainer>
           <StyledLink to="/introduce">소개</StyledLink>
           <button onClick={()=>setNotAvailable(true)}>커뮤니티</button>
-          <SearchContainer margin={visible}>
+          <SearchContainer searchmargin={visible? 'true':'false'}>
             {IsLogin() && 
               visible && 
               <SearchInputWrap>
@@ -155,7 +155,7 @@ const SearchContainer = styled.div<SearchContainerProps>`
   align-items: center;
   justify-content: center;
   margin-right: 32px;
-  margin-left: ${props=>props.margin?'0px':'30px'};;
+  margin-left: ${props=>props.searchmargin === 'true' ?'0px':'30px'};;
 `
 
 const SearchInputWrap = styled.div`
