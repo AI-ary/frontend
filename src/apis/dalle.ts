@@ -29,11 +29,11 @@ export const addDalleTextData = () =>{
   const {setLoading} = useStore()
   const {mutate, data: dalleTaskId, isLoading: isDalleTextLoading, isSuccess: isDalleTextSuccess, isError: isDalleTextError} = useMutation(addDalleText, {
     onError: () => {
-      console.log("텍스트 전송 실패");
+      // console.log("텍스트 전송 실패");
       setLoading(false)
     },
     onSuccess: () => {
-      console.log("텍스트 전송 성공");
+      // console.log("텍스트 전송 성공");
     },
   });
 
@@ -48,12 +48,12 @@ export const sendDallePollingData = () => {
   const {setLoading} = useStore()
   const {mutate, data: dalleState, isSuccess: isDallePollingSuccess, isError: isDallePollingError} = useMutation(sendDallePolling, {
     onError: (e) => {
-      console.log("상태 조회 실패");
+      // console.log("상태 조회 실패");
       console.log(e)
       setLoading(false)
     },
     onSuccess: (res) => {
-      console.log("상태 확인");
+      // console.log("상태 확인");
     },
   });
   const sendDallePollingState = async (taskId: string) => {
@@ -67,12 +67,12 @@ export const getDalledDrawingData = () => {
   const {setLoading} = useStore();
   const {mutate, data: dalleImg, isSuccess: isGetDalleImgSuccess, isError: isGetDalleImgError} = useMutation(getDalleDrawing,{
     onError: (e) => {
-      console.log('이미지 가져오기 실패');
+      // console.log('이미지 가져오기 실패');
       console.log(e);
       setLoading(false)
     },
     onSuccess: (res) => {
-      console.log("이미지 가져오기 성공");
+      // console.log("이미지 가져오기 성공");
     }
   });
   const getDalleImg = async (taskId: string) => {

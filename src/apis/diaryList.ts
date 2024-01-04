@@ -4,7 +4,6 @@ import { useCallback } from 'react';
 
 // 일기 목록 받아오기
 const getDiaryList = async (diaryDate:string) => {
-  console.log('일기 저장목록');
   const response = await baseAxios.get(`diaries?diary_date=${diaryDate}`);
   return response.data.data;
 };
@@ -34,7 +33,6 @@ export const deleteDiaryData = () => {
       console.log(error);
     },
     onSuccess: (data) => {
-      console.log(data);
     }
   });
   const deleteDiaryList = useCallback(

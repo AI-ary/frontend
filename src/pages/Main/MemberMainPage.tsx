@@ -50,7 +50,6 @@ function AfterLogin() {
       setNickname(sessionStorage.getItem('nickname'))
     } else {
       baseAxios.get('users/profile').then((res) => {
-        console.log(res)
         const { theme: userTheme, nickname: userNickname, profile_image : userProfileImage } = res.data.data
         sessionStorage.setItem('nickname', userNickname)
         sessionStorage.setItem('theme', userTheme)
@@ -99,7 +98,6 @@ function AfterLogin() {
       headers: { 'Content-Type': 'multipart/form-data'},
     };
     let form = new FormData();
-    console.log(extension.current)
     if (extension.current) {
       let myImg = selected.replace(`data:image/${extension.current};base64,`, '');
       const byteString = atob(myImg);
@@ -109,10 +107,8 @@ function AfterLogin() {
       }
       const u8arr = new Uint8Array(array);
       const file = new Blob([u8arr], { type: 'image/png' });
-      console.log(file);
       form.append('file', file);
       await baseAxios.put('users/profile', form, config).then((res) => {
-        console.log(res)
       }).catch((err) => {
         console.log(err)
       })
