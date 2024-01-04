@@ -84,7 +84,6 @@ export const updateAccessToken = async (accessToken: string, refreshToken: strin
     "access_token": accessToken,
     "refresh_token": refreshToken
   }, configJSON);
-  console.log(response.data);
   return response.data;
 };
 
