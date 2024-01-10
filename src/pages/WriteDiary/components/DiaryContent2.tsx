@@ -35,6 +35,8 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   const [modalTitle, setModalTitle] = useState<string>('');
   const [modalContent, setModalContent] = useState<string>('');
   const variables = useRef<RefObject>({isDoubleClick: false, bringDalleGrim: () => {}}); // 더블 클릭 방지 변수
+  const [dalleApiCnt, setDalleApiCnt] = useState<number>(0); // 달리 요청 횟수
+  const [dalleSendingError, setDalleSendingError] = useState<boolean>(false); // 달리 10번 이상 호출 시 실패
 
   const getDayOfWeek = (date:string) => {
     const week=['일', '월', '화', '수', '목', '금', '토'];
@@ -58,7 +60,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   };
 
   //작성한 일기 보내기
-  const {isSaveSuccess, addDiaryContent} = addDiaryData();
+  const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
 
   const grimDiary = async () => {
     // 더블 클릭 방지 로직
@@ -100,7 +102,10 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       variables.current.isDoubleClick = false;
       navigate('/list');
     }
-  },[isSaveSuccess]);
+    if(isSaveError){
+      variables.current.isDoubleClick = false;
+    }
+  },[isSaveSuccess, isSaveError]);
 
   //Dalle 그림 가져오기 버튼
   const {isDalleTextSuccess, isDalleTextError, dalleTaskId, addDalleTextContent} = addDalleTextData();
@@ -162,6 +167,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   useEffect(()=>{
     if(isDalleTextSuccess && dalleTaskId){
       sendDallePollingState(dalleTaskId);
+      setDalleApiCnt(dalleApiCnt+1);
     }
     if(isDalleTextError) {
       setTextSendingError(true);
@@ -173,10 +179,19 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     if(isDallePollingSuccess) {
       intervalId = setInterval(() => {
         sendDallePollingState(dalleTaskId);
+        setDalleApiCnt(dalleApiCnt+1); // 달리 요청 횟수 증가
       }, 8000);
-      if (dalleState === 'SUCCESS' && dalleTaskId !== undefined) {
+      // 폴링 10번 이상인 경우 에러
+      if(dalleApiCnt >= 10){
+        clearInterval(intervalId);
+        setLoading(false);
+        setDalleSendingError(true);
+        setDalleApiCnt(0);
+      }
+      if (dalleState === 'SUCCESS' && dalleTaskId !== undefined && dalleApiCnt < 10) {
         clearInterval(intervalId);
         getDalleImg(dalleTaskId);
+        setDalleApiCnt(0);
       }
     }
     return () => {
@@ -267,6 +282,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='no_btn' title="텍스트 전송 실패." content="" />}
       {bringGrimWarning && <Modal onClick={()=>{resetImgList(btnType)}} icon='warning' version='two_btn' title={modalTitle} content={modalContent} />}
       {bringMoreDalleWarning && <Modal onClick={()=>{setLoading(true); setGetDalleList([]); setChoiceDalleImg(''); addDalleTextContent(content); return;}} icon='warning' version='two_btn' title="달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?" content="" /> }
+      {dalleSendingError && <Modal onClick={()=>{setDalleSendingError(false)}} icon='warning' version='no_btn' title={<span>달리가 해석할 수 없습니다. <br /> 다른 내용을 입력해주세요!</span>} content="" />}
     </D.DiviContainer>
   );
 }

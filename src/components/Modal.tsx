@@ -1,6 +1,6 @@
 import { useStore } from '@/store/store';
 import { CommonFilledBtn, CommonOutlinedBtn } from '@/styles/common.style';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { PiWarningCircleLight, PiCheckCircleLight} from 'react-icons/pi';
 import * as S from '../styles/modal.style'
@@ -8,7 +8,7 @@ import * as S from '../styles/modal.style'
 interface Props {
     icon: string;
     version: string;
-    title: string;
+    title: string | ReactNode;
     content: string;
     onClick: ()=>void
 }
@@ -42,7 +42,7 @@ export default function Modal(props: Props) {
       if (modalIcon) {
         modalIcon.classList.remove('modal_shake')
       }
-    }, 1000)
+    }, 3000)
     
     return <></>;
   }

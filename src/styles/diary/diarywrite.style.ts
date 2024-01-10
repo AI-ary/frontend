@@ -267,7 +267,7 @@ export const DalleGrim = styled.img`
   &:first-child{
     margin-right: 53px;
   }
-  &:nth-child{
+  &:nth-child(3){
     margin-right: 53px;
   }
 `

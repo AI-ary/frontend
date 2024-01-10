@@ -23,7 +23,7 @@ function Manuscript(props:any) {
   };
 
   const showManuscript = emptySections.map((emptySection: unknown, idx: number) => 
-    <DW.EachWordWrap>
+    <DW.EachWordWrap key={idx}>
       <DW.CursorWrap>
         <DW.LeftCursor idx={idx} cursor={cursor}/>
         {word[idx]}

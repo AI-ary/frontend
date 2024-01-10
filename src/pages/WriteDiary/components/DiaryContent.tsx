@@ -65,7 +65,6 @@ function DiaryContent(props:DiaryContentProps) {
     let file;
     if(choiceDalleImg){
       const response = await fetch(choiceDalleImg);
-      console.log(response);
       const u8arr = new Uint8Array(await response.arrayBuffer());
       file = new Blob([u8arr], { type: 'image/png' });
     }else{
@@ -161,7 +160,6 @@ function DiaryContent(props:DiaryContentProps) {
   useEffect(()=>{
     let intervalId: any;
     if(isKonlpyPollingSuccess) {
-      console.log(konlpyState);
       intervalId = setInterval(() => {
         sendKonlpyPollingState(konlpyTaskId);
       }, 2000);
@@ -184,7 +182,6 @@ function DiaryContent(props:DiaryContentProps) {
       }
     }
     if(isGetKonlpyImgError){
-      console.log('가져오기 실패');
     }
   },[isGetKonlpyImgSuccess, isGetKonlpyImgError]);
 
@@ -221,7 +218,6 @@ function DiaryContent(props:DiaryContentProps) {
   useEffect(()=>{
     let intervalId: any;
     if(isDallePollingSuccess) {
-      console.log(dalleState);
       intervalId = setInterval(() => {
         sendDallePollingState(dalleTaskId);
       }, 8000);
@@ -238,7 +234,6 @@ function DiaryContent(props:DiaryContentProps) {
   useEffect(()=>{
     if(isGetDalleImgSuccess){
       setGetDalleList(dalleImg);
-      console.log(dalleImg);
     }
   },[isGetDalleImgSuccess]);
 
