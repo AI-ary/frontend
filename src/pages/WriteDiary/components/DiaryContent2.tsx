@@ -60,7 +60,7 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   };
 
   //작성한 일기 보내기
-  const {isSaveSuccess, addDiaryContent} = addDiaryData();
+  const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
 
   const grimDiary = async () => {
     // 더블 클릭 방지 로직
@@ -102,7 +102,10 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
       variables.current.isDoubleClick = false;
       navigate('/list');
     }
-  },[isSaveSuccess]);
+    if(isSaveError){
+      variables.current.isDoubleClick = false;
+    }
+  },[isSaveSuccess, isSaveError]);
 
   //Dalle 그림 가져오기 버튼
   const {isDalleTextSuccess, isDalleTextError, dalleTaskId, addDalleTextContent} = addDalleTextData();
