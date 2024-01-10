@@ -36,7 +36,7 @@ export default function Introduce() {
         <OpenBookRight>
           <I.GuideContainer>
             <div>
-              <I.GuideTitleWrap><I.GuideNum>4</I.GuideNum>그림 가져오기</I.GuideTitleWrap>
+              <I.GuideTitleWrap><I.GuideNum>4</I.GuideNum>그림 가져오기<span style={{color: 'red'}}>(업데이트 예정 기능)</span></I.GuideTitleWrap>
               <I.GuideContent>일기를 작성한 후, 그림 가져오기 버튼을 누르면 다이어리 속 추출된 키워드의 이미지가 왼쪽 페이지에 나열됩니다. 이미지는 드래그 앤 드롭하여 사용할 수 있습니다.</I.GuideContent>
               <I.GuideImgWrap>
                 <I.GuideImgKonlpy src='/images/guidekonlpy.png' alt='guide' />
