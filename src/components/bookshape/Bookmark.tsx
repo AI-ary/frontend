@@ -5,16 +5,17 @@ import { useStore } from '../../store/store';
 
 function Bookmark() {
   // const location = useLocation();
-  const { setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } = useStore();
-  const width = window.innerWidth
-  
-  let marginLeft : string
+  const { setChoiceImg, setChoiceDalleImg, setGetGrimList, setGetDalleList } =
+    useStore();
+  const width = window.innerWidth;
+
+  let marginLeft: string;
   if (width > 1440) {
-    marginLeft = '-55px'
+    marginLeft = '-55px';
   } else if (width <= 1440 && width > 1180) {
-    marginLeft = '-10px'
+    marginLeft = '-10px';
   } else {
-    marginLeft = '-6px'
+    marginLeft = '-6px';
   }
   // let loca = location.pathname;
 
@@ -70,9 +71,7 @@ function Bookmark() {
   return (
     <BookMark>
       <StyledNavLink to={IsLogin() ? '/main' : '/'} onClick={onClick}>
-        <div id='home' >
-          홈
-        </div>
+        <div id='home'>홈</div>
       </StyledNavLink>
       <StyledNavLink id='write' to='/list' onClick={onClick}>
         {/* style={{ pointerEvents: Valid() }}  */}
@@ -85,31 +84,31 @@ function Bookmark() {
 export default Bookmark;
 
 export const BookMark = styled.div`
-  display : flex;
-  flex-direction : column;
+  display: flex;
+  flex-direction: column;
   height: 95%;
 `;
 export const StyledNavLink = styled(NavLink)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width : 90px;
-  height : 60px;
+  width: 90px;
+  height: 60px;
   text-decoration: none;
   margin-bottom: 15px;
   font-size: 18px;
   font-family: 'Poor Story';
-  border-radius : 0px 8px 8px 0px;
+  border-radius: 0px 8px 8px 0px;
   text-align: center;
-  color: ${props => props.theme.bookMarkFont};
-  background-color: ${props => props.theme.bookMarkBg};
+  color: ${(props) => props.theme.bookMarkFont};
+  background-color: ${(props) => props.theme.bookMarkBg};
   &:link {
     transition: 0.5s;
     text-decoration: none;
   }
   &.active {
-    background-color: ${props => props.theme.bookMarkActiveBg};
-    color: ${props => props.theme.bookMarkFont};
+    background-color: ${(props) => props.theme.bookMarkActiveBg};
+    color: ${(props) => props.theme.bookMarkFont};
     font-weight: 700;
   }
 `;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface SearchWrapProps {
   isSelected: boolean;
@@ -18,14 +18,17 @@ export const SearchContainer = styled.div`
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
-}
-`
+  }
+`;
 
 export const SearchWrap = styled.div<SearchWrapProps>`
   width: 95%;
   border-radius: 8px;
-  background-color: #FFFFFF;
-  border: ${(props: any) => !props.isSelected ? '0.8px solid #E4E4E4': `3px solid ${props.theme.btnColor}`};
+  background-color: #ffffff;
+  border: ${(props: any) =>
+    !props.isSelected
+      ? '0.8px solid #E4E4E4'
+      : `3px solid ${props.theme.btnColor}`};
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
@@ -36,9 +39,9 @@ export const SearchWrap = styled.div<SearchWrapProps>`
     height: 100%;
     width: 1px;
     margin: 0 20px;
-    border: 0.8px solid #C9C9C9;
+    border: 0.8px solid #c9c9c9;
   }
-`
+`;
 
 export const SearchDate = styled.div`
   font-family: 'Poor Story';
@@ -52,7 +55,7 @@ export const SearchDate = styled.div`
   > div {
     font-size: 20px;
   }
-`
+`;
 
 export const SearchContentContainer = styled.div`
   width: 78%;
@@ -61,7 +64,7 @@ export const SearchContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 export const SearchTitleWrap = styled.div`
   display: flex;
@@ -77,7 +80,7 @@ export const SearchTitleWrap = styled.div`
     color: #373737;
     font-size: 24px;
   }
-`
+`;
 
 export const SearchContent = styled.div`
   width: 100%;
@@ -85,6 +88,6 @@ export const SearchContent = styled.div`
   color: #373737;
   font-size: 18px;
   overflow: hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;

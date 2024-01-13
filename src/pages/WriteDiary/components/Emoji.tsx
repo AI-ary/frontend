@@ -1,33 +1,41 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import * as D from '../../../styles/diary/diary.style';
 import * as DW from '../../../styles/diary/diarywrite.style';
-import EmojiPicker, {EmojiStyle} from 'emoji-picker-react';
+import EmojiPicker, { EmojiStyle } from 'emoji-picker-react';
 
-function Emoji(props:any){
-  const [inputStr, setInputStr]=useState<string>('🙂');
-  const [showPicker, setShowPicker]=useState<boolean>(false);
+function Emoji(props: any) {
+  const [inputStr, setInputStr] = useState<string>('🙂');
+  const [showPicker, setShowPicker] = useState<boolean>(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     props.getEmoji(inputStr);
-  },[inputStr, props])
+  }, [inputStr, props]);
 
-  const onEmojiClick=(emojiObject:any)=>{
+  const onEmojiClick = (emojiObject: any) => {
     setInputStr(emojiObject.emoji);
     setShowPicker(false);
-  }
+  };
 
-  
-  return(
+  return (
     <>
-      <D.Emoji style={{ cursor:'pointer' }} role="img" aria-label="smile" onClick={() => setShowPicker((val) => !val)}>{inputStr}</D.Emoji>
+      <D.Emoji
+        style={{ cursor: 'pointer' }}
+        role='img'
+        aria-label='smile'
+        onClick={() => setShowPicker((val) => !val)}
+      >
+        {inputStr}
+      </D.Emoji>
       {showPicker && (
         <DW.EmojiWrap>
-          <EmojiPicker emojiStyle={EmojiStyle.APPLE} onEmojiClick={onEmojiClick} />
+          <EmojiPicker
+            emojiStyle={EmojiStyle.APPLE}
+            onEmojiClick={onEmojiClick}
+          />
         </DW.EmojiWrap>
       )}
     </>
-
-  )
+  );
 }
 
 export default Emoji;

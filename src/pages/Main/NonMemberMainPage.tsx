@@ -24,7 +24,7 @@ export const Titles = styled.div`
 
 function Main() {
   const navigate = useNavigate();
-  const {success} = useStore()
+  const { success } = useStore();
   return (
     <ClosedBook>
       <S.Content>어른들의 동심을 찾아라!</S.Content>
@@ -34,9 +34,19 @@ function Main() {
         <C.CommonFilledBtn onClick={() => navigate('/signin')} isValid={false}>
           로그인
         </C.CommonFilledBtn>
-        <C.CommonOutlinedBtn onClick={() => navigate('/signup')}>회원가입</C.CommonOutlinedBtn>
+        <C.CommonOutlinedBtn onClick={() => navigate('/signup')}>
+          회원가입
+        </C.CommonOutlinedBtn>
       </S.ButtonWrap>
-      {success && <Modal onClick={()=>{}} icon='success' version='no_btn' title="로그아웃 성공!" content="" />}
+      {success && (
+        <Modal
+          onClick={() => {}}
+          icon='success'
+          version='no_btn'
+          title='로그아웃 성공!'
+          content=''
+        />
+      )}
     </ClosedBook>
   );
 }

@@ -1,8 +1,8 @@
 export const blueTheme = {
   bgImg: '/images/bg-blue.svg',
-  bgSideColor:'linear-gradient( to right, #7CA8D4, #578ABE)',
+  bgSideColor: 'linear-gradient( to right, #7CA8D4, #578ABE)',
   bgColor: '#7CA8D4',
-  bgIcon:'#578ABE',
+  bgIcon: '#578ABE',
   lineColor: 'rgba(82, 134, 186, 1)',
   fontColor: '#FFFFFF',
   btnColor: '#578ABE',
@@ -18,13 +18,13 @@ export const blueTheme = {
   noDiaryState: '#578ABE',
   goToDiaryWrite: '#578ABE',
   goToDiaryWriteHover: '#3F6892',
-  todayBorderColor : '#A1C7EE',
-}
+  todayBorderColor: '#A1C7EE',
+};
 export const rainbowTheme = {
   bgImg: '/images/bg-rainbow.svg',
-  bgSideColor:'linear-gradient( to right, #FEE6EB, #FDBDCA)',
+  bgSideColor: 'linear-gradient( to right, #FEE6EB, #FDBDCA)',
   bgColor: '#FEE6EB',
-  bgIcon:'#EB8888',
+  bgIcon: '#EB8888',
   lineColor: 'rgba(253, 189, 202, 1)',
   fontColor: '#373737',
   btnColor: '#EB8888',
@@ -40,16 +40,16 @@ export const rainbowTheme = {
   noDiaryState: '#EB8888',
   goToDiaryWrite: '#EB8888',
   goToDiaryWriteHover: '#FF839C',
-  todayBorderColor : '#FDAEBE',
-}
+  todayBorderColor: '#FDAEBE',
+};
 export const originTheme = {
-  bgImg:'/images/background.PNG',
-  bgSideColor:'linear-gradient( to right, #FAECC8, #F0D15D)',
+  bgImg: '/images/background.PNG',
+  bgSideColor: 'linear-gradient( to right, #FAECC8, #F0D15D)',
   bgColor: '#FAECC8',
-  bgIcon:'#EAB839',
+  bgIcon: '#EAB839',
   lineColor: 'rgba(240, 209, 93, 1)',
   fontColor: '#373737',
-  btnColor:'#EAB839',
+  btnColor: '#EAB839',
   btnHover: '#FAC130',
   btnDisabled: '#FFE39A',
   btnFontColor: '#FFFFFF',
@@ -62,13 +62,13 @@ export const originTheme = {
   noDiaryState: '#EAB839',
   goToDiaryWrite: '#EAB839',
   goToDiaryWriteHover: '#FAC130',
-  todayBorderColor : '#F2DF9A',
-}
+  todayBorderColor: '#F2DF9A',
+};
 
 export const theme = {
   blueTheme,
   rainbowTheme,
-  originTheme
-}
+  originTheme,
+};
 
 export default theme;

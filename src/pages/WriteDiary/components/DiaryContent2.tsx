@@ -1,8 +1,18 @@
-import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { useStore } from '../../../store/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { addDiaryData } from '@/apis/writeDiary';
-import { addDalleTextData, sendDallePollingData, getDalledDrawingData } from '@/apis/dalle';
+import {
+  addDalleTextData,
+  sendDallePollingData,
+  getDalledDrawingData,
+} from '@/apis/dalle';
 import { format } from 'date-fns';
 import Manuscript from './Manuscript';
 import Emoji from './Emoji';
@@ -13,7 +23,7 @@ import Modal from '@/components/Modal';
 import KonlplyLoading from '@/components/KonlpyLoading';
 
 type DiaryContentProps = {
-  checkSelectedDalle: (check:boolean) => void;
+  checkSelectedDalle: (check: boolean) => void;
 };
 
 interface RefObject {
@@ -21,7 +31,7 @@ interface RefObject {
   bringDalleGrim: () => void;
 }
 
-function DiaryContent2(props:DiaryContentProps, ref: any) {
+function DiaryContent2(props: DiaryContentProps, ref: any) {
   const navigate = useNavigate();
   const location = useLocation();
   const [grim, setGrim] = useState<boolean>(false); //그리기모드 버튼 클릭 여부
@@ -29,20 +39,40 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   const [title, setTitle] = useState<string>(''); //제목
   const [content, setContent] = useState<string>(''); //일기 내용
   const [weather, setWeather] = useState<string>(); //날씨 선택
-  const { updateCanvas, getDalleList, choiceDalleImg, confirmWeather, confirmTitle, confirmContents,limitWordLength, bringGrimWarning, bringMoreDalleWarning, loading, setChoiceDalleImg, setGetDalleList,  setConfirmContents, setBringGrimWarning, setBringMoreDalleWarning, setLoading } = useStore();
+  const {
+    updateCanvas,
+    getDalleList,
+    choiceDalleImg,
+    confirmWeather,
+    confirmTitle,
+    confirmContents,
+    limitWordLength,
+    bringGrimWarning,
+    bringMoreDalleWarning,
+    loading,
+    setChoiceDalleImg,
+    setGetDalleList,
+    setConfirmContents,
+    setBringGrimWarning,
+    setBringMoreDalleWarning,
+    setLoading,
+  } = useStore();
   const [emoji, setEmoji] = useState<string>('');
-  const [textSendingError, setTextSendingError] = useState<boolean>(false);  // 텍스트 전송 실패
+  const [textSendingError, setTextSendingError] = useState<boolean>(false); // 텍스트 전송 실패
   const [modalTitle, setModalTitle] = useState<string>('');
   const [modalContent, setModalContent] = useState<string>('');
-  const variables = useRef<RefObject>({isDoubleClick: false, bringDalleGrim: () => {}}); // 더블 클릭 방지 변수
+  const variables = useRef<RefObject>({
+    isDoubleClick: false,
+    bringDalleGrim: () => {},
+  }); // 더블 클릭 방지 변수
   const [dalleApiCnt, setDalleApiCnt] = useState<number>(0); // 달리 요청 횟수
   const [dalleSendingError, setDalleSendingError] = useState<boolean>(false); // 달리 10번 이상 호출 시 실패
 
-  const getDayOfWeek = (date:string) => {
-    const week=['일', '월', '화', '수', '목', '금', '토'];
+  const getDayOfWeek = (date: string) => {
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
     const dayOfWeek = week[new Date(date).getDay()];
     return dayOfWeek;
-  }
+  };
 
   const rawDate = location.state?.date;
   let todayMonth = rawDate.getMonth() + 1; //월 구하기
@@ -55,23 +85,23 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
   }));
 
   //이모지 받아오기
-  const getEmoji = (x:string) => {
+  const getEmoji = (x: string) => {
     setEmoji(x);
   };
 
   //작성한 일기 보내기
-  const {isSaveSuccess, isSaveError, addDiaryContent} = addDiaryData();
+  const { isSaveSuccess, isSaveError, addDiaryContent } = addDiaryData();
 
   const grimDiary = async () => {
     // 더블 클릭 방지 로직
-    if(variables.current.isDoubleClick) return;
+    if (variables.current.isDoubleClick) return;
     variables.current.isDoubleClick = true;
     let file;
-    if(choiceDalleImg){
+    if (choiceDalleImg) {
       const response = await fetch(choiceDalleImg);
       const u8arr = new Uint8Array(await response.arrayBuffer());
       file = new Blob([u8arr], { type: 'image/png' });
-    }else{
+    } else {
       // 캔버스 이미지(base64)를 다시 png로 변환하기
       let myImg = updateCanvas.replace('data:image/png;base64,', '');
       const byteString = atob(myImg);
@@ -85,110 +115,128 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     let form = new FormData();
     form.append('file', file);
     const sendData = {
-      'title': title,
-      'weather': weather,
-      'emoji': emoji,
-      'contents': content,
-      'diary_date': date,
-    }
-    const jsonBlob = new Blob([JSON.stringify(sendData)], { type: 'application/json' });
+      title: title,
+      weather: weather,
+      emoji: emoji,
+      contents: content,
+      diary_date: date,
+    };
+    const jsonBlob = new Blob([JSON.stringify(sendData)], {
+      type: 'application/json',
+    });
     form.append('createRequest', jsonBlob);
     addDiaryContent(form);
-  }
-  useEffect(()=> {
-    if(isSaveSuccess){
+  };
+  useEffect(() => {
+    if (isSaveSuccess) {
       setChoiceDalleImg('');
       setGetDalleList([]);
       variables.current.isDoubleClick = false;
       navigate('/list');
     }
-    if(isSaveError){
+    if (isSaveError) {
       variables.current.isDoubleClick = false;
     }
-  },[isSaveSuccess, isSaveError]);
+  }, [isSaveSuccess, isSaveError]);
 
   //Dalle 그림 가져오기 버튼
-  const {isDalleTextSuccess, isDalleTextError, dalleTaskId, addDalleTextContent} = addDalleTextData();
-  const {isDallePollingSuccess, dalleState, sendDallePollingState} = sendDallePollingData();
-  const {isGetDalleImgSuccess, dalleImg, getDalleImg} = getDalledDrawingData();
+  const {
+    isDalleTextSuccess,
+    isDalleTextError,
+    dalleTaskId,
+    addDalleTextContent,
+  } = addDalleTextData();
+  const { isDallePollingSuccess, dalleState, sendDallePollingState } =
+    sendDallePollingData();
+  const { isGetDalleImgSuccess, dalleImg, getDalleImg } =
+    getDalledDrawingData();
 
-  const resetImgList = (isKonlply : number) => {
+  const resetImgList = (isKonlply: number) => {
     setChoiceDalleImg('');
     setGetDalleList([]);
-    setModalTitle(btnType === 2 ? '달리를 가져오게 되면 기존 그림이 사라집니다.' : '그림을 그리시게 되면 달리 그림이 사라집니다.')
-    setModalContent(btnType === 2 ? '달리에서 이미지를 가져올까요?' : '그림 그리시겠습니까?')
-    if(isKonlply === 2){
+    setModalTitle(
+      btnType === 2
+        ? '달리를 가져오게 되면 기존 그림이 사라집니다.'
+        : '그림을 그리시게 되면 달리 그림이 사라집니다.'
+    );
+    setModalContent(
+      btnType === 2 ? '달리에서 이미지를 가져올까요?' : '그림 그리시겠습니까?'
+    );
+    if (isKonlply === 2) {
       props.checkSelectedDalle(false);
-      setGrim(true); 
-    }else{
+      setGrim(true);
+    } else {
       setLoading(true);
       addDalleTextContent(content);
       props.checkSelectedDalle(true);
     }
     setBtnType(isKonlply === 2 ? 1 : 2);
-  }
+  };
 
   const bringGrim = () => {
-    if(btnType === 2){
-      setBringGrimWarning(true)
-    }
-    else {
+    if (btnType === 2) {
+      setBringGrimWarning(true);
+    } else {
       setModalTitle('달리를 가져오게 되면 기존 그림이 사라집니다.');
       setModalContent('달리에서 이미지를 가져올까요?');
       props.checkSelectedDalle(false);
       setBtnType(1);
-      setGrim(true);  
+      setGrim(true);
       setGetDalleList([]);
-    }  
-  }
+    }
+  };
 
   // 달리 가져오기
   const bringDalleGrim = () => {
-    if(content===''){
+    if (content === '') {
       setConfirmContents(true);
       return;
     }
     if (btnType === 1) {
-      setBringGrimWarning(true)
-    }else{
+      setBringGrimWarning(true);
+    } else {
       setModalTitle('그림을 그리시게 되면 달리 그림이 사라집니다.');
       setModalContent('그림 그리시겠습니까?');
       props.checkSelectedDalle(true);
       setBtnType(2);
-      if (getDalleList.length >= 4){
+      if (getDalleList.length >= 4) {
         setBringMoreDalleWarning(true);
-      }else{
+      } else {
         setLoading(true);
-        addDalleTextContent(content);  
+        addDalleTextContent(content);
       }
     }
-  }
+  };
 
-  useEffect(()=>{
-    if(isDalleTextSuccess && dalleTaskId){
+  useEffect(() => {
+    if (isDalleTextSuccess && dalleTaskId) {
       sendDallePollingState(dalleTaskId);
-      setDalleApiCnt(dalleApiCnt+1);
+      setDalleApiCnt(dalleApiCnt + 1);
     }
-    if(isDalleTextError) {
+    if (isDalleTextError) {
       setTextSendingError(true);
     }
-  },[isDalleTextSuccess, isDalleTextError]);
+  }, [isDalleTextSuccess, isDalleTextError]);
 
-  useEffect(()=>{
+  useEffect(() => {
     let intervalId: any;
-    if(isDallePollingSuccess) {
+    if (isDallePollingSuccess) {
       intervalId = setInterval(() => {
         sendDallePollingState(dalleTaskId);
-        setDalleApiCnt(dalleApiCnt+1); // 달리 요청 횟수 증가
+        setDalleApiCnt(dalleApiCnt + 1); // 달리 요청 횟수 증가
       }, 8000);
       // 폴링 10번 이상인 경우 에러
-      if(dalleApiCnt >= 10){
+      if (dalleApiCnt >= 10) {
         clearInterval(intervalId);
         setLoading(false);
         setDalleSendingError(true);
         setDalleApiCnt(0);
       }
-      if (dalleState === 'SUCCESS' && dalleTaskId !== undefined && dalleApiCnt < 10) {
+      if (
+        dalleState === 'SUCCESS' &&
+        dalleTaskId !== undefined &&
+        dalleApiCnt < 10
+      ) {
         clearInterval(intervalId);
         getDalleImg(dalleTaskId);
         setDalleApiCnt(0);
@@ -196,48 +244,74 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
     }
     return () => {
       clearInterval(intervalId);
-    }
-  },[isDallePollingSuccess, dalleTaskId, dalleState]);
+    };
+  }, [isDallePollingSuccess, dalleTaskId, dalleState]);
 
-  useEffect(()=>{    
-    if(isGetDalleImgSuccess && dalleImg.length !== 0){
+  useEffect(() => {
+    if (isGetDalleImgSuccess && dalleImg.length !== 0) {
       setGetDalleList([...getDalleList, ...(dalleImg as string[])]);
       setLoading(false);
     }
-  },[isGetDalleImgSuccess]);
+  }, [isGetDalleImgSuccess]);
 
   //제목 내용
-  const onChange = (e:any) => {
+  const onChange = (e: any) => {
     setTitle(e.target.value);
   };
 
   //날씨 선택
-  const weatherChange = (weatherName:string) => {
+  const weatherChange = (weatherName: string) => {
     setWeather(weatherName);
   };
 
-  interface WeatherBtnProps{
+  interface WeatherBtnProps {
     mood: string;
   }
 
-  function WeatherBtn({mood}:WeatherBtnProps) {
-    return <D.WeatherRadioBtn type='radio' id={mood} checked={weather === mood} onChange={() => weatherChange(mood)} />;
+  function WeatherBtn({ mood }: WeatherBtnProps) {
+    return (
+      <D.WeatherRadioBtn
+        type='radio'
+        id={mood}
+        checked={weather === mood}
+        onChange={() => weatherChange(mood)}
+      />
+    );
   }
 
   return (
     <D.DiviContainer>
       <D.DiaryContainer>
         <D.DateContainer>
-          <D.DateContent>{todayMonth}월 {todayDate}일 {todayDay}요일</D.DateContent>
+          <D.DateContent>
+            {todayMonth}월 {todayDate}일 {todayDay}요일
+          </D.DateContent>
           <D.WeatherWrap>
-            <WeatherBtn mood='SUNNY'/>
-            <label htmlFor='SUNNY'><D.StyledSunny fill={weather === 'SUNNY' ? '#FF0000' : '#969696'} className='weather' /></label>
+            <WeatherBtn mood='SUNNY' />
+            <label htmlFor='SUNNY'>
+              <D.StyledSunny
+                fill={weather === 'SUNNY' ? '#FF0000' : '#969696'}
+                className='weather'
+              />
+            </label>
             <WeatherBtn mood='CLOUDY' />
-            <label htmlFor='CLOUDY'><D.StyledCloudy fill={weather === 'CLOUDY' ? '#4E5D79' : '#969696'} className='weather' /></label>
+            <label htmlFor='CLOUDY'>
+              <D.StyledCloudy
+                fill={weather === 'CLOUDY' ? '#4E5D79' : '#969696'}
+                className='weather'
+              />
+            </label>
             <WeatherBtn mood='RAIN' />
-            <label htmlFor='RAIN'><D.StyledRainy fill={weather=== 'RAIN' ? '#5A5A5A' : '#969696'} className='weather' /></label>
+            <label htmlFor='RAIN'>
+              <D.StyledRainy
+                fill={weather === 'RAIN' ? '#5A5A5A' : '#969696'}
+                className='weather'
+              />
+            </label>
             <WeatherBtn mood='SNOW' />
-            <label htmlFor='SNOW'><D.StyledSnow fill={weather === 'SNOW' ? '#98ffed' : '#969696'} /></label>
+            <label htmlFor='SNOW'>
+              <D.StyledSnow fill={weather === 'SNOW' ? '#98ffed' : '#969696'} />
+            </label>
           </D.WeatherWrap>
         </D.DateContainer>
         <D.TitleContainer>
@@ -251,23 +325,18 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
         </D.TitleContainer>
         <D.Canvas>
           <Drawing grim={grim} />
-          <DW.ButtonContainer >
+          <DW.ButtonContainer>
             {!grim ? (
               <>
                 <DW.Modebutton onClick={bringDalleGrim}>
                   Dall-E 가져오기
                 </DW.Modebutton>
-                <DW.Modebutton onClick={bringGrim}>
-                  그림 그리기
-                </DW.Modebutton>
-                <DW.Savebutton
-                  onClick={grimDiary}>
-                  저장하기
-                </DW.Savebutton>
-              </>): 
-              <DW.Savebutton onClick={()=> setGrim(false)}>
-                완료
-              </DW.Savebutton>}
+                <DW.Modebutton onClick={bringGrim}>그림 그리기</DW.Modebutton>
+                <DW.Savebutton onClick={grimDiary}>저장하기</DW.Savebutton>
+              </>
+            ) : (
+              <DW.Savebutton onClick={() => setGrim(false)}>완료</DW.Savebutton>
+            )}
           </DW.ButtonContainer>
         </D.Canvas>
         <D.Content>
@@ -275,14 +344,94 @@ function DiaryContent2(props:DiaryContentProps, ref: any) {
         </D.Content>
       </D.DiaryContainer>
       {loading && <KonlplyLoading />}
-      {confirmWeather && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="날씨를 선택해 주세요." content="" />}
-      {confirmTitle && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="제목을 입력해 주세요." content="" />}
-      {confirmContents && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="내용을 입력해 주세요." content="" />}
-      {limitWordLength && <Modal onClick={()=>{}} icon='warning' version='no_btn' title="50글자 이하로 작성해 주세요." content="" />}
-      {textSendingError && <Modal onClick={()=>{setTextSendingError(false)}} icon='warning' version='no_btn' title="텍스트 전송 실패." content="" />}
-      {bringGrimWarning && <Modal onClick={()=>{resetImgList(btnType)}} icon='warning' version='two_btn' title={modalTitle} content={modalContent} />}
-      {bringMoreDalleWarning && <Modal onClick={()=>{setLoading(true); setGetDalleList([]); setChoiceDalleImg(''); addDalleTextContent(content); return;}} icon='warning' version='two_btn' title="달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?" content="" /> }
-      {dalleSendingError && <Modal onClick={()=>{setDalleSendingError(false)}} icon='warning' version='no_btn' title={<span>달리가 해석할 수 없습니다. <br /> 다른 내용을 입력해주세요!</span>} content="" />}
+      {confirmWeather && (
+        <Modal
+          onClick={() => {}}
+          icon='warning'
+          version='no_btn'
+          title='날씨를 선택해 주세요.'
+          content=''
+        />
+      )}
+      {confirmTitle && (
+        <Modal
+          onClick={() => {}}
+          icon='warning'
+          version='no_btn'
+          title='제목을 입력해 주세요.'
+          content=''
+        />
+      )}
+      {confirmContents && (
+        <Modal
+          onClick={() => {}}
+          icon='warning'
+          version='no_btn'
+          title='내용을 입력해 주세요.'
+          content=''
+        />
+      )}
+      {limitWordLength && (
+        <Modal
+          onClick={() => {}}
+          icon='warning'
+          version='no_btn'
+          title='50글자 이하로 작성해 주세요.'
+          content=''
+        />
+      )}
+      {textSendingError && (
+        <Modal
+          onClick={() => {
+            setTextSendingError(false);
+          }}
+          icon='warning'
+          version='no_btn'
+          title='텍스트 전송 실패.'
+          content=''
+        />
+      )}
+      {bringGrimWarning && (
+        <Modal
+          onClick={() => {
+            resetImgList(btnType);
+          }}
+          icon='warning'
+          version='two_btn'
+          title={modalTitle}
+          content={modalContent}
+        />
+      )}
+      {bringMoreDalleWarning && (
+        <Modal
+          onClick={() => {
+            setLoading(true);
+            setGetDalleList([]);
+            setChoiceDalleImg('');
+            addDalleTextContent(content);
+            return;
+          }}
+          icon='warning'
+          version='two_btn'
+          title='달리는 최대 4개까지 가능합니다. 기존 달리를 초기화하고 새로운 달리를 가져올까요?'
+          content=''
+        />
+      )}
+      {dalleSendingError && (
+        <Modal
+          onClick={() => {
+            setDalleSendingError(false);
+          }}
+          icon='warning'
+          version='no_btn'
+          title={
+            <span>
+              달리가 해석할 수 없습니다. <br /> 다른 내용을 입력해주세요!
+            </span>
+          }
+          content=''
+        />
+      )}
     </D.DiviContainer>
   );
 }

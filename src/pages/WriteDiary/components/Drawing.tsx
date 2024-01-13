@@ -1,15 +1,15 @@
-import {useState, useEffect, useRef, Fragment} from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import { useStore } from '../../../store/store';
-import {Stage, Layer, Line, Image, Transformer, Circle} from 'react-konva';
+import { Stage, Layer, Line, Image, Transformer, Circle } from 'react-konva';
 import useImage from 'use-image';
-import {BsFillCircleFill} from 'react-icons/bs';
+import { BsFillCircleFill } from 'react-icons/bs';
 import * as DW from '../../../styles/diary/diarywrite.style';
 
-interface RectangleProps{
+interface RectangleProps {
   image: string;
-  shapeProps:{
-    x:number;
-    y:number;
+  shapeProps: {
+    x: number;
+    y: number;
     width: number;
     height: number;
     fill: string;
@@ -24,21 +24,30 @@ interface RectangleProps{
   onClick?: any;
 }
 
-const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onSelect, onChange, onDelete}:RectangleProps) => {
+const Rectangle = ({
+  image,
+  shapeProps,
+  draggable,
+  isSelected,
+  unSelectShape,
+  onSelect,
+  onChange,
+  onDelete,
+}: RectangleProps) => {
   const shapeRef = useRef<any>();
   const trRef = useRef<any>();
-  const [img] = useImage(image,'anonymous');
-  const deleteBtn=useRef<any>();
+  const [img] = useImage(image, 'anonymous');
+  const deleteBtn = useRef<any>();
   useEffect(() => {
     if (isSelected) {
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-  const handleDelete = () =>{
+  const handleDelete = () => {
     unSelectShape(null);
     onDelete(shapeRef.current);
-  }
+  };
   return (
     <Fragment>
       <Image
@@ -52,7 +61,7 @@ const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onS
           onChange({
             ...shapeProps,
             x: e.target.x(),
-            y: e.target.y()
+            y: e.target.y(),
           });
         }}
         onTransformEnd={(e) => {
@@ -67,7 +76,7 @@ const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onS
             y: node.y(),
             // set minimal value
             width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY)
+            height: Math.max(node.height() * scaleY),
           });
         }}
       />
@@ -84,10 +93,10 @@ const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onS
         >
           <Circle
             radius={8}
-            fill="red"
+            fill='red'
             ref={deleteBtn}
             onClick={handleDelete}
-            x={img===undefined?0:Math.max(shapeRef.current.width())*1}
+            x={img === undefined ? 0 : Math.max(shapeRef.current.width()) * 1}
           ></Circle>
         </Transformer>
       )}
@@ -95,11 +104,11 @@ const Rectangle = ({ image, shapeProps,draggable, isSelected, unSelectShape, onS
   );
 };
 
-interface DrawingProps{
+interface DrawingProps {
   grim: boolean;
 }
 
-interface GrimImageProps{
+interface GrimImageProps {
   id: string;
   img: string;
   x: number;
@@ -109,20 +118,35 @@ interface GrimImageProps{
   fill: string;
 }
 
-function Drawing(props:DrawingProps){
-  const [viewportSize, setViewportSize]=useState({ width: window.innerWidth, height: window.innerHeight });
-  const [canvasSize, setCanvasSize]=useState({width:500, height:290});
-  const {choiceImg, choiceDalleImg, setUpdateCanvas} = useStore();
+function Drawing(props: DrawingProps) {
+  const [viewportSize, setViewportSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const [canvasSize, setCanvasSize] = useState({ width: 500, height: 290 });
+  const { choiceImg, choiceDalleImg, setUpdateCanvas } = useStore();
   const [grimimage, setGrimimage] = useState<GrimImageProps[]>([]);
-  const [dalleImg, setDalleImg] = useState<HTMLImageElement | undefined>(undefined);
+  const [dalleImg, setDalleImg] = useState<HTMLImageElement | undefined>(
+    undefined
+  );
   const [selectedId, selectShape] = useState<number | null>(null);
   const [tool, setTool] = useState<string>('pen');
-  const [currentColor,setColor]=useState<string>('#000000');
-  const listColors:string[]=['#FF0000','#FF6B00','#FFB800', '#00EC42', '#0500FF', '#B200C1', '#FF849D', '#946710', '#000000']
+  const [currentColor, setColor] = useState<string>('#000000');
+  const listColors: string[] = [
+    '#FF0000',
+    '#FF6B00',
+    '#FFB800',
+    '#00EC42',
+    '#0500FF',
+    '#B200C1',
+    '#FF849D',
+    '#946710',
+    '#000000',
+  ];
   const [lines, setLines] = useState<any>([]);
-  let stageRef=useRef<any>(null);
+  let stageRef = useRef<any>(null);
   const isDrawing = useRef<boolean>(false);
-  const checkDeselect = (e:any) => {
+  const checkDeselect = (e: any) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       selectShape(null);
@@ -131,16 +155,16 @@ function Drawing(props:DrawingProps){
 
   const handleResize = () => {
     setViewportSize({ width: window.innerWidth, height: window.innerHeight });
-  }
+  };
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    if(viewportSize.width>=1441 && viewportSize.height>=831){
-      setCanvasSize({width:579, height:290})
-    }else if(viewportSize.width>=1025 && viewportSize.height>=681){
-      setCanvasSize({width:483, height:250})
-    }else if(viewportSize.width>=769 && viewportSize.height>=551){
-      setCanvasSize({width:356, height:197})
+    if (viewportSize.width >= 1441 && viewportSize.height >= 831) {
+      setCanvasSize({ width: 579, height: 290 });
+    } else if (viewportSize.width >= 1025 && viewportSize.height >= 681) {
+      setCanvasSize({ width: 483, height: 250 });
+    } else if (viewportSize.width >= 769 && viewportSize.height >= 551) {
+      setCanvasSize({ width: 356, height: 197 });
     }
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -148,41 +172,44 @@ function Drawing(props:DrawingProps){
   }, [viewportSize]);
 
   useEffect(() => {
-    setGrimimage([...grimimage, ...choiceImg.map(item=>{
-      return{
-        id:item.id,
-        img: item.img,
-        x:item.x,
-        y:item.y,
-        width:item.width,
-        height: item.height,
-        fill:''
-      }
-    })]);
-    if(choiceDalleImg){
+    setGrimimage([
+      ...grimimage,
+      ...choiceImg.map((item) => {
+        return {
+          id: item.id,
+          img: item.img,
+          x: item.x,
+          y: item.y,
+          width: item.width,
+          height: item.height,
+          fill: '',
+        };
+      }),
+    ]);
+    if (choiceDalleImg) {
       setGrimimage([]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [choiceImg]);
 
   useEffect(() => {
-    if(choiceDalleImg){
+    if (choiceDalleImg) {
       const img = new window.Image();
       img.onload = () => {
         setDalleImg(img);
-      }
+      };
       img.src = choiceDalleImg;
-      setDalleImg(img);  
+      setDalleImg(img);
     }
-  },[choiceDalleImg, canvasSize]);
+  }, [choiceDalleImg, canvasSize]);
 
-  const handleMouseDown = (e:any) => {
+  const handleMouseDown = (e: any) => {
     // debugger;
     isDrawing.current = true;
     const pos = e.target.getStage().getPointerPosition();
-    setLines([...lines, { tool, points: [pos.x, pos.y],color:currentColor }]);
+    setLines([...lines, { tool, points: [pos.x, pos.y], color: currentColor }]);
   };
-  const handleMouseMove = (e:any) => {
+  const handleMouseMove = (e: any) => {
     if (!isDrawing.current) {
       return;
     }
@@ -199,7 +226,7 @@ function Drawing(props:DrawingProps){
 
     // replace last
     // lines.splice(lines.length - 1, 1, lastLine);
-    setLines([...lines.slice(0, -1),lastLine]);
+    setLines([...lines.slice(0, -1), lastLine]);
   };
   const handleMouseUp = () => {
     isDrawing.current = false;
@@ -208,52 +235,56 @@ function Drawing(props:DrawingProps){
     setLines(lines.slice(0, -1));
   };
 
-  const handleExport = () =>{
+  const handleExport = () => {
     const stage = stageRef.current;
-    if(stage){
-      const dataUrl=stage.toDataURL({
-        mimeType:'image/png',
-        crossorigin:'anonymous'
-      },0.5); 
+    if (stage) {
+      const dataUrl = stage.toDataURL(
+        {
+          mimeType: 'image/png',
+          crossorigin: 'anonymous',
+        },
+        0.5
+      );
       setUpdateCanvas(dataUrl);
     }
-  }
-  const handleRemove=(index:any)=>{
-    const newList=grimimage.filter((item, index)=> index !== index);
+  };
+  const handleRemove = (index: any) => {
+    const newList = grimimage.filter((item, index) => index !== index);
     setGrimimage(newList);
-  }
-  const unSelectShape = (prop:any)=>{
+  };
+  const unSelectShape = (prop: any) => {
     selectShape(prop);
   };
-  const onDeleteImage = (node:any)=>{
+  const onDeleteImage = (node: any) => {
     const newImage = [...grimimage];
-    newImage.splice(node.index,1);
+    newImage.splice(node.index, 1);
     setGrimimage(newImage);
-  }
+  };
 
-  return(
+  return (
     <>
-      {choiceDalleImg ? 
-      (
+      {choiceDalleImg ? (
         <Stage
           ref={stageRef}
           width={canvasSize.width}
-          height={canvasSize.height}>
-            <Layer name="image-layer">
-              <Image image={dalleImg} 
-              width={canvasSize.width-1}
-              height={canvasSize.height-1}
-              />
-            </Layer>
+          height={canvasSize.height}
+        >
+          <Layer name='image-layer'>
+            <Image
+              image={dalleImg}
+              width={canvasSize.width - 1}
+              height={canvasSize.height - 1}
+            />
+          </Layer>
         </Stage>
-      ) :(
+      ) : (
         <>
-          {!props.grim?(
+          {!props.grim ? (
             <Stage
               ref={stageRef}
               width={canvasSize.width}
               height={canvasSize.height}
-              onMouseDown={(e) => {      
+              onMouseDown={(e) => {
                 checkDeselect(e);
               }}
               onTouchStart={(e) => {
@@ -262,117 +293,143 @@ function Drawing(props:DrawingProps){
               onMouseLeave={handleExport}
             >
               <Layer>
-                {lines && lines.map((line:any, i:any) => (
-                  <Line
-                    key={i}
-                    points={line.points}
-                    stroke={line.color}
-                    strokeWidth={5}
-                    tension={0.5}
-                    lineCap="round"
-                    globalCompositeOperation={
-                      line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                    }
-                  />
-                ))}
-                {grimimage && grimimage.map((rect, i) => {
-                  return (
-                    <Rectangle
+                {lines &&
+                  lines.map((line: any, i: any) => (
+                    <Line
                       key={i}
-                      image={rect.img}
-                      shapeProps={rect}
-                      isSelected={i === selectedId}
-                      unSelectShape={(e:any)=>{unSelectShape(e)}}
-                      draggable={true}
-                      onClick={handleRemove}
-                      onSelect={() => {
-                        selectShape(i);
+                      points={line.points}
+                      stroke={line.color}
+                      strokeWidth={5}
+                      tension={0.5}
+                      lineCap='round'
+                      globalCompositeOperation={
+                        line.tool === 'eraser'
+                          ? 'destination-out'
+                          : 'source-over'
+                      }
+                    />
+                  ))}
+                {grimimage &&
+                  grimimage.map((rect, i) => {
+                    return (
+                      <Rectangle
+                        key={i}
+                        image={rect.img}
+                        shapeProps={rect}
+                        isSelected={i === selectedId}
+                        unSelectShape={(e: any) => {
+                          unSelectShape(e);
+                        }}
+                        draggable={true}
+                        onClick={handleRemove}
+                        onSelect={() => {
+                          selectShape(i);
+                        }}
+                        onChange={(newAttrs: GrimImageProps) => {
+                          const rects = grimimage.slice();
+                          rects[i] = newAttrs;
+                          setGrimimage(rects);
+                        }}
+                        onDelete={onDeleteImage}
+                      />
+                    );
+                  })}
+              </Layer>
+            </Stage>
+          ) : (
+            <Stage
+              ref={stageRef}
+              width={canvasSize.width}
+              height={canvasSize.height}
+              onMouseDown={(e) => {
+                handleMouseDown(e);
+                checkDeselect(e);
+              }}
+              onTouchStart={(e) => {
+                handleMouseDown(e);
+                checkDeselect(e);
+              }}
+              onMousemove={handleMouseMove}
+              onMouseup={handleMouseUp}
+              onTouchMove={(e) => {
+                handleMouseMove(e);
+              }}
+              onTouchEnd={() => {
+                handleMouseUp();
+              }}
+              onMouseLeave={handleExport}
+            >
+              <Layer>
+                {lines &&
+                  lines.map((line: any, i: any) => (
+                    <Line
+                      key={i}
+                      points={line.points}
+                      stroke={line.color}
+                      strokeWidth={5}
+                      tension={0.5}
+                      lineCap='round'
+                      globalCompositeOperation={
+                        line.tool === 'eraser'
+                          ? 'destination-out'
+                          : 'source-over'
+                      }
+                    />
+                  ))}
+                {grimimage &&
+                  grimimage.map((rect, i) => {
+                    return (
+                      <Rectangle
+                        key={i}
+                        image={rect.img}
+                        shapeProps={rect}
+                        isSelected={i === selectedId}
+                        draggable={false}
+                        onSelect={() => {
+                          selectShape(i);
+                        }}
+                        onChange={(newAttrs: any) => {
+                          const rects = grimimage.slice();
+                          rects[i] = newAttrs;
+                          setGrimimage(rects);
+                        }}
+                      />
+                    );
+                  })}
+              </Layer>
+            </Stage>
+          )}
+          {props.grim ? (
+            <DW.DrawingBtnWrap>
+              {listColors &&
+                listColors.map((map, index) => {
+                  return (
+                    <BsFillCircleFill
+                      key={index}
+                      color={map}
+                      className='custom-button'
+                      onClick={() => {
+                        setTool('pen');
+                        setColor(map);
                       }}
-                      onChange={(newAttrs: GrimImageProps) => {
-                        const rects = grimimage.slice();
-                        rects[i] = newAttrs;
-                        setGrimimage(rects);
-                      }}
-                      onDelete={onDeleteImage}
                     />
                   );
                 })}
-              </Layer>
-            </Stage>
-          ):( <Stage
-            ref={stageRef}
-            width={canvasSize.width}
-            height={canvasSize.height}
-            onMouseDown={(e) => {      
-              handleMouseDown(e);
-              checkDeselect(e);
-            }}
-            onTouchStart={(e) => {
-              handleMouseDown(e);
-              checkDeselect(e);
-            }}
-            onMousemove={handleMouseMove}
-            onMouseup={handleMouseUp}
-            onTouchMove={(e) => {
-              handleMouseMove(e);
-            }}
-            onTouchEnd={() => {
-              handleMouseUp();
-            }}
-            onMouseLeave={handleExport}
-          >
-            <Layer>
-              {lines && lines.map((line:any, i:any) => (
-                <Line
-                  key={i}
-                  points={line.points}
-                  stroke={line.color}
-                  strokeWidth={5}
-                  tension={0.5}
-                  lineCap="round"
-                  globalCompositeOperation={
-                    line.tool === 'eraser' ? 'destination-out' : 'source-over'
-                  }
-                />
-              ))}
-              {grimimage && grimimage.map((rect, i) => {
-                return (
-                  <Rectangle
-                    key={i}
-                    image={rect.img}
-                    shapeProps={rect}
-                    isSelected={i === selectedId}
-                    draggable={false}
-                    onSelect={() => {
-                      selectShape(i);
-                    }}
-                    onChange={(newAttrs: any) => {
-                      const rects = grimimage.slice();
-                      rects[i] = newAttrs;
-                      setGrimimage(rects);
-                    }}
-                  />
-                );
-              })}
-            </Layer>
-          </Stage>)}
-          {props.grim?(
-            <DW.DrawingBtnWrap>
-              {listColors && listColors.map((map,index)=>{
-                return(
-                  <BsFillCircleFill key={index} color={map} className="custom-button" onClick={()=>{
-                    setTool('pen');
-                    setColor(map);
-                  }} />
-                )
-              })}
-              <img src="images/eraser.svg" alt="eraser" onClick={()=>{setTool('eraser');}}/>
-              <img src="/images/undo.svg" alt="undo" onClick={handleUndo}/>
-            </DW.DrawingBtnWrap>):('')}
+              <img
+                src='images/eraser.svg'
+                alt='eraser'
+                onClick={() => {
+                  setTool('eraser');
+                }}
+              />
+              <img src='/images/undo.svg' alt='undo' onClick={handleUndo} />
+            </DW.DrawingBtnWrap>
+          ) : (
+            ''
+          )}
         </>
-        )
-      }
+      )}
     </>
-  )
+  );
 }
 export default Drawing;

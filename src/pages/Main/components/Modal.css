@@ -1,4 +1,4 @@
-.Img{
+.Img {
   width: 450px;
   height: 420px;
   background-size: cover;
@@ -7,26 +7,26 @@
   border: 1px solid black;
 }
 
-.Img>img{
+.Img > img {
   width: 450px;
   height: 420px;
   border-radius: 14px;
 }
 
-[type=radio]{
+[type='radio'] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-[type=radio] + img{
+[type='radio'] + img {
   cursor: pointer;
 }
-[type=radio]:checked +img{
+[type='radio']:checked + img {
   outline: 2px solid black;
 }
 
-.item{
+.item {
   background-size: cover;
   padding: 3px;
   margin-top: 10px;
@@ -38,11 +38,12 @@
   object-fit: cover;
 }
 
-.item:hover{
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.381), 0 6px 20px 0 rgba(0, 0, 0, 0.381);
+.item:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.381),
+    0 6px 20px 0 rgba(0, 0, 0, 0.381);
 }
 
-.item2{
+.item2 {
   background-size: cover;
   margin-top: 10px;
   margin-left: 20px;
@@ -54,7 +55,7 @@
   object-fit: cover;
 }
 
-div>h2{
+div > h2 {
   position: relative;
   margin: 0 auto;
   padding: 0 auto;
@@ -140,9 +141,8 @@ div>h2{
       margin-right: 34.5em;
     }
   }
-
 }
-  
+
 @media screen and (max-width: 1180px), screen and (max-height: 680px) {
   @keyframes slide {
     0% {

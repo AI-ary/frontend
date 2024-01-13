@@ -5,29 +5,29 @@
 /*화면 높이 100vh로 줄 때 생기는 스크롤 없애기*/
 
 @media screen and (min-width: 1401px), screen and (min-height: 701px) {
-    #help {
-        color: rgba(0, 0, 0, 0);
-    }
+  #help {
+    color: rgba(0, 0, 0, 0);
+  }
 }
 
 .modal_shake {
-    animation-name: shaking;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
+  animation-name: shaking;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes shaking {
-    0% {
-        transform: rotate(0deg);
-    }
-    33% {
-        transform: rotate(20deg);
-    }
-    66% {
-        transform: rotate(-20deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  33% {
+    transform: rotate(20deg);
+  }
+  66% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }

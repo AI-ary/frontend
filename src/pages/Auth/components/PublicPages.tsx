@@ -8,9 +8,7 @@ type Props = {
 };
 
 const PublicPages: React.FC<Props> = ({ Component, restricted }) => {
-  return (
-    (IsLogin() && restricted) ? <AfterLogin /> : <Component />
-  )
+  return IsLogin() && restricted ? <AfterLogin /> : <Component />;
 };
 
 export default PublicPages;

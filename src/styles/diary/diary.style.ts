@@ -1,11 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import { ReactComponent as Sunny } from '../../../public/images/sunny.svg';
 import { ReactComponent as Cloud } from '../../../public/images/cloud.svg';
 import { ReactComponent as Rainy } from '../../../public/images/rainy.svg';
 import { ReactComponent as Snow } from '../../../public/images/snow.svg';
 import { ReactComponent as Share } from '../../../public/images/share.svg';
 import { ReactComponent as Delete } from '../../../public/images/delete.svg';
-
 
 export const DiviContainer = styled.div`
   width: 100%;
@@ -26,7 +25,7 @@ export const DiaryContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-`
+`;
 
 export const DateContainer = styled.div`
   display: flex;
@@ -50,34 +49,34 @@ export const WeatherWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  .weather{
+  .weather {
     margin-right: 13px;
   }
 `;
 
 export const StyledSunny = styled(Sunny)`
-  fill: ${props => props.fill};
+  fill: ${(props) => props.fill};
   width: 32px;
   height: 32px;
-`
+`;
 
 export const StyledCloudy = styled(Cloud)`
-  fill: ${props => props.fill};
+  fill: ${(props) => props.fill};
   width: 32px;
   height: 32px;
-`
+`;
 
 export const StyledRainy = styled(Rainy)`
-  fill: ${props => props.fill};
+  fill: ${(props) => props.fill};
   width: 32px;
   height: 32px;
-`
+`;
 
 export const StyledSnow = styled(Snow)`
-  fill: ${props => props.fill};
+  fill: ${(props) => props.fill};
   width: 32px;
   height: 32px;
-`
+`;
 
 export const WeatherRadioBtn = styled.input`
   display: none;
@@ -87,7 +86,7 @@ export const WeatherRadioBtn = styled.input`
 export const TitleContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;;
+  justify-content: space-between;
   align-items: center;
   padding: 8px 12px;
   box-sizing: border-box;
@@ -125,7 +124,7 @@ export const Titlecontent = styled.div`
 export const Emoji = styled.div`
   font-size: 28px;
   margin-top: 3px;
-`
+`;
 
 /*그림판 container*/
 export const Canvas = styled.div`
@@ -158,7 +157,7 @@ export const PaperContainer = styled.div`
     width: 100%;
     height: 100%;
   }
-`
+`;
 export const TableTr = styled.div`
   --line-length: 20;
   width: 100%;
@@ -167,14 +166,14 @@ export const TableTr = styled.div`
   &:last-child {
     border-bottom: none;
   }
-`
+`;
 
-export const TableTd =styled.div`
+export const TableTd = styled.div`
   --line-length: 10;
   border-bottom: 1.6px solid #434343;
   border-right: 1.6px solid #434343;
   height: 100%;
-  width: calc(100% / var(--line-length)); 
+  width: calc(100% / var(--line-length));
   font-family: 'Poor Story';
   color: #373737;
   font-size: 24px;
@@ -188,7 +187,7 @@ export const TableTd =styled.div`
   &.no-border-bottom {
     border-bottom: none;
   }
-`
+`;
 
 export const ChoiceButtonContainer = styled.div`
   width: 100%;
@@ -197,24 +196,24 @@ export const ChoiceButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-`
+`;
 
 export const ButtonItem = styled.button`
   margin-right: 13px;
-  &:hover circle{
+  &:hover circle {
     fill: #434343;
   }
   &:hover path {
     fill: white;
   }
-`
+`;
 
 export const StyledShare = styled(Share)`
   width: 41px;
   height: 41px;
-`
+`;
 
 export const StyledDelete = styled(Delete)`
   width: 42px;
   height: 41px;
-`
+`;
